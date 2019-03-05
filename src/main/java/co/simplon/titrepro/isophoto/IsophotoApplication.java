@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class IsophotoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(IsophotoApplication.class, args);
+		SpringApplication.run(IsophotoApplication.class, args); //test
 	}
 
 }
