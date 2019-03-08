@@ -26,7 +26,8 @@ public class Photo implements Serializable {
 
 	@Column(length = 2147483647)
 	private String image;
-
+	
+	@Column
 	private double prix;
 
 	@Column(length = 2147483647)
