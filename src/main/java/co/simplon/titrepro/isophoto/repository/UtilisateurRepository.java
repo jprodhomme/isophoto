@@ -8,4 +8,3 @@ import co.simplon.titrepro.isophoto.model.Utilisateur;
 public interface UtilisateurRepository extends JpaRepository<Utilisateur, String> {
 
 }
-s
