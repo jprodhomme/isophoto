@@ -13,23 +13,23 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * The persistent class for the photo database table.
  * 
  */
 @Entity
-@Table(name = "photo", schema= "db_isophoto")
-@NamedQuery(name="Photo.findAll", query="SELECT p FROM Photo p")
+@Table(name = "photo", schema = "db_isophoto")
+@NamedQuery(name = "Photo.findAll", query = "SELECT p FROM Photo p")
 public class Photo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	private Integer id;
 
-	@Column(name="\"aVendre\"")
+	@Column(name = "\"aVendre\"")
 	private Boolean aVendre;
 
 	private String description;
@@ -40,44 +40,49 @@ public class Photo implements Serializable {
 
 	private String titre;
 
-	//bi-directional many-to-many association to Commande
+	// bi-directional many-to-many association to Commande
 	@ManyToMany
 	@JsonIgnore
-	@JoinTable(
-		name="many_photo_has_many_commande"
-		, joinColumns={
-			@JoinColumn(name="id_photo")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="id_commande")
-			}
-		, schema = "db_isophoto")
+	@JoinTable(name = "many_photo_has_many_commande", joinColumns = {
+			@JoinColumn(name = "id_photo") }, inverseJoinColumns = {
+					@JoinColumn(name = "id_commande") }, schema = "db_isophoto")
 	private List<Commande> commandes;
 
-	//bi-directional many-to-many association to Timeline
-	@ManyToMany(mappedBy="photos")
+	// bi-directional many-to-many association to Timeline
+	@ManyToMany(mappedBy = "photos")
 	@JsonIgnore
 	private List<Timeline> timelines;
 
-	//bi-directional many-to-one association to Categorie
+	// bi-directional many-to-one association to Categorie
 	@ManyToOne
 	@JsonIgnore
-	@JoinColumn(name="id_categorie")
+	@JoinColumn(name = "id_categorie")
 	private Categorie categorie;
 
-	//bi-directional many-to-one association to Exif
+	// bi-directional many-to-one association to Exif
 	@ManyToOne
 	@JsonIgnore
-	@JoinColumn(name="id_exif")
+	@JoinColumn(name = "id_exif")
 	private Exif exif;
 
-	//bi-directional many-to-one association to Photographe
+	// bi-directional many-to-one association to Photographe
 	@ManyToOne
 	@JsonIgnore
-	@JoinColumn(name="id_photographe")
+	@JoinColumn(name = "id_photographe")
 	private Photographe photographe;
-
+	
 	public Photo() {
+		
+	}
+	
+	public Photo(Integer id, boolean aVendre, String description, String image, float prix, String titre) {
+		super();
+		this.id = id;
+		this.aVendre = aVendre;
+		this.description = description;
+		this.image = image;
+		this.prix = prix;
+		this.titre = titre;
 	}
 
 	public Integer getId() {
@@ -174,6 +179,5 @@ public class Photo implements Serializable {
 				+ ", prix=" + prix + ", titre=" + titre + ", commandes=" + commandes + ", timelines=" + timelines
 				+ ", categorie=" + categorie + ", exif=" + exif + ", photographe=" + photographe + "]";
 	}
-	
 
 }
