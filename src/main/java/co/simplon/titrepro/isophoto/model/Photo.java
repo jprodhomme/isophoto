@@ -168,4 +168,12 @@ public class Photo implements Serializable {
 		this.photographe = photographe;
 	}
 
+	@Override
+	public String toString() {
+		return "Photo [id=" + id + ", aVendre=" + aVendre + ", description=" + description + ", image=" + image
+				+ ", prix=" + prix + ", titre=" + titre + ", commandes=" + commandes + ", timelines=" + timelines
+				+ ", categorie=" + categorie + ", exif=" + exif + ", photographe=" + photographe + "]";
+	}
+	
+
 }
