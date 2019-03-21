@@ -10,10 +10,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import co.simplon.titrepro.isophoto.model.Categorie;
 import co.simplon.titrepro.isophoto.model.Photo;
+import co.simplon.titrepro.isophoto.repository.AuthorityRepository;
 import co.simplon.titrepro.isophoto.repository.CategorieRepository;
+import co.simplon.titrepro.isophoto.repository.ExifRepository;
 import co.simplon.titrepro.isophoto.repository.PhotoRepository;
+import co.simplon.titrepro.isophoto.repository.PhotographeRepository;
 
 @RestController
 @RequestMapping("/api")
@@ -24,7 +29,17 @@ public class PhotoController {
 
 	@Autowired
 	CategorieRepository catRepo;
-
+	
+	@Autowired
+	PhotographeRepository photographeRepo;
+	
+	@Autowired
+	ExifRepository exifRepo;
+	
+	@Autowired
+	AuthorityRepository authorityRepo;
+	
+	@JsonIgnore
 	@GetMapping("/photos")
 	public ResponseEntity<?> getAllPhoto() {
 		List<Photo> listePhoto = photoRepo.findAll();
@@ -37,6 +52,7 @@ public class PhotoController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 
+		System.out.println("Liste Photo => " + listePhoto);
 		return ResponseEntity.status(HttpStatus.OK).body(listePhoto);
 	}
 
