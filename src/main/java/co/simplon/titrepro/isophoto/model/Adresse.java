@@ -1,6 +1,5 @@
 package co.simplon.titrepro.isophoto.model;
 
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
@@ -11,28 +10,25 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="adresse")
+@Table(name = "adresse", schema= "db_isophoto")
 @NamedQuery(name="Adresse.findAll", query="SELECT a FROM Adresse a")
 public class Adresse implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false)
 	private Integer id;
 
 	@Column(name="\"codePostal\"")
 	private Integer codePostal;
 
-	@Column(name="\"nomVoie\"", length=2147483647)
+	@Column(name="\"nomVoie\"")
 	private String nomVoie;
 
 	@Column(name="\"numVoie\"")
 	private Integer numVoie;
 
-	@Column(length=2147483647)
 	private String pays;
 
-	@Column(length=2147483647)
 	private String ville;
 
 	//bi-directional many-to-many association to Photographe

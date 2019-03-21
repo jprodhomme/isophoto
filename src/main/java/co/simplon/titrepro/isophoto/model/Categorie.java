@@ -10,16 +10,14 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="categorie")
+@Table(name = "categorie", schema= "db_isophoto")
 @NamedQuery(name="Categorie.findAll", query="SELECT c FROM Categorie c")
 public class Categorie implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false)
 	private Integer id;
 
-	@Column(length=2147483647)
 	private String nom;
 
 	//bi-directional many-to-one association to Photo

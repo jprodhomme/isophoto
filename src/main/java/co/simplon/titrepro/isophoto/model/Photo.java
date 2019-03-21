@@ -4,59 +4,61 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
+
 /**
  * The persistent class for the photo database table.
  * 
  */
 @Entity
-@Table(name = "photo")
-@NamedQuery(name = "Photo.findAll", query = "SELECT p FROM Photo p")
+@Table(name = "photo", schema= "db_isophoto")
+@NamedQuery(name="Photo.findAll", query="SELECT p FROM Photo p")
 public class Photo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique = true, nullable = false)
 	private Integer id;
 
-	@Column(name = "\"aVendre\"")
+	@Column(name="\"aVendre\"")
 	private Boolean aVendre;
 
-	@Column(length = 2147483647)
 	private String description;
 
-	@Column(length = 2147483647)
 	private String image;
-	
-	@Column
+
 	private double prix;
 
-	@Column(length = 2147483647)
 	private String titre;
 
-	// bi-directional many-to-many association to Commande
+	//bi-directional many-to-many association to Commande
 	@ManyToMany
-	@JoinTable(name = "many_photo_has_many_commande", joinColumns = {
-			@JoinColumn(name = "id_photo", nullable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "id_commande", nullable = false) })
+	@JoinTable(
+		name="many_photo_has_many_commande"
+		, joinColumns={
+			@JoinColumn(name="id_photo")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="id_commande")
+			}
+		, schema = "db_isophoto")
 	private List<Commande> commandes;
 
-	// bi-directional many-to-many association to Timeline
-	@ManyToMany(mappedBy = "photos")
+	//bi-directional many-to-many association to Timeline
+	@ManyToMany(mappedBy="photos")
 	private List<Timeline> timelines;
 
-	// bi-directional many-to-one association to Categorie
+	//bi-directional many-to-one association to Categorie
 	@ManyToOne
-	@JoinColumn(name = "id_categorie")
+	@JoinColumn(name="id_categorie")
 	private Categorie categorie;
 
-	// bi-directional many-to-one association to Exif
+	//bi-directional many-to-one association to Exif
 	@ManyToOne
-	@JoinColumn(name = "id_exif")
+	@JoinColumn(name="id_exif")
 	private Exif exif;
 
-	// bi-directional many-to-one association to Photographe
+	//bi-directional many-to-one association to Photographe
 	@ManyToOne
-	@JoinColumn(name = "id_photographe")
+	@JoinColumn(name="id_photographe")
 	private Photographe photographe;
 
 	public Photo() {

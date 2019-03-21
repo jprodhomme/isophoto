@@ -5,41 +5,38 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
+
 /**
  * The persistent class for the exif database table.
  * 
  */
 @Entity
-@Table(name = "exif")
-@NamedQuery(name = "Exif.findAll", query = "SELECT e FROM Exif e")
+@Table(name = "exif", schema= "db_isophoto")
+@NamedQuery(name="Exif.findAll", query="SELECT e FROM Exif e")
 public class Exif implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique = true, nullable = false)
 	private Integer id;
 
-	@Column(length = 2147483647)
 	private String constructeur;
 
-	@Column(name = "\"dateHeure\"")
+	@Column(name="\"dateHeure\"")
 	private Timestamp dateHeure;
 
 	private Boolean flash;
 
 	private Integer modele;
 
-	@Column(length = 2147483647)
 	private String objectif;
 
-	@Column(length = 2147483647)
 	private String ouverture;
 
-	@Column(name = "\"vitesseObturation\"")
+	@Column(name="\"vitesseObturation\"")
 	private double vitesseObturation;
 
-	// bi-directional many-to-one association to Photo
-	@OneToMany(mappedBy = "exif")
+	//bi-directional many-to-one association to Photo
+	@OneToMany(mappedBy="exif")
 	private List<Photo> photos;
 
 	public Exif() {

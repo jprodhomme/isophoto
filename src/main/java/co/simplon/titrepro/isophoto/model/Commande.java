@@ -1,6 +1,5 @@
 package co.simplon.titrepro.isophoto.model;
 
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -12,13 +11,12 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="commande")
+@Table(name = "commande", schema= "db_isophoto")
 @NamedQuery(name="Commande.findAll", query="SELECT c FROM Commande c")
 public class Commande implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique=true, nullable=false)
 	private Integer id;
 
 	@Column(name="\"dateCommande\"")
