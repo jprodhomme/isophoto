@@ -58,6 +58,20 @@ public class Photographe implements Serializable {
 
 	public Photographe() {
 	}
+	
+	
+
+	public Photographe(Integer id, String email, String nom, String password, String prenom, String pseudo) {
+		super();
+		this.id = id;
+		this.email = email;
+		this.nom = nom;
+		this.password = password;
+		this.prenom = prenom;
+		this.pseudo = pseudo;
+	}
+
+
 
 	public Integer getId() {
 		return this.id;
