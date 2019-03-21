@@ -7,4 +7,6 @@ import co.simplon.titrepro.isophoto.model.Photo;
 
 public interface PhotoRepository extends JpaRepository<Photo, String>{
 	
+	
+	
 }

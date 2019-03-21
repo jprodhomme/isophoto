@@ -1,10 +1,13 @@
 package co.simplon.titrepro.isophoto.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import javax.validation.Valid;
-
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
