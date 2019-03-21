@@ -5,41 +5,46 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+
 /**
  * The persistent class for the timeline database table.
  * 
  */
 @Entity
-@Table(name = "timeline")
-@NamedQuery(name = "Timeline.findAll", query = "SELECT t FROM Timeline t")
+@Table(name = "timeline", schema= "db_isophoto")
+@NamedQuery(name="Timeline.findAll", query="SELECT t FROM Timeline t")
 public class Timeline implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(unique = true, nullable = false)
 	private Integer id;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "\"dateCreation\"")
+	@Column(name="\"dateCreation\"")
 	private Date dateCreation;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "\"dateUpdate\"")
+	@Column(name="\"dateUpdate\"")
 	private Date dateUpdate;
 
-	@Column(length = 2147483647)
 	private String nom;
 
-	// bi-directional many-to-many association to Photo
+	//bi-directional many-to-many association to Photo
 	@ManyToMany
-	@JoinTable(name = "many_timeline_has_many_photo", joinColumns = {
-			@JoinColumn(name = "id_timeline", nullable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "id_photo", nullable = false) })
+	@JoinTable(
+		name="many_timeline_has_many_photo"
+		, joinColumns={
+			@JoinColumn(name="id_timeline")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="id_photo")
+			}
+		, schema = "db_isophoto")
 	private List<Photo> photos;
 
-	// bi-directional many-to-one association to Photographe
+	//bi-directional many-to-one association to Photographe
 	@ManyToOne
-	@JoinColumn(name = "id_photographe")
+	@JoinColumn(name="id_photographe")
 	private Photographe photographe;
 
 	public Timeline() {
