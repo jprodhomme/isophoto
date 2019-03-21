@@ -1,8 +1,19 @@
 package co.simplon.titrepro.isophoto.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -31,6 +42,7 @@ public class Photo implements Serializable {
 
 	//bi-directional many-to-many association to Commande
 	@ManyToMany
+	@JsonIgnore
 	@JoinTable(
 		name="many_photo_has_many_commande"
 		, joinColumns={
@@ -44,20 +56,24 @@ public class Photo implements Serializable {
 
 	//bi-directional many-to-many association to Timeline
 	@ManyToMany(mappedBy="photos")
+	@JsonIgnore
 	private List<Timeline> timelines;
 
 	//bi-directional many-to-one association to Categorie
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="id_categorie")
 	private Categorie categorie;
 
 	//bi-directional many-to-one association to Exif
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="id_exif")
 	private Exif exif;
 
 	//bi-directional many-to-one association to Photographe
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="id_photographe")
 	private Photographe photographe;
 
