@@ -2,6 +2,8 @@ package co.simplon.titrepro.isophoto.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.Valid;
+
 import java.util.List;
 
 
@@ -25,6 +27,12 @@ public class Categorie implements Serializable {
 	private List<Photo> photos;
 
 	public Categorie() {
+	}
+
+	public Categorie(Integer id, String nom) {
+		super();
+		this.id = id;
+		this.nom = nom;
 	}
 
 	public Integer getId() {
