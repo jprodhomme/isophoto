@@ -59,6 +59,17 @@ public class PhotographeController {
 		return ResponseEntity.status(HttpStatus.OK).body(listePhotographes);
 	}
 	
+	
+	/**
+	 * Méthode POST pour ajouter un PHOTOGRAPHE
+	 * @param id
+	 * @param email
+	 * @param nom
+	 * @param password
+	 * @param prenom
+	 * @param pseudo
+	 * @return
+	 */
 	@PostMapping("/addphotographe")
 	public ResponseEntity<?> addPhotographes(@Valid Integer id, @Valid String email, @Valid String nom, @Valid String password, @Valid String prenom,
 		@Valid String pseudo) {

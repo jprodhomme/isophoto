@@ -86,6 +86,38 @@ public class PhotoController {
 		return ResponseEntity.status(HttpStatus.OK).body(listePhoto);
 	}
 	
+	/**
+	 * Méthode GET pour récupérer toutes les PHOTOS d'un PHOTOGRAPHE
+	 * @param nom
+	 * @return
+	 */
+	@GetMapping("/photosbyphotographe/{nom}")
+	public ResponseEntity<?> getPhotosbyPhotographe(@PathVariable String nom) {
+
+		List<Photo> listePhoto = null;
+		try {
+			Optional<Photographe> photographeNom = photographeRepo.findByNom(nom);
+			if (photographeNom.isPresent()) {
+				listePhoto = (List<Photo>) photographeNom.get().getPhotos();
+
+			}
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(listePhoto);
+	}
+	
+	/**
+	 * Méthode POST pour ajouter un PHOTO
+	 * @param id
+	 * @param aVendre
+	 * @param description
+	 * @param image
+	 * @param prix
+	 * @param titre
+	 * @return
+	 */
+	// PB authority + id Photographe TO DO  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	@PostMapping("/addphoto")
 	public ResponseEntity<?> addPhoto(@Valid Integer id, @Valid boolean aVendre, @Valid String description, @Valid String image, @Valid float prix,
 		@Valid String titre) {

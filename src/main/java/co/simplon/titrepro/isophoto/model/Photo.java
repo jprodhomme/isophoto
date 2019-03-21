@@ -12,7 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.Valid;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
