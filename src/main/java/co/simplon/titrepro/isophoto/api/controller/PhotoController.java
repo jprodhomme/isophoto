@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.titrepro.isophoto.model.Categorie;
+import co.simplon.titrepro.isophoto.model.Exif;
 import co.simplon.titrepro.isophoto.model.Photo;
 import co.simplon.titrepro.isophoto.model.Photographe;
 import co.simplon.titrepro.isophoto.repository.AuthorityRepository;
@@ -107,6 +108,7 @@ public class PhotoController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(listePhoto);
 	}
+	
 
 	/**
 	 * Méthode POST pour ajouter un PHOTO
@@ -137,5 +139,6 @@ public class PhotoController {
 		}
 
 	}
+	
 
 }
