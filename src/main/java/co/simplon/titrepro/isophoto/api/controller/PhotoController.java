@@ -85,9 +85,10 @@ public class PhotoController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(listePhoto);
 	}
-	
+
 	/**
 	 * Méthode GET pour récupérer toutes les PHOTOS d'un PHOTOGRAPHE
+	 * 
 	 * @param nom
 	 * @return
 	 */
@@ -106,9 +107,10 @@ public class PhotoController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(listePhoto);
 	}
-	
+
 	/**
 	 * Méthode POST pour ajouter un PHOTO
+	 * 
 	 * @param id
 	 * @param aVendre
 	 * @param description
@@ -117,23 +119,23 @@ public class PhotoController {
 	 * @param titre
 	 * @return
 	 */
-	// PB authority + id Photographe TO DO  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	// id Photographe TO DO -- *Hibernate 
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	@PostMapping("/addphoto")
-	public ResponseEntity<?> addPhoto(@Valid Integer id, @Valid boolean aVendre, @Valid String description, @Valid String image, @Valid float prix,
-		@Valid String titre) {
-		
+	public ResponseEntity<?> addPhoto(@Valid Integer id, @Valid boolean aVendre, @Valid String description,
+			@Valid String image, @Valid float prix, @Valid String titre) {
+
 		Photo photo = new Photo(id, aVendre, description, image, prix, titre);
 		photoRepo.save(photo);
-		
-	
+
 		try {
-			//authoritiesRepo.save(authorities);
+			// authoritiesRepo.save(authorities);
 			return ResponseEntity.status(HttpStatus.OK).body(null);
-			
-		} catch(Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);	
-		}	
-				
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+
 	}
 
 }
