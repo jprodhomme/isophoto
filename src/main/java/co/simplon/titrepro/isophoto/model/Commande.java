@@ -5,24 +5,25 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-
 /**
  * The persistent class for the commande database table.
  * 
  */
 @Entity
-@Table(name = "commande", schema= "db_isophoto")
-@NamedQuery(name="Commande.findAll", query="SELECT c FROM Commande c")
+@Table(name = "commande", schema = "db_isophoto")
+@NamedQuery(name = "Commande.findAll", query = "SELECT c FROM Commande c")
 public class Commande implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false, nullable = false)
+	protected Integer id;
 
-	@Column(name="\"dateCommande\"")
+	@Column(name = "\"dateCommande\"")
 	private Timestamp dateCommande;
 
-	@Column(name="\"fraisDePort\"")
+	@Column(name = "\"fraisDePort\"")
 	private double fraisDePort;
 
 	private Integer quantité;
@@ -31,13 +32,13 @@ public class Commande implements Serializable {
 
 	private double tva;
 
-	//bi-directional many-to-one association to Photographe
+	// bi-directional many-to-one association to Photographe
 	@ManyToOne
-	@JoinColumn(name="id_photographe")
+	@JoinColumn(name = "id_photographe")
 	private Photographe photographe;
 
-	//bi-directional many-to-many association to Photo
-	@ManyToMany(mappedBy="commandes")
+	// bi-directional many-to-many association to Photo
+	@ManyToMany(mappedBy = "commandes")
 	private List<Photo> photos;
 
 	public Commande() {

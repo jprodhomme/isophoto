@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -12,7 +14,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,7 +28,9 @@ public class Photo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false, nullable = false)
+	protected Integer id;
 
 	@Column(name = "\"aVendre\"")
 	private Boolean aVendre;
@@ -70,14 +73,13 @@ public class Photo implements Serializable {
 	@JsonIgnore
 	@JoinColumn(name = "id_photographe")
 	private Photographe photographe;
-	
+
 	public Photo() {
-		
+
 	}
-	
-	public Photo(Integer id, boolean aVendre, String description, String image, float prix, String titre) {
+
+	public Photo(boolean aVendre, String description, String image, float prix, String titre) {
 		super();
-		this.id = id;
 		this.aVendre = aVendre;
 		this.description = description;
 		this.image = image;

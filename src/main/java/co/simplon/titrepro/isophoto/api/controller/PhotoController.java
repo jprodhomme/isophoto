@@ -108,7 +108,6 @@ public class PhotoController {
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(listePhoto);
 	}
-	
 
 	/**
 	 * Méthode POST pour ajouter un PHOTO
@@ -121,13 +120,14 @@ public class PhotoController {
 	 * @param titre
 	 * @return
 	 */
-	// id Photographe TO DO -- *Hibernate 
-	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	@PostMapping("/addphoto")
-	public ResponseEntity<?> addPhoto(@Valid Integer id, @Valid boolean aVendre, @Valid String description,
-			@Valid String image, @Valid float prix, @Valid String titre) {
+	public ResponseEntity<?> addPhoto(@Valid boolean aVendre, 
+									  @Valid String description,
+									  @Valid String image,
+									  @Valid float prix,
+									  @Valid String titre) {
 
-		Photo photo = new Photo(id, aVendre, description, image, prix, titre);
+		Photo photo = new Photo(aVendre, description, image, prix, titre);
 		photoRepo.save(photo);
 
 		try {
@@ -139,6 +139,5 @@ public class PhotoController {
 		}
 
 	}
-	
 
 }

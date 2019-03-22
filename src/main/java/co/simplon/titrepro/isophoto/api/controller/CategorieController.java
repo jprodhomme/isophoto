@@ -43,9 +43,9 @@ public class CategorieController {
 	 * @return
 	 */
 	@PostMapping("/addcategorie")
-	public ResponseEntity<?> addCategorie(@Valid Integer id, @Valid String nom) {
+	public ResponseEntity<?> addCategorie(@Valid String nom) {
 
-		Categorie categorie = new Categorie(id, nom);
+		Categorie categorie = new Categorie(nom);
 		catRepo.save(categorie);
 
 		try {

@@ -3,38 +3,41 @@ package co.simplon.titrepro.isophoto.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 
 /**
  * The persistent class for the categorie database table.
  * 
  */
 @Entity
-@Table(name = "categorie", schema= "db_isophoto")
-@NamedQuery(name="Categorie.findAll", query="SELECT c FROM Categorie c")
+@Table(name = "categorie", schema = "db_isophoto")
+@NamedQuery(name = "Categorie.findAll", query = "SELECT c FROM Categorie c")
 public class Categorie implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false, nullable = false)
+	protected Integer id;
 
 	private String nom;
 
-	//bi-directional many-to-one association to Photo
-	@OneToMany(mappedBy="categorie")
+	// bi-directional many-to-one association to Photo
+	@OneToMany(mappedBy = "categorie")
 	private List<Photo> photos;
 
 	public Categorie() {
 	}
 
-	public Categorie(Integer id, String nom) {
+	public Categorie(String nom) {
 		super();
-		this.id = id;
 		this.nom = nom;
 	}
 
