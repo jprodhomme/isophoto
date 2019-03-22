@@ -4,23 +4,24 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
 /**
  * The persistent class for the photographe database table.
  * 
  */
 @Entity
-@Table(name = "photographe", schema= "db_isophoto")
-@NamedQuery(name="Photographe.findAll", query="SELECT p FROM Photographe p")
+@Table(name = "photographe", schema = "db_isophoto")
+@NamedQuery(name = "Photographe.findAll", query = "SELECT p FROM Photographe p")
 public class Photographe implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false, nullable = false)
+	protected Long id;
 
 	private String email;
 
-	@Column(name="id_authorities")
+	@Column(name = "id_authorities")
 	private Integer idAuthorities;
 
 	private String nom;
@@ -31,39 +32,30 @@ public class Photographe implements Serializable {
 
 	private String pseudo;
 
-	//bi-directional many-to-one association to Commande
-	@OneToMany(mappedBy="photographe")
+	// bi-directional many-to-one association to Commande
+	@OneToMany(mappedBy = "photographe")
 	private List<Commande> commandes;
 
-	//bi-directional many-to-many association to Adresse
+	// bi-directional many-to-many association to Adresse
 	@ManyToMany
-	@JoinTable(
-		name="many_photographe_has_many_adresse"
-		, joinColumns={
-			@JoinColumn(name="id_photographe")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="id_adresse")
-			}
-		, schema = "db_isophoto")
+	@JoinTable(name = "many_photographe_has_many_adresse", joinColumns = {
+			@JoinColumn(name = "id_photographe") }, inverseJoinColumns = {
+					@JoinColumn(name = "id_adresse") }, schema = "db_isophoto")
 	private List<Adresse> adresses;
 
-	//bi-directional many-to-one association to Photo
-	@OneToMany(mappedBy="photographe")
+	// bi-directional many-to-one association to Photo
+	@OneToMany(mappedBy = "photographe")
 	private List<Photo> photos;
 
-	//bi-directional many-to-one association to Timeline
-	@OneToMany(mappedBy="photographe")
+	// bi-directional many-to-one association to Timeline
+	@OneToMany(mappedBy = "photographe")
 	private List<Timeline> timelines;
 
 	public Photographe() {
 	}
-	
-	
 
-	public Photographe(Integer id, String email, String nom, String password, String prenom, String pseudo) {
+	public Photographe(String email, String nom, String password, String prenom, String pseudo) {
 		super();
-		this.id = id;
 		this.email = email;
 		this.nom = nom;
 		this.password = password;
@@ -71,13 +63,11 @@ public class Photographe implements Serializable {
 		this.pseudo = pseudo;
 	}
 
-
-
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

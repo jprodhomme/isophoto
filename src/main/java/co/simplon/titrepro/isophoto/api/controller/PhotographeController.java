@@ -70,10 +70,10 @@ public class PhotographeController {
 	 * @return
 	 */
 	@PostMapping("/addphotographe")
-	public ResponseEntity<?> addPhotographes(@Valid Integer id, @Valid String email, @Valid String nom, @Valid String password, @Valid String prenom,
+	public ResponseEntity<?> addPhotographes( @Valid String email, @Valid String nom, @Valid String password, @Valid String prenom,
 		@Valid String pseudo) {
 		
-		Photographe photographe = new Photographe(id, email, nom, password, prenom, pseudo);
+		Photographe photographe = new Photographe(email, nom, password, prenom, pseudo);
 		photographeRepo.save(photographe);
 		
 	

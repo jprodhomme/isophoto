@@ -4,24 +4,25 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
 /**
  * The persistent class for the authorities database table.
  * 
  */
 @Entity
-@Table(name = "authorities", schema= "db_isophoto")
-@NamedQuery(name="Authority.findAll", query="SELECT a FROM Authority a")
+@Table(name = "authorities", schema = "db_isophoto")
+@NamedQuery(name = "Authority.findAll", query = "SELECT a FROM Authority a")
 public class Authority implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false, nullable = false)
+	protected Integer id;
 
 	private String role;
 
-	//bi-directional many-to-one association to Utilisateur
-	@OneToMany(mappedBy="authority")
+	// bi-directional many-to-one association to Utilisateur
+	@OneToMany(mappedBy = "authority")
 	private List<Utilisateur> utilisateurs;
 
 	public Authority() {

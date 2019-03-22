@@ -5,38 +5,39 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-
 /**
  * The persistent class for the exif database table.
  * 
  */
 @Entity
-@Table(name = "exif", schema= "db_isophoto")
-@NamedQuery(name="Exif.findAll", query="SELECT e FROM Exif e")
+@Table(name = "exif", schema = "db_isophoto")
+@NamedQuery(name = "Exif.findAll", query = "SELECT e FROM Exif e")
 public class Exif implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false, nullable = false)
+	protected Integer id;
 
 	private String constructeur;
 
-	@Column(name="\"dateHeure\"")
+	@Column(name = "\"dateHeure\"")
 	private Timestamp dateHeure;
 
 	private Boolean flash;
 
-	private Integer modele;
+	private String modele;
 
 	private String objectif;
 
 	private String ouverture;
 
-	@Column(name="\"vitesseObturation\"")
+	@Column(name = "\"vitesseObturation\"")
 	private double vitesseObturation;
 
-	//bi-directional many-to-one association to Photo
-	@OneToMany(mappedBy="exif")
+	// bi-directional many-to-one association to Photo
+	@OneToMany(mappedBy = "exif")
 	private List<Photo> photos;
 
 	public Exif() {
@@ -74,11 +75,11 @@ public class Exif implements Serializable {
 		this.flash = flash;
 	}
 
-	public Integer getModele() {
+	public String getModele() {
 		return this.modele;
 	}
 
-	public void setModele(Integer modele) {
+	public void String(String modele) {
 		this.modele = modele;
 	}
 

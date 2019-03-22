@@ -16,7 +16,9 @@ public class Adresse implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", updatable = false, nullable = false)
+	protected Integer id;
 
 	@Column(name="\"codePostal\"")
 	private Integer codePostal;
