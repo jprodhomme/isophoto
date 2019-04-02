@@ -1,5 +1,6 @@
 package co.simplon.titrepro.isophoto.api.controller;
 
+import java.io.PrintStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.titrepro.isophoto.model.Categorie;
-import co.simplon.titrepro.isophoto.model.Exif;
 import co.simplon.titrepro.isophoto.model.Photo;
 import co.simplon.titrepro.isophoto.model.Photographe;
 import co.simplon.titrepro.isophoto.repository.AuthorityRepository;
@@ -51,6 +51,7 @@ public class PhotoController {
 	@GetMapping("/photos")
 	public ResponseEntity<?> getAllPhoto() {
 		List<Photo> listePhoto = photoRepo.findAll();
+		
 
 		try {
 			listePhoto = (List<Photo>) photoRepo.findAll();
@@ -60,6 +61,9 @@ public class PhotoController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 
+		System.out.println("----------------------------------------");
+		System.out.println("Liste de toutes les photos : " + listePhoto);
+		System.out.println("----------------------------------------");
 		return ResponseEntity.status(HttpStatus.OK).body(listePhoto);
 	}
 
@@ -84,6 +88,10 @@ public class PhotoController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
+		System.out.println("----------------------------------------");
+		System.out.println("Catégorie : " + nom);
+		System.out.println("Liste Photo de la catégorie " + nom + listePhoto);
+		System.out.println("----------------------------------------");
 		return ResponseEntity.status(HttpStatus.OK).body(listePhoto);
 	}
 
@@ -95,7 +103,7 @@ public class PhotoController {
 	 */
 	@GetMapping("/photosbyphotographe/{nom}")
 	public ResponseEntity<?> getPhotosbyPhotographe(@PathVariable String nom) {
-
+		
 		List<Photo> listePhoto = null;
 		try {
 			Optional<Photographe> photographeNom = photographeRepo.findByNom(nom);
@@ -106,6 +114,11 @@ public class PhotoController {
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
+		System.out.println("----------------------------------------");
+		System.out.println("Photographe : " + nom);
+		System.out.println("Liste Photo de " + nom + listePhoto);
+		System.out.println("----------------------------------------");
+		
 		return ResponseEntity.status(HttpStatus.OK).body(listePhoto);
 	}
 
@@ -131,7 +144,7 @@ public class PhotoController {
 		photoRepo.save(photo);
 
 		try {
-			// authoritiesRepo.save(authorities);
+			// authoritiesRepo.save(authorities); 
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 
 		} catch (Exception e) {

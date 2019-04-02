@@ -9,5 +9,5 @@ import co.simplon.titrepro.isophoto.model.Photographe;
 public interface PhotographeRepository extends JpaRepository<Photographe, String> {
 
 	Optional<Photographe> findByNom(String nom);
-
+	void deleteByNom(String nom);
 }

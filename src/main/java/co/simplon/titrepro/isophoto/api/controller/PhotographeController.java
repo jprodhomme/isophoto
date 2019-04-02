@@ -54,7 +54,6 @@ public class PhotographeController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 
-		System.out.println("Liste Photo => " + listePhotographes);
 		return ResponseEntity.status(HttpStatus.OK).body(listePhotographes);
 	}
 	
@@ -86,6 +85,7 @@ public class PhotographeController {
 		}	
 				
 	}
-
+	
+		
 
 }
