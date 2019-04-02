@@ -47,9 +47,7 @@ public class Photographe implements Serializable {
 	@OneToMany(mappedBy = "photographe")
 	private List<Photo> photos;
 
-	// bi-directional many-to-one association to Timeline
-	@OneToMany(mappedBy = "photographe")
-	private List<Timeline> timelines;
+
 
 	public Photographe() {
 	}
@@ -171,26 +169,7 @@ public class Photographe implements Serializable {
 		return photo;
 	}
 
-	public List<Timeline> getTimelines() {
-		return this.timelines;
-	}
+	
 
-	public void setTimelines(List<Timeline> timelines) {
-		this.timelines = timelines;
-	}
-
-	public Timeline addTimeline(Timeline timeline) {
-		getTimelines().add(timeline);
-		timeline.setPhotographe(this);
-
-		return timeline;
-	}
-
-	public Timeline removeTimeline(Timeline timeline) {
-		getTimelines().remove(timeline);
-		timeline.setPhotographe(null);
-
-		return timeline;
-	}
 
 }

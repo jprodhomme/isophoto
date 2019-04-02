@@ -51,10 +51,7 @@ public class Photo implements Serializable {
 					@JoinColumn(name = "id_commande") }, schema = "db_isophoto")
 	private List<Commande> commandes;
 
-	// bi-directional many-to-many association to Timeline
-	@ManyToMany(mappedBy = "photos")
-	@JsonIgnore
-	private List<Timeline> timelines;
+
 
 	// bi-directional many-to-one association to Categorie
 	@ManyToOne
@@ -143,13 +140,6 @@ public class Photo implements Serializable {
 		this.commandes = commandes;
 	}
 
-	public List<Timeline> getTimelines() {
-		return this.timelines;
-	}
-
-	public void setTimelines(List<Timeline> timelines) {
-		this.timelines = timelines;
-	}
 
 	public Categorie getCategorie() {
 		return this.categorie;
@@ -178,7 +168,7 @@ public class Photo implements Serializable {
 	@Override
 	public String toString() {
 		return "Photo [id=" + id + ", aVendre=" + aVendre + ", description=" + description + ", image=" + image
-				+ ", prix=" + prix + ", titre=" + titre + ", commandes=" + commandes + ", timelines=" + timelines
+				+ ", prix=" + prix + ", titre=" + titre + ", commandes=" + commandes + ", timelines=" 
 				+ ", categorie=" + categorie + ", exif=" + exif + ", photographe=" + photographe + "]";
 	}
 
