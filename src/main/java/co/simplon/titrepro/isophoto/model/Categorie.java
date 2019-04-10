@@ -8,9 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
+
+
 
 /**
  * The persistent class for the categorie database table.
@@ -25,19 +28,18 @@ public class Categorie implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", updatable = false, nullable = false)
-	protected Integer id;
+	private Integer id;
 
 	private String nom;
 
-	// bi-directional many-to-one association to Photo
-	@OneToMany(mappedBy = "categorie")
+	//bi-directional many-to-many association to Photo
+	@ManyToMany(mappedBy="categories")
 	private List<Photo> photos;
 
 	public Categorie() {
 	}
 
-	public Categorie(String nom) {
-		super();
+	public Categorie(@Valid String nom) {
 		this.nom = nom;
 	}
 
@@ -63,20 +65,6 @@ public class Categorie implements Serializable {
 
 	public void setPhotos(List<Photo> photos) {
 		this.photos = photos;
-	}
-
-	public Photo addPhoto(Photo photo) {
-		getPhotos().add(photo);
-		photo.setCategorie(this);
-
-		return photo;
-	}
-
-	public Photo removePhoto(Photo photo) {
-		getPhotos().remove(photo);
-		photo.setCategorie(null);
-
-		return photo;
 	}
 
 }

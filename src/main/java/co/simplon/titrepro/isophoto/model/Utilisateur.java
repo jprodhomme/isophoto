@@ -3,6 +3,7 @@ package co.simplon.titrepro.isophoto.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+
 /**
  * The persistent class for the utilisateur database table.
  * 
@@ -16,21 +17,21 @@ public class Utilisateur implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", updatable = false, nullable = false)
-	protected Integer id;
+	protected Long id;
 
-	// bi-directional many-to-one association to Authority
+	//bi-directional many-to-one association to Authority
 	@ManyToOne
-	@JoinColumn(name = "id_authorities")
+	@JoinColumn(name="id_authorities")
 	private Authority authority;
 
 	public Utilisateur() {
 	}
 
-	public Integer getId() {
+	public  Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
