@@ -1,8 +1,16 @@
 package co.simplon.titrepro.isophoto.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the authorities database table.
@@ -17,12 +25,12 @@ public class Authority implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", updatable = false, nullable = false)
-	protected Integer id;
+	private Integer id;
 
 	private String role;
 
-	// bi-directional many-to-one association to Utilisateur
-	@OneToMany(mappedBy = "authority")
+	//bi-directional many-to-one association to Utilisateur
+	@OneToMany(mappedBy="authority")
 	private List<Utilisateur> utilisateurs;
 
 	public Authority() {

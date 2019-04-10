@@ -1,6 +1,5 @@
 package co.simplon.titrepro.isophoto.api.controller;
 
-import java.io.PrintStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +19,6 @@ import co.simplon.titrepro.isophoto.model.Photo;
 import co.simplon.titrepro.isophoto.model.Photographe;
 import co.simplon.titrepro.isophoto.repository.AuthorityRepository;
 import co.simplon.titrepro.isophoto.repository.CategorieRepository;
-import co.simplon.titrepro.isophoto.repository.ExifRepository;
 import co.simplon.titrepro.isophoto.repository.PhotoRepository;
 import co.simplon.titrepro.isophoto.repository.PhotographeRepository;
 
@@ -38,9 +36,6 @@ public class PhotoController {
 	PhotographeRepository photographeRepo;
 
 	@Autowired
-	ExifRepository exifRepo;
-
-	@Autowired
 	AuthorityRepository authorityRepo;
 
 	/**
@@ -51,7 +46,6 @@ public class PhotoController {
 	@GetMapping("/photos")
 	public ResponseEntity<?> getAllPhoto() {
 		List<Photo> listePhoto = photoRepo.findAll();
-		
 
 		try {
 			listePhoto = (List<Photo>) photoRepo.findAll();
@@ -103,7 +97,7 @@ public class PhotoController {
 	 */
 	@GetMapping("/photosbyphotographe/{nom}")
 	public ResponseEntity<?> getPhotosbyPhotographe(@PathVariable String nom) {
-		
+
 		List<Photo> listePhoto = null;
 		try {
 			Optional<Photographe> photographeNom = photographeRepo.findByNom(nom);
@@ -118,7 +112,7 @@ public class PhotoController {
 		System.out.println("Photographe : " + nom);
 		System.out.println("Liste Photo de " + nom + listePhoto);
 		System.out.println("----------------------------------------");
-		
+
 		return ResponseEntity.status(HttpStatus.OK).body(listePhoto);
 	}
 
@@ -134,17 +128,13 @@ public class PhotoController {
 	 * @return
 	 */
 	@PostMapping("/addphoto")
-	public ResponseEntity<?> addPhoto(@Valid boolean aVendre, 
-									  @Valid String description,
-									  @Valid String image,
-									  @Valid float prix,
-									  @Valid String titre) {
+	public ResponseEntity<?> addPhoto(@Valid String description, @Valid String image,
+			@Valid String categorie, @Valid String titre) {
 
-		Photo photo = new Photo(aVendre, description, image, prix, titre);
+		Photo photo = new Photo(description, image, categorie, titre);
 		photoRepo.save(photo);
 
 		try {
-			// authoritiesRepo.save(authorities); 
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 
 		} catch (Exception e) {

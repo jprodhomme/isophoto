@@ -25,7 +25,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import co.simplon.titrepro.isophoto.model.Categorie;
 import co.simplon.titrepro.isophoto.repository.AuthorityRepository;
 import co.simplon.titrepro.isophoto.repository.CategorieRepository;
-import co.simplon.titrepro.isophoto.repository.ExifRepository;
 import co.simplon.titrepro.isophoto.repository.PhotoRepository;
 import co.simplon.titrepro.isophoto.repository.PhotographeRepository;
 
@@ -41,9 +40,6 @@ public class CategorieController {
 
 	@Autowired
 	PhotographeRepository photographeRepo;
-
-	@Autowired
-	ExifRepository exifRepo;
 
 	@Autowired
 	AuthorityRepository authorityRepo;
@@ -79,7 +75,7 @@ public class CategorieController {
 	@GetMapping("/exif")
 	public void getCategorie() throws ImageProcessingException, IOException {
 
-		File nefFile = new File("/home/julien/Bureau/test.nef");
+		File nefFile = new File("/home/julien/Bureau/test2.jpg");
 		
 //		List<File> file = new ArrayList<File>();
 		

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import co.simplon.titrepro.isophoto.model.Photographe;
 import co.simplon.titrepro.isophoto.repository.AuthorityRepository;
 import co.simplon.titrepro.isophoto.repository.CategorieRepository;
-import co.simplon.titrepro.isophoto.repository.ExifRepository;
 import co.simplon.titrepro.isophoto.repository.PhotoRepository;
 import co.simplon.titrepro.isophoto.repository.PhotographeRepository;
 
@@ -31,9 +30,6 @@ public class PhotographeController {
 	
 	@Autowired
 	PhotographeRepository photographeRepo;
-	
-	@Autowired
-	ExifRepository exifRepo;
 	
 	@Autowired
 	AuthorityRepository authorityRepo;
@@ -69,10 +65,13 @@ public class PhotographeController {
 	 * @return
 	 */
 	@PostMapping("/addphotographe")
-	public ResponseEntity<?> addPhotographes( @Valid String email, @Valid String nom, @Valid String password, @Valid String prenom,
-		@Valid String pseudo) {
+	public ResponseEntity<?> addPhotographes( @Valid String email, 
+											  @Valid String nom,
+											  @Valid String prenom, 
+											  @Valid String password,
+											  @Valid String pseudo) {
 		
-		Photographe photographe = new Photographe(email, nom, password, prenom, pseudo);
+		Photographe photographe = new Photographe(email, nom, prenom, pseudo, password);
 		photographeRepo.save(photographe);
 		
 	

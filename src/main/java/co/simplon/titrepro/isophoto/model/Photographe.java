@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
+
 /**
  * The persistent class for the photographe database table.
  * 
@@ -13,15 +14,15 @@ import java.util.List;
 @NamedQuery(name = "Photographe.findAll", query = "SELECT p FROM Photographe p")
 public class Photographe implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", updatable = false, nullable = false)
-	protected Long id;
+	protected Integer id;
 
 	private String email;
 
-	@Column(name = "id_authorities")
+	@Column(name="id_authorities")
 	private Integer idAuthorities;
 
 	private String nom;
@@ -32,40 +33,33 @@ public class Photographe implements Serializable {
 
 	private String pseudo;
 
-	// bi-directional many-to-one association to Commande
-	@OneToMany(mappedBy = "photographe")
-	private List<Commande> commandes;
-
-	// bi-directional many-to-many association to Adresse
-	@ManyToMany
-	@JoinTable(name = "many_photographe_has_many_adresse", joinColumns = {
-			@JoinColumn(name = "id_photographe") }, inverseJoinColumns = {
-					@JoinColumn(name = "id_adresse") }, schema = "db_isophoto")
-	private List<Adresse> adresses;
-
-	// bi-directional many-to-one association to Photo
-	@OneToMany(mappedBy = "photographe")
+	//bi-directional many-to-one association to Photo
+	@OneToMany(mappedBy="photographe")
 	private List<Photo> photos;
-
-
 
 	public Photographe() {
 	}
-
-	public Photographe(String email, String nom, String password, String prenom, String pseudo) {
-		super();
+	
+	public Photographe(String email, 
+					   String nom, 
+					   String prenom, 
+					   String pseudo,
+					   String password) {
+		
 		this.email = email;
 		this.nom = nom;
-		this.password = password;
 		this.prenom = prenom;
 		this.pseudo = pseudo;
+		this.password = password;
+		
+		
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -117,36 +111,6 @@ public class Photographe implements Serializable {
 		this.pseudo = pseudo;
 	}
 
-	public List<Commande> getCommandes() {
-		return this.commandes;
-	}
-
-	public void setCommandes(List<Commande> commandes) {
-		this.commandes = commandes;
-	}
-
-	public Commande addCommande(Commande commande) {
-		getCommandes().add(commande);
-		commande.setPhotographe(this);
-
-		return commande;
-	}
-
-	public Commande removeCommande(Commande commande) {
-		getCommandes().remove(commande);
-		commande.setPhotographe(null);
-
-		return commande;
-	}
-
-	public List<Adresse> getAdresses() {
-		return this.adresses;
-	}
-
-	public void setAdresses(List<Adresse> adresses) {
-		this.adresses = adresses;
-	}
-
 	public List<Photo> getPhotos() {
 		return this.photos;
 	}
@@ -168,8 +132,5 @@ public class Photographe implements Serializable {
 
 		return photo;
 	}
-
-	
-
 
 }

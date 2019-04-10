@@ -11,9 +11,10 @@ import com.drew.metadata.Tag;
 
 public class ExifInfoImpl {
 
-	public void exifInfo() throws ImageProcessingException, IOException {
+	public void exifInfo(String text) throws ImageProcessingException, IOException {
 
-		File nefFile = new File("/home/julien/Bureau/test2.jpg");
+		
+		File nefFile = new File(text);
 
 		Metadata metadata = ImageMetadataReader.readMetadata(nefFile);
 
@@ -31,3 +32,4 @@ public class ExifInfoImpl {
 
 	}
 }
+
