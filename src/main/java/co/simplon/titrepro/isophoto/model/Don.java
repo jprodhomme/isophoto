@@ -2,17 +2,8 @@ package co.simplon.titrepro.isophoto.model;
 
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.sql.Timestamp;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
 
 /**
@@ -20,15 +11,14 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "don", schema = "db_isophoto")
+@Table(name="don", schema = "db_isophoto")
 @NamedQuery(name="Don.findAll", query="SELECT d FROM Don d")
 public class Don implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", updatable = false, nullable = false)
-	protected Integer id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;
 
 	private String commentaire;
 

@@ -1,22 +1,15 @@
 package co.simplon.titrepro.isophoto.model;
 
-import java.io.Serializable;
-import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.io.Serializable;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import co.simplon.titrepro.isophoto.services.PhotographeService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -24,15 +17,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 
  */
 @Entity
-@Table(name = "photo", schema = "db_isophoto")
-@NamedQuery(name = "Photo.findAll", query = "SELECT p FROM Photo p")
+@Table(name="photo", schema = "db_isophoto")
+@NamedQuery(name="Photo.findAll", query="SELECT p FROM Photo p")
 public class Photo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", updatable = false, nullable = false)
-	protected Integer id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 
 	private String description;
 
@@ -44,39 +36,54 @@ public class Photo implements Serializable {
 	@OneToMany(mappedBy="photo")
 	private List<Don> dons;
 
-	//bi-directional many-to-many association to Categorie
+	//bi-directional many-to-many association to Commentaire
 	@ManyToMany
 	@JoinTable(
-		name="many_photo_has_many_categorie"
+		name="many_commentaires_has_many_photo"
 		, joinColumns={
 			@JoinColumn(name="id_photo")
 			}
 		, inverseJoinColumns={
-			@JoinColumn(name="id_categorie")
+			@JoinColumn(name="id_commentaires")
 			}
 		)
-	private List<Categorie> categories;
+	private List<Commentaire> commentaires;
+
+	//bi-directional many-to-many association to Tag
+	@ManyToMany(mappedBy="photos")
+	private List<Tag> tags;
 
 	//bi-directional many-to-one association to Photographe
 	@ManyToOne
-	@JsonIgnore
 	@JoinColumn(name="id_photographe")
 	private Photographe photographe;
 
 	public Photo() {
+		
 	}
 	
-	public Photo(String description,
-				 String image,
-				 String categorie,
-				 String titre) {
+	public Photo(String description, 
+				 String image, 
+				 String titre, 
+				 ArrayList<Tag> tags, 
+				 Photographe photographe) {
+		this.description = description;
+		this.titre = titre;
+		this.image = image;
+		this.tags = tags;
+		this.photographe = photographe;
+		
+		
 	}
+	
 
-	public Integer getId() {
+
+
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -103,7 +110,7 @@ public class Photo implements Serializable {
 	public void setTitre(String titre) {
 		this.titre = titre;
 	}
-
+	@JsonIgnore
 	public List<Don> getDons() {
 		return this.dons;
 	}
@@ -112,17 +119,41 @@ public class Photo implements Serializable {
 		this.dons = dons;
 	}
 
-	public List<Categorie> getCategories() {
-		return this.categories;
+	public Don addDon(Don don) {
+		getDons().add(don);
+		don.setPhoto(this);
+
+		return don;
 	}
 
-	public void setCategories(List<Categorie> categories) {
-		this.categories = categories;
+	public Don removeDon(Don don) {
+		getDons().remove(don);
+		don.setPhoto(null);
+
+		return don;
+	}
+	@JsonIgnore
+	public List<Commentaire> getCommentaires() {
+		return this.commentaires;
+	}
+
+	public void setCommentaires(List<Commentaire> commentaires) {
+		this.commentaires = commentaires;
+	}
+	
+	@JsonIgnore
+	public List<Tag> getTags() {
+		return this.tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
 	}
 
 	public Photographe getPhotographe() {
 		return this.photographe;
 	}
+	
 
 	public void setPhotographe(Photographe photographe) {
 		this.photographe = photographe;
