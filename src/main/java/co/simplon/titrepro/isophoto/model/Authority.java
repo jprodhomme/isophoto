@@ -1,37 +1,30 @@
 package co.simplon.titrepro.isophoto.model;
 
+
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  * The persistent class for the authorities database table.
  * 
  */
-@Entity
-@Table(name = "authorities", schema = "db_isophoto")
-@NamedQuery(name = "Authority.findAll", query = "SELECT a FROM Authority a")
+@Entity	
+@Table(name="authorities", schema = "db_isophoto")
+@NamedQuery(name="Authority.findAll", query="SELECT a FROM Authority a")
 public class Authority implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", updatable = false, nullable = false)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
 	private String role;
 
-	//bi-directional many-to-one association to Utilisateur
+	//bi-directional many-to-one association to Photographe
 	@OneToMany(mappedBy="authority")
-	private List<Utilisateur> utilisateurs;
+	private List<Photographe> photographes;
 
 	public Authority() {
 	}
@@ -52,26 +45,26 @@ public class Authority implements Serializable {
 		this.role = role;
 	}
 
-	public List<Utilisateur> getUtilisateurs() {
-		return this.utilisateurs;
+	public List<Photographe> getPhotographes() {
+		return this.photographes;
 	}
 
-	public void setUtilisateurs(List<Utilisateur> utilisateurs) {
-		this.utilisateurs = utilisateurs;
+	public void setPhotographes(List<Photographe> photographes) {
+		this.photographes = photographes;
 	}
 
-	public Utilisateur addUtilisateur(Utilisateur utilisateur) {
-		getUtilisateurs().add(utilisateur);
-		utilisateur.setAuthority(this);
+	public Photographe addPhotographe(Photographe photographe) {
+		getPhotographes().add(photographe);
+		photographe.setAuthority(this);
 
-		return utilisateur;
+		return photographe;
 	}
 
-	public Utilisateur removeUtilisateur(Utilisateur utilisateur) {
-		getUtilisateurs().remove(utilisateur);
-		utilisateur.setAuthority(null);
+	public Photographe removePhotographe(Photographe photographe) {
+		getPhotographes().remove(photographe);
+		photographe.setAuthority(null);
 
-		return utilisateur;
+		return photographe;
 	}
 
 }

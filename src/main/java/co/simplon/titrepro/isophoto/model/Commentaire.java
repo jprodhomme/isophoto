@@ -2,33 +2,28 @@ package co.simplon.titrepro.isophoto.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
- * The persistent class for the commentaire database table.
+ * The persistent class for the commentaires database table.
  * 
  */
 @Entity
-@Table(name = "commentaire", schema = "db_isophoto")
+@Table(name="commentaires", schema = "db_isophoto")
 @NamedQuery(name="Commentaire.findAll", query="SELECT c FROM Commentaire c")
 public class Commentaire implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", updatable = false, nullable = false)
-	protected Integer id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;
 
+	private String commentaires;
 
-	private String commentaire;
-
-	private Timestamp date;
-
-	//bi-directional many-to-one association to Don
-	@ManyToOne
-	@JoinColumn(name="id_don")
-	private Don don;
+	//bi-directional many-to-many association to Photo
+	@ManyToMany(mappedBy="commentaires")
+	private List<Photo> photos;
 
 	public Commentaire() {
 	}
@@ -41,28 +36,20 @@ public class Commentaire implements Serializable {
 		this.id = id;
 	}
 
-	public String getCommentaire() {
-		return this.commentaire;
+	public String getCommentaires() {
+		return this.commentaires;
 	}
 
-	public void setCommentaire(String commentaire) {
-		this.commentaire = commentaire;
+	public void setCommentaires(String commentaires) {
+		this.commentaires = commentaires;
 	}
 
-	public Timestamp getDate() {
-		return this.date;
+	public List<Photo> getPhotos() {
+		return this.photos;
 	}
 
-	public void setDate(Timestamp date) {
-		this.date = date;
-	}
-
-	public Don getDon() {
-		return this.don;
-	}
-
-	public void setDon(Don don) {
-		this.don = don;
+	public void setPhotos(List<Photo> photos) {
+		this.photos = photos;
 	}
 
 }
