@@ -1,7 +1,5 @@
 package co.simplon.titrepro.isophoto.services;
 
-import java.util.ArrayList;
-
 import co.simplon.titrepro.isophoto.model.Photo;
 
 public interface PhotoService {
@@ -13,4 +11,5 @@ public interface PhotoService {
 						    String pseudo);
 
 
+	
 }

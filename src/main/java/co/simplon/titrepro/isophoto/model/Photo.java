@@ -17,6 +17,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * The persistent class for the photo database table.
@@ -43,18 +45,17 @@ public class Photo implements Serializable {
 	private List<Don> dons;
 
 	//bi-directional many-to-many association to Commentaire
-//	@ManyToMany
-//	@JsonIgnore
-//	@JoinTable(
-//		name="many_commentaires_has_many_photo"
-//		, joinColumns={
-//			@JoinColumn(name="id_photo")
-//			}
-//		, inverseJoinColumns={
-//			@JoinColumn(name="id_commentaires")
-//			}
-//		)
-//	private List<Commentaire> commentaires;
+	@ManyToMany
+	@JoinTable(
+		name="many_commentaires_has_many_photo", schema = "db_isophoto"
+		, joinColumns={
+			@JoinColumn(name="id_photo")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="id_commentaires")
+			}
+		)
+	private List<Commentaire> commentaires;
 
 	//bi-directional many-to-many association to Tag
 	@ManyToMany
@@ -87,9 +88,10 @@ public class Photo implements Serializable {
 		this.image = image;
 		this.tags = tagsString;
 		this.photographe = photographe;
-		
-		
+			
 	}
+	
+	
 	public Photo(String description, 
 			 String image, 
 			 String titre, 
@@ -98,24 +100,14 @@ public class Photo implements Serializable {
 	this.titre = titre;
 	this.image = image;
 	this.photographe = photographe;
-	
-	
-}
+
+	}
 
 	public Long getId() {
-//		if (this.id == null) {
-//			this.id = (long) 60;
-//		}
-//		System.out.println("ID ===============> " +this.id);
 		return this.id;
 	}
 
 	public void setId(Long id) {
-//		if(this.id == null) {
-//			this.id = (long) 61;
-//			System.out.println("SET ID ============> "+this.id);
-//		}
-//	
 		this.id = id;
 	}
 
@@ -142,8 +134,7 @@ public class Photo implements Serializable {
 	public void setTitre(String titre) {
 		this.titre = titre;
 	}
-	
-	
+
 	public List<Don> getDons() {
 		return this.dons;
 	}
@@ -165,17 +156,15 @@ public class Photo implements Serializable {
 
 		return don;
 	}
-	
-	
-//	public List<Commentaire> getCommentaires() {
-//		return this.commentaires;
-//	}
-//
-//	public void setCommentaires(List<Commentaire> commentaires) {
-//		this.commentaires = commentaires;
-//	}
-	
-	
+
+	public List<Commentaire> getCommentaires() {
+		return this.commentaires;
+	}
+
+	public void setCommentaires(List<Commentaire> commentaires) {
+		this.commentaires = commentaires;
+	}
+
 	public List<Tag> getTags() {
 		return this.tags;
 	}
@@ -183,14 +172,15 @@ public class Photo implements Serializable {
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
-	
+
 	public Photographe getPhotographe() {
 		return this.photographe;
 	}
-	
 
 	public void setPhotographe(Photographe photographe) {
 		this.photographe = photographe;
 	}
+
+
 
 }

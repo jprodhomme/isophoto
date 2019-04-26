@@ -7,10 +7,11 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +19,7 @@ import co.simplon.titrepro.isophoto.model.Photo;
 import co.simplon.titrepro.isophoto.model.Photographe;
 import co.simplon.titrepro.isophoto.model.Tag;
 import co.simplon.titrepro.isophoto.repository.PhotoRepository;
+import co.simplon.titrepro.isophoto.services.CommentaireService;
 import co.simplon.titrepro.isophoto.services.PhotoService;
 import co.simplon.titrepro.isophoto.services.PhotographeService;
 import co.simplon.titrepro.isophoto.services.TagService;
@@ -27,17 +29,22 @@ import co.simplon.titrepro.isophoto.services.TagService;
 public class PhotoController {
 	@Autowired
 	PhotoRepository photoRepo;
+	
+
 
 	private PhotographeService photographeService;
 	private PhotoService photoService;
 	private TagService tagService;
+	private CommentaireService commentaireService;
 
 	public PhotoController(PhotographeService photographeService, 
 						   PhotoService photoService, 
-						   TagService tagService) {
+						   TagService tagService,
+						   CommentaireService commentaireService) {
 		this.photographeService = photographeService;
 		this.photoService = photoService;
 		this.tagService = tagService;
+		this.commentaireService = commentaireService;
 	}
 
 	/**
@@ -46,7 +53,6 @@ public class PhotoController {
 	 * @return
 	 */
 	@GetMapping("/photos")
-	@CrossOrigin(origins = "http://localhost:4200")
 	public ResponseEntity<?> getAllPhoto() {
 		List<Photo> listePhoto = photoRepo.findAll();
 
@@ -62,15 +68,14 @@ public class PhotoController {
 	}
 
 	/**
-	 * Méthode GET pour retourner toutes les PHOTOS d'une CATEGORIE en renseignant
-	 * le NOM de la catégorie
+	 * Méthode GET qui retourne toutes les PHOTOS en renseignant
+	 * un TAG
 	 * 
-	 * @param nomCat
-	 * @param id
+	 * @param tag
 	 * @return
 	 */
-	@GetMapping("/photosbytag/{tag}")
-	public ResponseEntity<?> getPhotosbyTag(@PathVariable String tag) {
+	@GetMapping("/photosbytag")
+	public ResponseEntity<?> getPhotosbyTag(@Valid String tag) {
 
 		List<Photo> listePhoto = null;
 
@@ -139,4 +144,41 @@ public class PhotoController {
 
 	}
 
+	@DeleteMapping("/deletephoto/{delId}")
+	public ResponseEntity<?> delUser(@PathVariable long delId) {
+
+		this.photoRepo.deleteById(delId);
+
+		List<Photo> photoList = null;
+		try {
+			photoList = (List<Photo>) photoRepo.findAll();
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(photoList);
+
+	}
+
+	@PutMapping("/addcommentaire")
+	public ResponseEntity<?> addCommentaire(@Valid long idPhoto, @Valid String commentaireString) {
+
+		try {
+
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(this.commentaireService.addCommentaire(idPhoto, commentaireString));
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		}
+
+	}
 }
+		
+		
+		
+	
+	
+
+
+
