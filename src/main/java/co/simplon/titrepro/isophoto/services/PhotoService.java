@@ -6,6 +6,11 @@ import co.simplon.titrepro.isophoto.model.Photo;
 
 public interface PhotoService {
 	
-	public Photo savePhoto(String description, String titre,  String image, ArrayList<String> tagsString, String pseudo);
+	public Photo savePhoto( String description, 
+						    String titre,  
+						    String image, 
+						    String tagsString, 
+						    String pseudo);
+
 
 }

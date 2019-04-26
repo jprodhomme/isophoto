@@ -2,14 +2,20 @@ package co.simplon.titrepro.isophoto.model;
 
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import co.simplon.titrepro.isophoto.services.PhotographeService;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -37,21 +43,30 @@ public class Photo implements Serializable {
 	private List<Don> dons;
 
 	//bi-directional many-to-many association to Commentaire
-	@ManyToMany
-	@JoinTable(
-		name="many_commentaires_has_many_photo"
-		, joinColumns={
-			@JoinColumn(name="id_photo")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="id_commentaires")
-			}
-		)
-	private List<Commentaire> commentaires;
+//	@ManyToMany
+//	@JsonIgnore
+//	@JoinTable(
+//		name="many_commentaires_has_many_photo"
+//		, joinColumns={
+//			@JoinColumn(name="id_photo")
+//			}
+//		, inverseJoinColumns={
+//			@JoinColumn(name="id_commentaires")
+//			}
+//		)
+//	private List<Commentaire> commentaires;
 
 	//bi-directional many-to-many association to Tag
-	@ManyToMany(mappedBy="photos")
-	private List<Tag> tags;
+	@ManyToMany
+	@JoinTable(
+			name="many_tags_has_many_photo", schema = "db_isophoto"
+			, joinColumns={
+				@JoinColumn(name="id_tags")
+				}
+			, inverseJoinColumns={
+				@JoinColumn(name="id_photo")
+				}
+			)	private List<Tag> tags;
 
 	//bi-directional many-to-one association to Photographe
 	@ManyToOne
@@ -63,27 +78,44 @@ public class Photo implements Serializable {
 	}
 	
 	public Photo(String description, 
-				 String image, 
 				 String titre, 
-				 ArrayList<Tag> tags, 
+				 String image, 
+				 ArrayList<Tag> tagsString, 
 				 Photographe photographe) {
 		this.description = description;
 		this.titre = titre;
 		this.image = image;
-		this.tags = tags;
+		this.tags = tagsString;
 		this.photographe = photographe;
 		
 		
 	}
+	public Photo(String description, 
+			 String image, 
+			 String titre, 
+			 Photographe photographe) {
+	this.description = description;
+	this.titre = titre;
+	this.image = image;
+	this.photographe = photographe;
 	
-
-
+	
+}
 
 	public Long getId() {
+//		if (this.id == null) {
+//			this.id = (long) 60;
+//		}
+//		System.out.println("ID ===============> " +this.id);
 		return this.id;
 	}
 
 	public void setId(Long id) {
+//		if(this.id == null) {
+//			this.id = (long) 61;
+//			System.out.println("SET ID ============> "+this.id);
+//		}
+//	
 		this.id = id;
 	}
 
@@ -110,7 +142,8 @@ public class Photo implements Serializable {
 	public void setTitre(String titre) {
 		this.titre = titre;
 	}
-	@JsonIgnore
+	
+	
 	public List<Don> getDons() {
 		return this.dons;
 	}
@@ -132,16 +165,17 @@ public class Photo implements Serializable {
 
 		return don;
 	}
-	@JsonIgnore
-	public List<Commentaire> getCommentaires() {
-		return this.commentaires;
-	}
-
-	public void setCommentaires(List<Commentaire> commentaires) {
-		this.commentaires = commentaires;
-	}
 	
-	@JsonIgnore
+	
+//	public List<Commentaire> getCommentaires() {
+//		return this.commentaires;
+//	}
+//
+//	public void setCommentaires(List<Commentaire> commentaires) {
+//		this.commentaires = commentaires;
+//	}
+	
+	
 	public List<Tag> getTags() {
 		return this.tags;
 	}
@@ -149,7 +183,7 @@ public class Photo implements Serializable {
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
 	}
-
+	
 	public Photographe getPhotographe() {
 		return this.photographe;
 	}

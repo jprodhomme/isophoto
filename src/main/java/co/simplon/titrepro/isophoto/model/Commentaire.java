@@ -1,8 +1,13 @@
 package co.simplon.titrepro.isophoto.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -17,22 +22,22 @@ public class Commentaire implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	private String commentaires;
 
 	//bi-directional many-to-many association to Photo
-	@ManyToMany(mappedBy="commentaires")
-	private List<Photo> photos;
+//	@ManyToMany(mappedBy="commentaires")
+//	private List<Photo> photos;
 
 	public Commentaire() {
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -44,12 +49,12 @@ public class Commentaire implements Serializable {
 		this.commentaires = commentaires;
 	}
 
-	public List<Photo> getPhotos() {
-		return this.photos;
-	}
-
-	public void setPhotos(List<Photo> photos) {
-		this.photos = photos;
-	}
+//	public List<Photo> getPhotos() {
+//		return this.photos;
+//	}
+//
+//	public void setPhotos(List<Photo> photos) {
+//		this.photos = photos;
+//	}
 
 }

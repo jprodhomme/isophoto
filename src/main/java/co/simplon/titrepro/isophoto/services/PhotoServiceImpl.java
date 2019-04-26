@@ -27,19 +27,33 @@ public class PhotoServiceImpl implements PhotoService {
 	public Photo savePhoto(String description, 
 						   String titre, 
 						   String image, 
-						   ArrayList<String> tagsString,
+						   String tagsString,
 						   String pseudo) {
 
+		
 		ArrayList<Tag> tags = new ArrayList<Tag>();
-		for (String tagString : tagsString) {
-			tags.add(new Tag(tagString));
-			
-			
+		
+
+		for (String tagString : tagsString.split(",")) {
+
+			System.out.println("TagString =========> " +tagString);
+			Tag tag = this.tagRepo.findByTag(tagString);
+			if( tag == null) {
+				System.out.println("TagString =========> " +tagString);
+				tag = this.tagRepo.save(new Tag (tagString));
+			}
+			tags.add(tag);
+		
 		}
 
-		Photo photo = new Photo(description, titre, image, tags, this.photographeRepo.findByPseudo(pseudo));
-		this.tagRepo.saveAll(tags);
-		return this.photoRepo.save(photo);
+		Photo photo = new Photo("desc", "titreTest", "imageTest",tags, this.photographeRepo.findByPseudo(pseudo));
+
+		this.photoRepo.save(photo);
+
+		
+		return photo;
 		
 	}
+
+	
 }
