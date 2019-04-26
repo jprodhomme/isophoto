@@ -2,8 +2,17 @@ package co.simplon.titrepro.isophoto.model;
 
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 /**
@@ -22,25 +31,26 @@ public class Tag implements Serializable {
 
 	private String tag;
 
+	
 	//bi-directional many-to-many association to Photo
-	@ManyToMany
-	@JoinTable(
-		name="many_tags_has_many_photo"
-		, joinColumns={
-			@JoinColumn(name="id_tags")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="id_photo")
-			}
-		)
+	@ManyToMany(mappedBy="tags")
+	@JsonIgnore
 	private List<Photo> photos;
 
 	public Tag() {
 	}
 	
+	
+	
 	public Tag(String tag) {
 		this.tag = tag;
 	}
+
+	public Tag(List<Photo> photos) {
+		this.photos = photos;
+	}
+
+
 
 	public Long getId() {
 		return this.id;
@@ -57,7 +67,8 @@ public class Tag implements Serializable {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-
+	
+	
 	public List<Photo> getPhotos() {
 		return this.photos;
 	}

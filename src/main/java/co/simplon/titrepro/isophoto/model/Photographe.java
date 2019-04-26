@@ -2,12 +2,19 @@ package co.simplon.titrepro.isophoto.model;
 
 
 import java.io.Serializable;
-import javax.persistence.*;
-import javax.validation.Valid;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.util.List;
 
 
 /**
@@ -24,15 +31,15 @@ public class Photographe implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-	private String email;
-
 	private String nom;
 
-	private String password;
-
 	private String prenom;
-
+	
 	private String pseudo;
+	
+	private String email;
+	
+	private String password;
 
 	//bi-directional many-to-one association to Photo
 	@OneToMany(mappedBy="photographe")
@@ -46,17 +53,17 @@ public class Photographe implements Serializable {
 	public Photographe() {
 	}
 
-	public Photographe(String email,
-					   String nom, 
-					   String password,
+	public Photographe(String nom,
 					   String prenom, 
-					   String pseudo
+					   String pseudo,
+					   String email, 
+					   String password
 					   ) {
-		this.email = email;
 		this.nom = nom;
-		this.password = password;
 		this.prenom = prenom;
 		this.pseudo = pseudo;
+		this.email = email;
+		this.password = password;
 	}
 
 	public Long getId() {
@@ -106,6 +113,7 @@ public class Photographe implements Serializable {
 	public void setPseudo(String pseudo) {
 		this.pseudo = pseudo;
 	}
+	
 	@JsonIgnore
 	public List<Photo> getPhotos() {
 		return this.photos;
@@ -128,7 +136,7 @@ public class Photographe implements Serializable {
 
 		return photo;
 	}
-	@JsonIgnore
+	
 	public Authority getAuthority() {
 		return this.authority;
 	}

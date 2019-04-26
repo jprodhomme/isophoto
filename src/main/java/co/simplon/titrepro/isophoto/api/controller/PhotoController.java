@@ -1,8 +1,6 @@
-package co.simplon.titrepro.isophoto.api.controller;
+	package co.simplon.titrepro.isophoto.api.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -20,10 +18,9 @@ import co.simplon.titrepro.isophoto.model.Photo;
 import co.simplon.titrepro.isophoto.model.Photographe;
 import co.simplon.titrepro.isophoto.model.Tag;
 import co.simplon.titrepro.isophoto.repository.PhotoRepository;
-import co.simplon.titrepro.isophoto.repository.PhotographeRepository;
-import co.simplon.titrepro.isophoto.repository.TagRepository;
 import co.simplon.titrepro.isophoto.services.PhotoService;
 import co.simplon.titrepro.isophoto.services.PhotographeService;
+import co.simplon.titrepro.isophoto.services.TagService;
 
 @RestController
 @RequestMapping("/api")
@@ -31,18 +28,16 @@ public class PhotoController {
 	@Autowired
 	PhotoRepository photoRepo;
 
-	@Autowired
-	TagRepository tagRepo;
-
-	@Autowired
-	PhotographeRepository photographeRepo;
-
 	private PhotographeService photographeService;
 	private PhotoService photoService;
+	private TagService tagService;
 
-	public PhotoController(PhotographeService photographeService, PhotoService photoService) {
+	public PhotoController(PhotographeService photographeService, 
+						   PhotoService photoService, 
+						   TagService tagService) {
 		this.photographeService = photographeService;
 		this.photoService = photoService;
+		this.tagService = tagService;
 	}
 
 	/**
@@ -75,24 +70,21 @@ public class PhotoController {
 	 * @return
 	 */
 	@GetMapping("/photosbytag/{tag}")
-	@CrossOrigin(origins = "http://localhost:4200")
-	public ResponseEntity<?> getPhotosbyId(@PathVariable String tag) {
+	public ResponseEntity<?> getPhotosbyTag(@PathVariable String tag) {
 
 		List<Photo> listePhoto = null;
-		try {
-			Optional<Tag> tagNom = tagRepo.findByTag(tag);
-			if (tagNom.isPresent()) {
-				listePhoto = (List<Photo>) tagNom.get().getPhotos();
 
-			}
+		try {
+			Tag tagString = tagService.findByTag(tag);
+
+			listePhoto = (List<Photo>) tagString.getPhotos();
+
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
-		System.out.println("----------------------------------------");
-		System.out.println("Tag : " + tag);
-		System.out.println("Liste Photo avec le Tag " + tag + listePhoto);
-		System.out.println("----------------------------------------");
+		System.out.println(listePhoto.toString());
 		return ResponseEntity.status(HttpStatus.OK).body(listePhoto);
+
 	}
 
 	/**
@@ -101,44 +93,42 @@ public class PhotoController {
 	 * @param nom
 	 * @return
 	 */
-	@GetMapping("/photosbyphotographe/{nom}")
-	public ResponseEntity<?> getPhotosbyPhotographe(@PathVariable String nom) {
+	@GetMapping("/photosbyphotographe/{pseudo}")
+	public ResponseEntity<?> getPhotosbyPhotographe(@PathVariable String pseudo) {
 
 		List<Photo> listePhoto = null;
-		try {
-			Optional<Photographe> photographeNom = photographeRepo.findByNom(nom);
-			if (photographeNom.isPresent()) {
-				listePhoto = (List<Photo>) photographeNom.get().getPhotos();
 
-			}
+		try {
+			Photographe photographeNom = photographeService.findByPseudo(pseudo);
+
+			listePhoto = (List<Photo>) photographeNom.getPhotos();
+
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
-		System.out.println("----------------------------------------");
-		System.out.println("Photographe : " + nom);
-		System.out.println("Liste Photo de " + nom + listePhoto);
-		System.out.println("----------------------------------------");
 
 		return ResponseEntity.status(HttpStatus.OK).body(listePhoto);
 	}
 
 	/**
-	 * 
+	 * Méthode POST pour ajouter une photo en lui donnant les paramètres suivants.
+	 *
 	 * @param description
-	 * @param image
-	 * @param categorie
 	 * @param titre
+	 * @param image
+	 * @param tagsString
+	 * @param pseudo
 	 * @return
 	 */
 	@PostMapping("/addphoto")
 	public ResponseEntity<?> addPhoto(@Valid String description,
 			 						  @Valid String titre, 
 			 						  @Valid String image, 
-			 						  @Valid ArrayList<String> tagsString,
+			 						  @Valid String tagsString,
 									  @Valid String pseudo) {									
-
 		try {
-
+			System.out.println("/addPhoto : " + tagsString);
+			
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(this.photoService.savePhoto(description, titre, image, tagsString, pseudo));
 
