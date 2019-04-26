@@ -4,6 +4,7 @@ package co.simplon.titrepro.isophoto.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,7 +43,7 @@ public class Photographe implements Serializable {
 	private String password;
 
 	//bi-directional many-to-one association to Photo
-	@OneToMany(mappedBy="photographe")
+	@OneToMany(mappedBy="photographe", cascade=CascadeType.REMOVE)
 	private List<Photo> photos;
 
 	//bi-directional many-to-one association to Authority
