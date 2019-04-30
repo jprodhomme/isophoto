@@ -1,17 +1,17 @@
 package co.simplon.titrepro.isophoto.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 /**
@@ -30,22 +30,17 @@ public class Commentaire implements Serializable {
 
 	private String commentaires;
 
-	//bi-directional many-to-many association to Photo
-	@ManyToMany(mappedBy="commentaires")
-	@JsonIgnore
-	private List<Photo> photos;
-
-	
+	// bi-directional many-to-one association to Photo
+	@ManyToOne
+	@JsonBackReference
+	@JoinColumn(name = "id_photo")
+	private Photo photo;
 
 	public Commentaire() {
-		
 	}
-	public Commentaire(String commentaireString) {
-		this.commentaires = commentaireString;
-	}
-	
-	public Commentaire(List<Photo> photos) {
-		this.photos = photos;
+
+	public Commentaire(String commentaires) {
+		this.commentaires = commentaires;
 	}
 
 	public Long getId() {
@@ -64,14 +59,12 @@ public class Commentaire implements Serializable {
 		this.commentaires = commentaires;
 	}
 
-	public List<Photo> getPhotos() {
-		return this.photos;
+	public Photo getPhoto() {
+		return this.photo;
 	}
 
-	public void setPhotos(List<Photo> photos) {
-		this.photos = photos;
+	public void setPhoto(Photo photo) {
+		this.photo = photo;
 	}
-
-	
 
 }

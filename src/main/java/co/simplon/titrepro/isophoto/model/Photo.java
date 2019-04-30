@@ -17,6 +17,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 /**
  * The persistent class for the photo database table.
@@ -42,30 +44,24 @@ public class Photo implements Serializable {
 	@OneToMany(mappedBy="photo")
 	private List<Don> dons;
 
-	//bi-directional many-to-many association to Commentaire
-	@ManyToMany
-	@JoinTable(
-		name="many_commentaires_has_many_photo", schema = "db_isophoto"
-		, joinColumns={
-			@JoinColumn(name="id_photo")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="id_commentaires")
-			}
-		)
+	//bi-directional many-to-one association to Commentaire
+	@OneToMany(mappedBy="photo")
+	@JsonManagedReference
 	private List<Commentaire> commentaires;
 
+		
 	//bi-directional many-to-many association to Tag
 	@ManyToMany
 	@JoinTable(
-			name="many_tags_has_many_photo", schema = "db_isophoto"
-			, joinColumns={
-				@JoinColumn(name="id_tags")
-				}
-			, inverseJoinColumns={
-				@JoinColumn(name="id_photo")
-				}
-			)	private List<Tag> tags;
+		name="many_tags_has_many_photo", schema="db_isophoto"
+		, joinColumns={
+			@JoinColumn(name="id_tags")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="id_photo")
+			}
+		)
+	private List<Tag> tags;
 
 	//bi-directional many-to-one association to Photographe
 	@ManyToOne

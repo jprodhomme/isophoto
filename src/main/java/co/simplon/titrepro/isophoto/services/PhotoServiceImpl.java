@@ -1,14 +1,11 @@
 package co.simplon.titrepro.isophoto.services;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import co.simplon.titrepro.isophoto.model.Commentaire;
 import co.simplon.titrepro.isophoto.model.Photo;
 import co.simplon.titrepro.isophoto.model.Tag;
-import co.simplon.titrepro.isophoto.repository.CommentaireRepository;
 import co.simplon.titrepro.isophoto.repository.PhotoRepository;
 import co.simplon.titrepro.isophoto.repository.PhotographeRepository;
 import co.simplon.titrepro.isophoto.repository.TagRepository;
@@ -19,13 +16,13 @@ public class PhotoServiceImpl implements PhotoService {
 	private PhotoRepository photoRepo;
 	private PhotographeRepository photographeRepo;
 	private TagRepository tagRepo;
-	private CommentaireRepository commentaireRepo;
+	
 
-	public PhotoServiceImpl(PhotoRepository photoRepo, PhotographeRepository photographeRepo, TagRepository tagRepo, CommentaireRepository commentaireRepo) {
+	public PhotoServiceImpl(PhotoRepository photoRepo, PhotographeRepository photographeRepo, TagRepository tagRepo) {
 		this.photoRepo = photoRepo;
 		this.photographeRepo = photographeRepo;
 		this.tagRepo = tagRepo;
-		this.commentaireRepo = commentaireRepo;
+		
 	}
 
 	@Override
@@ -48,7 +45,6 @@ public class PhotoServiceImpl implements PhotoService {
 
 		this.photoRepo.save(photo);
 
-		
 		return photo;
 		
 	}

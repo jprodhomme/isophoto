@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.simplon.titrepro.isophoto.model.Photo;
 import co.simplon.titrepro.isophoto.model.Photographe;
 import co.simplon.titrepro.isophoto.repository.PhotographeRepository;
 import co.simplon.titrepro.isophoto.services.PhotoService;

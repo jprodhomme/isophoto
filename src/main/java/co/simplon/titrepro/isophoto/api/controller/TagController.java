@@ -50,9 +50,7 @@ public class TagController {
 	@PostMapping("/addtag")
 	public ResponseEntity<?> addTag(@Valid String tagString) {
 
-		
-
-		try {
+			try {
 			
 			return ResponseEntity.status(HttpStatus.OK).body(this.tagService.saveTag(tagString));
 

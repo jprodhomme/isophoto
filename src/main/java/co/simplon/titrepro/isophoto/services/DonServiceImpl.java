@@ -1,13 +1,9 @@
 package co.simplon.titrepro.isophoto.services;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import co.simplon.titrepro.isophoto.model.Don;
 import co.simplon.titrepro.isophoto.model.Photo;
-import co.simplon.titrepro.isophoto.repository.DonRepository;
-import co.simplon.titrepro.isophoto.repository.PhotoRepository;
 
 @Service
 public class DonServiceImpl implements DonService {

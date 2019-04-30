@@ -32,7 +32,6 @@ public class Tag implements Serializable {
 	private String tag;
 
 	
-	//bi-directional many-to-many association to Photo
 	@ManyToMany(mappedBy="tags")
 	@JsonIgnore
 	private List<Photo> photos;
