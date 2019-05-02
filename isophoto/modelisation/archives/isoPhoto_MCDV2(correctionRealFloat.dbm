@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,68" last-zoom="0.75"
+	 default-schema="public" default-owner="postgres">
+<database name="db_isophoto">
+	<role name="postgres"/>
+	<appended-sql><![CDATA[-- Database generated with pgModeler (PostgreSQL Database Modeler).
+-- pgModeler  version: 0.9.1-beta
+-- PostgreSQL version: 10.0
+-- Project Site: pgmodeler.com.br
+-- Model Author: ---
+
+
+-- Database creation must be done outside an multicommand file.
+-- These commands were put in this file only for convenience.
+-- -- object: db_isophoto | type: DATABASE --
+-- -- DROP DATABASE IF EXISTS db_isophoto;
+-- CREATE DATABASE db_isophoto
+-- 	OWNER = postgres
+-- ;
+-- -- ddl-end --
+-- 
+
+-- object: db_isophoto | type: SCHEMA --
+DROP SCHEMA IF EXISTS db_isophoto CASCADE;
+CREATE SCHEMA db_isophoto;
+-- ddl-end --
+ALTER SCHEMA db_isophoto OWNER TO postgres;
+-- ddl-end --
+
+SET search_path TO pg_catalog,public,db_isophoto;
+-- ddl-end --
+
+-- object: public.photo | type: TABLE --
+-- DROP TABLE IF EXISTS public.photo CASCADE;
+CREATE TABLE public.photo(
+	id smallint NOT NULL,
+	titre varchar,
+	image varchar,
+	description varchar,
+	prix float,
+	"aVendre" boolean,
+	id_categorie smallint,
+	id_exif smallint,
+	id_photographe smallint,
+	CONSTRAINT photo_pk PRIMARY KEY (id)
+
+);
+-- ddl-end --
+ALTER TABLE public.photo OWNER TO postgres;
+-- ddl-end --
+
+-- object: public.exif | type: TABLE --
+-- DROP TABLE IF EXISTS public.exif CASCADE;
+CREATE TABLE public.exif(
+	id smallint NOT NULL,
+	constructeur varchar,
+	modele smallint,
+	"vitesseObturation" float,
+	ouverture varchar,
+	"dateHeure" timestamp,
+	flash boolean,
+	objectif varchar,
+	CONSTRAINT exif_pk PRIMARY KEY (id)
+
+);
+-- ddl-end --
+ALTER TABLE public.exif OWNER TO postgres;
+-- ddl-end --
+
+-- object: public.categorie | type: TABLE --
+-- DROP TABLE IF EXISTS public.categorie CASCADE;
+CREATE TABLE public.categorie(
+	id smallint NOT NULL,
+	nom varchar,
+	CONSTRAINT categorie_pk PRIMARY KEY (id)
+
+);
+-- ddl-end --
+ALTER TABLE public.categorie OWNER TO postgres;
+-- ddl-end --
+
+-- object: public.commande | type: TABLE --
+-- DROP TABLE IF EXISTS public.commande CASCADE;
+CREATE TABLE public.commande(
+	id smallint NOT NULL,
+	"dateCommande" timestamp,
+	"fraisDePort" float,
+	tva float,
+	ttc float,
+	id_photographe smallint,
+	"quantité" smallint,
+	CONSTRAINT commande_pk PRIMARY KEY (id)
+
+);
+-- ddl-end --
+ALTER TABLE public.commande OWNER TO postgres;
+-- ddl-end --
+
+-- object: public.utilisateur | type: TABLE --
+-- DROP TABLE IF EXISTS public.utilisateur CASCADE;
+CREATE TABLE public.utilisateur(
+	id smallint NOT NULL,
+	id_authorities smallint,
+	CONSTRAINT utilisateur_pk PRIMARY KEY (id)
+
+);
+-- ddl-end --
+ALTER TABLE public.utilisateur OWNER TO postgres;
+-- ddl-end --
+
+-- object: public.adresse | type: TABLE --
+-- DROP TABLE IF EXISTS public.adresse CASCADE;
+CREATE TABLE public.adresse(
+	id smallint NOT NULL,
+	"numVoie" smallint,
+	"nomVoie" varchar,
+	"codePostal" int4,
+	ville varchar,
+	pays varchar,
+	CONSTRAINT adresse_pk PRIMARY KEY (id)
+
+);
+-- ddl-end --
+ALTER TABLE public.adresse OWNER TO postgres;
+-- ddl-end --
+
+-- object: categorie_fk | type: CONSTRAINT --
+-- ALTER TABLE public.photo DROP CONSTRAINT IF EXISTS categorie_fk CASCADE;
+ALTER TABLE public.photo ADD CONSTRAINT categorie_fk FOREIGN KEY (id_categorie)
+REFERENCES public.categorie (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: photo_uq | type: CONSTRAINT --
+-- ALTER TABLE public.photo DROP CONSTRAINT IF EXISTS photo_uq CASCADE;
+ALTER TABLE public.photo ADD CONSTRAINT photo_uq UNIQUE (id_categorie);
+-- ddl-end --
+
+-- object: exif_fk | type: CONSTRAINT --
+-- ALTER TABLE public.photo DROP CONSTRAINT IF EXISTS exif_fk CASCADE;
+ALTER TABLE public.photo ADD CONSTRAINT exif_fk FOREIGN KEY (id_exif)
+REFERENCES public.exif (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: photo_uq1 | type: CONSTRAINT --
+-- ALTER TABLE public.photo DROP CONSTRAINT IF EXISTS photo_uq1 CASCADE;
+ALTER TABLE public.photo ADD CONSTRAINT photo_uq1 UNIQUE (id_exif);
+-- ddl-end --
+
+-- object: public.many_photo_has_many_commande | type: TABLE --
+-- DROP TABLE IF EXISTS public.many_photo_has_many_commande CASCADE;
+CREATE TABLE public.many_photo_has_many_commande(
+	id_photo smallint NOT NULL,
+	id_commande smallint NOT NULL,
+	CONSTRAINT many_photo_has_many_commande_pk PRIMARY KEY (id_photo,id_commande)
+
+);
+-- ddl-end --
+
+-- object: photo_fk | type: CONSTRAINT --
+-- ALTER TABLE public.many_photo_has_many_commande DROP CONSTRAINT IF EXISTS photo_fk CASCADE;
+ALTER TABLE public.many_photo_has_many_commande ADD CONSTRAINT photo_fk FOREIGN KEY (id_photo)
+REFERENCES public.photo (id) MATCH FULL
+ON DELETE CASCADE ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: commande_fk | type: CONSTRAINT --
+-- ALTER TABLE public.many_photo_has_many_commande DROP CONSTRAINT IF EXISTS commande_fk CASCADE;
+ALTER TABLE public.many_photo_has_many_commande ADD CONSTRAINT commande_fk FOREIGN KEY (id_commande)
+REFERENCES public.commande (id) MATCH FULL
+ON DELETE CASCADE ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: public.timeline | type: TABLE --
+-- DROP TABLE IF EXISTS public.timeline CASCADE;
+CREATE TABLE public.timeline(
+	id smallint NOT NULL,
+	nom varchar,
+	"dateCreation" date,
+	"dateUpdate" date,
+	id_photographe smallint,
+	CONSTRAINT timeline_pk PRIMARY KEY (id)
+
+);
+-- ddl-end --
+ALTER TABLE public.timeline OWNER TO postgres;
+-- ddl-end --
+
+-- object: public.many_timeline_has_many_photo | type: TABLE --
+-- DROP TABLE IF EXISTS public.many_timeline_has_many_photo CASCADE;
+CREATE TABLE public.many_timeline_has_many_photo(
+	id_timeline smallint NOT NULL,
+	id_photo smallint NOT NULL,
+	CONSTRAINT many_timeline_has_many_photo_pk PRIMARY KEY (id_timeline,id_photo)
+
+);
+-- ddl-end --
+
+-- object: timeline_fk | type: CONSTRAINT --
+-- ALTER TABLE public.many_timeline_has_many_photo DROP CONSTRAINT IF EXISTS timeline_fk CASCADE;
+ALTER TABLE public.many_timeline_has_many_photo ADD CONSTRAINT timeline_fk FOREIGN KEY (id_timeline)
+REFERENCES public.timeline (id) MATCH FULL
+ON DELETE CASCADE ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: photo_fk | type: CONSTRAINT --
+-- ALTER TABLE public.many_timeline_has_many_photo DROP CONSTRAINT IF EXISTS photo_fk CASCADE;
+ALTER TABLE public.many_timeline_has_many_photo ADD CONSTRAINT photo_fk FOREIGN KEY (id_photo)
+REFERENCES public.photo (id) MATCH FULL
+ON DELETE CASCADE ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: public.authorities | type: TABLE --
+-- DROP TABLE IF EXISTS public.authorities CASCADE;
+CREATE TABLE public.authorities(
+	id smallint NOT NULL,
+	role varchar,
+	CONSTRAINT authorities_pk PRIMARY KEY (id)
+
+);
+-- ddl-end --
+ALTER TABLE public.authorities OWNER TO postgres;
+-- ddl-end --
+
+-- object: authorities_fk | type: CONSTRAINT --
+-- ALTER TABLE public.utilisateur DROP CONSTRAINT IF EXISTS authorities_fk CASCADE;
+ALTER TABLE public.utilisateur ADD CONSTRAINT authorities_fk FOREIGN KEY (id_authorities)
+REFERENCES public.authorities (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: public.photographe | type: TABLE --
+-- DROP TABLE IF EXISTS public.photographe CASCADE;
+CREATE TABLE public.photographe(
+	id smallint NOT NULL,
+	nom varchar,
+	prenom varchar,
+	pseudo varchar,
+	email varchar,
+	password varchar,
+-- 	id_authorities smallint,
+	CONSTRAINT photographe_pk PRIMARY KEY (id)
+
+) INHERITS(public.utilisateur)
+;
+-- ddl-end --
+ALTER TABLE public.photographe OWNER TO postgres;
+-- ddl-end --
+
+-- object: public.many_photographe_has_many_adresse | type: TABLE --
+-- DROP TABLE IF EXISTS public.many_photographe_has_many_adresse CASCADE;
+CREATE TABLE public.many_photographe_has_many_adresse(
+	id_photographe smallint NOT NULL,
+	id_adresse smallint NOT NULL,
+	CONSTRAINT many_photographe_has_many_adresse_pk PRIMARY KEY (id_photographe,id_adresse)
+
+);
+-- ddl-end --
+
+-- object: photographe_fk | type: CONSTRAINT --
+-- ALTER TABLE public.many_photographe_has_many_adresse DROP CONSTRAINT IF EXISTS photographe_fk CASCADE;
+ALTER TABLE public.many_photographe_has_many_adresse ADD CONSTRAINT photographe_fk FOREIGN KEY (id_photographe)
+REFERENCES public.photographe (id) MATCH FULL
+ON DELETE CASCADE ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: adresse_fk | type: CONSTRAINT --
+-- ALTER TABLE public.many_photographe_has_many_adresse DROP CONSTRAINT IF EXISTS adresse_fk CASCADE;
+ALTER TABLE public.many_photographe_has_many_adresse ADD CONSTRAINT adresse_fk FOREIGN KEY (id_adresse)
+REFERENCES public.adresse (id) MATCH FULL
+ON DELETE CASCADE ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: photographe_fk | type: CONSTRAINT --
+-- ALTER TABLE public.commande DROP CONSTRAINT IF EXISTS photographe_fk CASCADE;
+ALTER TABLE public.commande ADD CONSTRAINT photographe_fk FOREIGN KEY (id_photographe)
+REFERENCES public.photographe (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: photographe_fk | type: CONSTRAINT --
+-- ALTER TABLE public.timeline DROP CONSTRAINT IF EXISTS photographe_fk CASCADE;
+ALTER TABLE public.timeline ADD CONSTRAINT photographe_fk FOREIGN KEY (id_photographe)
+REFERENCES public.photographe (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+-- object: photographe_fk | type: CONSTRAINT --
+-- ALTER TABLE public.photo DROP CONSTRAINT IF EXISTS photographe_fk CASCADE;
+ALTER TABLE public.photo ADD CONSTRAINT photographe_fk FOREIGN KEY (id_photographe)
+REFERENCES public.photographe (id) MATCH FULL
+ON DELETE SET NULL ON UPDATE CASCADE;
+-- ddl-end --
+
+]]></appended-sql>
+</database>
+
+<schema name="public" rect-visible="true" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<schema name="db_isophoto" rect-visible="true" fill-color="#e1e1e1">
+	<role name="postgres"/>
+</schema>
+
+<table name="photo">
+	<schema name="db_isophoto"/>
+	<role name="postgres"/>
+	<position x="1180" y="743"/>
+	<column name="id" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="titre">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="image">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="description">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="prix">
+		<type name="real" length="0"/>
+	</column>
+	<column name="aVendre">
+		<type name="boolean" length="0"/>
+	</column>
+	<constraint name="photo_pk" type="pk-constr" table="db_isophoto.photo">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_categorie" index="6"/>
+		<object name="id_exif" index="7"/>
+		<object name="id_photographe" index="8"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="categorie_fk" index="1"/>
+		<object name="exif_fk" index="3"/>
+		<object name="photo_uq" index="2"/>
+		<object name="photo_uq1" index="4"/>
+		<object name="photographe_fk" index="5"/>
+	</customidxs>
+</table>
+
+<table name="exif" hide-ext-attribs="true">
+	<schema name="db_isophoto"/>
+	<role name="postgres"/>
+	<position x="1940" y="883"/>
+	<column name="id" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="constructeur">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="modele">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="vitesseObturation">
+		<type name="real" length="0"/>
+	</column>
+	<column name="ouverture">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="dateHeure">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="flash">
+		<type name="boolean" length="0"/>
+	</column>
+	<column name="objectif">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="exif_pk" type="pk-constr" table="db_isophoto.exif">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="categorie">
+	<schema name="db_isophoto"/>
+	<role name="postgres"/>
+	<position x="1940" y="383"/>
+	<column name="id" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="nom">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="categorie_pk" type="pk-constr" table="db_isophoto.categorie">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="commande">
+	<schema name="db_isophoto"/>
+	<role name="postgres"/>
+	<position x="200" y="463"/>
+	<column name="id" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="dateCommande">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="fraisDePort">
+		<type name="real" length="0"/>
+	</column>
+	<column name="tva">
+		<type name="real" length="0"/>
+	</column>
+	<column name="ttc">
+		<type name="real" length="0"/>
+	</column>
+	<column name="quantité">
+		<type name="smallint" length="0"/>
+	</column>
+	<constraint name="commande_pk" type="pk-constr" table="db_isophoto.commande">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_photographe" index="5"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="photographe_fk" index="1"/>
+	</customidxs>
+</table>
+
+<table name="utilisateur">
+	<schema name="db_isophoto"/>
+	<role name="postgres"/>
+	<position x="220" y="63"/>
+	<column name="id" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<constraint name="utilisateur_pk" type="pk-constr" table="db_isophoto.utilisateur">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_authorities" index="1"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="authorities_fk" index="0"/>
+	</customidxs>
+</table>
+
+<table name="adresse">
+	<schema name="db_isophoto"/>
+	<role name="postgres"/>
+	<position x="1820" y="63"/>
+	<column name="id" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="numVoie">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="nomVoie">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="codePostal">
+		<type name="int4" length="0"/>
+	</column>
+	<column name="ville">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="pays">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="adresse_pk" type="pk-constr" table="db_isophoto.adresse">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="photo_has_one_categorie" type="rel11"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#5b27cd"
+	 src-table="db_isophoto.categorie"
+	 dst-table="db_isophoto.photo"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="photo_has_one_exif" type="rel11"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#467b57"
+	 src-table="db_isophoto.exif"
+	 dst-table="db_isophoto.photo"
+	 src-required="false" dst-required="false"/>
+
+<table name="many_photo_has_many_commande">
+	<schema name="db_isophoto"/>
+	<position x="200" y="903"/>
+</table>
+
+<relationship name="photo_has_many_many_photo_has_many_commande" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="db_isophoto.photo"
+	 dst-table="db_isophoto.many_photo_has_many_commande"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+/>
+
+<relationship name="commande_has_many_many_photo_has_many_commande" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="db_isophoto.commande"
+	 dst-table="db_isophoto.many_photo_has_many_commande"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+/>
+
+<table name="timeline">
+	<schema name="db_isophoto"/>
+	<role name="postgres"/>
+	<position x="1220" y="263"/>
+	<column name="id" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="nom">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="dateCreation">
+		<type name="date" length="0"/>
+	</column>
+	<column name="dateUpdate">
+		<type name="date" length="0"/>
+	</column>
+	<constraint name="timeline_pk" type="pk-constr" table="db_isophoto.timeline">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="many_timeline_has_many_photo">
+	<schema name="db_isophoto"/>
+	<position x="1160" y="543"/>
+</table>
+
+<relationship name="timeline_has_many_many_timeline_has_many_photo" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="db_isophoto.timeline"
+	 dst-table="db_isophoto.many_timeline_has_many_photo"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+/>
+
+<relationship name="photo_has_many_many_timeline_has_many_photo" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="db_isophoto.photo"
+	 dst-table="db_isophoto.many_timeline_has_many_photo"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+/>
+
+<table name="authorities">
+	<schema name="db_isophoto"/>
+	<role name="postgres"/>
+	<position x="220" y="323"/>
+	<column name="id" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="role">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="authorities_pk" type="pk-constr" table="db_isophoto.authorities">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="authorities_has_many_utilisateur" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#bc38f3"
+	 src-table="db_isophoto.authorities"
+	 dst-table="db_isophoto.utilisateur"
+	 src-required="false" dst-required="false"/>
+
+<table name="photographe">
+	<schema name="db_isophoto"/>
+	<role name="postgres"/>
+	<position x="640" y="423"/>
+	<column name="id" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="nom">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="prenom">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="pseudo">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="email">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="password">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="photographe_pk" type="pk-constr" table="db_isophoto.photographe">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="many_photographe_has_many_adresse">
+	<schema name="db_isophoto"/>
+	<position x="880" y="63"/>
+</table>
+
+<relationship name="photographe_has_many_many_photographe_has_many_adresse" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="db_isophoto.photographe"
+	 dst-table="db_isophoto.many_photographe_has_many_adresse"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+/>
+
+<relationship name="adresse_has_many_many_photographe_has_many_adresse" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="db_isophoto.adresse"
+	 dst-table="db_isophoto.many_photographe_has_many_adresse"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+/>
+
+<relationship name="photographe_inherits_utilisateur" type="relgen"
+	 pk-pattern="{dt}_pk"
+	 custom-color="#ee2ed5"
+	 src-table="db_isophoto.photographe"
+	 dst-table="db_isophoto.utilisateur"/>
+
+<relationship name="photographe_has_many_commande" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#d0ab4f"
+	 src-table="db_isophoto.photographe"
+	 dst-table="db_isophoto.commande"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="photographe_has_many_timeline" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#e42906"
+	 src-table="db_isophoto.photographe"
+	 dst-table="db_isophoto.timeline"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="photographe_has_many_photo" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#e17944"
+	 src-table="db_isophoto.photographe"
+	 dst-table="db_isophoto.photo"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>

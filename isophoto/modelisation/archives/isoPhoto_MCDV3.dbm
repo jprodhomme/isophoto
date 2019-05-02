@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.1-beta" last-position="0,0" last-zoom="0.85"
+	 default-schema="public" default-owner="postgres">
+<database name="db_isophoto">
+</database>
+
+<schema name="public" rect-visible="true" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<schema name="db_isophoto" rect-visible="true" fill-color="#e1e1e1">
+	<role name="postgres"/>
+</schema>
+
+<table name="photo">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="720" y="343"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="titre">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="image">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="description">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="photo_pk" type="pk-constr" table="public.photo">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_photographe" index="4"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="photographe_fk" index="1"/>
+	</customidxs>
+</table>
+
+<table name="tags">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="1440" y="43"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="tag">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="tag_pk" type="pk-constr" table="public.tags">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="don">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="280" y="683"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="dateDon">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="montant">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="commentaire">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="commande_pk" type="pk-constr" table="public.don">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+
+	<customidxs object-type="column">
+		<object name="id_photo" index="4"/>
+	</customidxs>
+
+	<customidxs object-type="constraint">
+		<object name="photo_fk" index="1"/>
+	</customidxs>
+</table>
+
+<table name="authorities">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="240" y="23"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="role">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="authorities_pk" type="pk-constr" table="public.authorities">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="photographe">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="220" y="323"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="nom">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="prenom">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="pseudo">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="email">
+		<type name="varchar" length="0"/>
+	</column>
+	<column name="password">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="photographe_pk" type="pk-constr" table="public.photographe">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="photographe_has_many_photo" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#132bfd"
+	 src-table="public.photographe"
+	 dst-table="public.photo"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="photo_has_many_don" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#780083"
+	 src-table="public.photo"
+	 dst-table="public.don"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="authorities_has_many_photographe" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#0c48f1"
+	 src-table="public.authorities"
+	 dst-table="public.photographe"
+	 src-required="false" dst-required="false"/>
+
+<table name="commentaires">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="720" y="720"/>
+	<column name="id" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="commentaires">
+		<type name="varchar" length="0"/>
+	</column>
+	<constraint name="commentaires_pk" type="pk-constr" table="public.commentaires">
+		<columns names="id" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<relationship name="photo_has_many_commentaires" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 custom-color="#8cff1c"
+	 src-table="public.photo"
+	 dst-table="public.commentaires"
+	 src-required="false" dst-required="false"/>
+
+<table name="many_tags_has_many_photo">
+	<schema name="public"/>
+	<position x="1380" y="360"/>
+</table>
+
+<relationship name="tags_has_many_many_tags_has_many_photo" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="public.tags"
+	 dst-table="public.many_tags_has_many_photo"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+/>
+
+<relationship name="photo_has_many_many_tags_has_many_photo" type="rel1n"
+	 src-col-pattern="{sc}_{st}"
+	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
+	 src-fk-pattern="{st}_fk"
+	 src-table="public.photo"
+	 dst-table="public.many_tags_has_many_photo"
+	 src-required="true" dst-required="false"
+	 identifier="true"
+/>
+
+</dbmodel>
