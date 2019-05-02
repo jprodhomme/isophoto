@@ -22,13 +22,13 @@ public class TagController {
 
 	@Autowired
 	TagRepository tagRepo;
-	
+
 	private TagService tagService;
-	
+
 	public TagController(TagService tagService) {
-		this.tagService = tagService; 
+		this.tagService = tagService;
 	}
-	
+
 	@GetMapping("/gettags")
 	public ResponseEntity<?> getAllTag() {
 		List<Tag> listeTag = tagRepo.findAll();
@@ -50,8 +50,8 @@ public class TagController {
 	@PostMapping("/addtag")
 	public ResponseEntity<?> addTag(@Valid String tagString) {
 
-			try {
-			
+		try {
+
 			return ResponseEntity.status(HttpStatus.OK).body(this.tagService.saveTag(tagString));
 
 		} catch (Exception e) {
@@ -59,8 +59,5 @@ public class TagController {
 		}
 
 	}
-	
-	
 
-	}
-
+}

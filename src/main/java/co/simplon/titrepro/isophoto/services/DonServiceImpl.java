@@ -26,39 +26,29 @@ public class DonServiceImpl implements DonService {
 	@Override
 	public Photo addDon(Long idPhoto, 
 						String commentaire,		
-						
 						Integer montant) {
-		
-		
-		Photo photo = photoRepo.findById(idPhoto).get();//récup la photo avec son id
-		
-		// Définir la date du don avec le timestamp actuel
+
+		Photo photo = photoRepo.findById(idPhoto).get();
+
 		Date date = new Date();
 		Long time = date.getTime();
 		Timestamp ts = new Timestamp(time);
-		
+
 		System.out.println("Timestamp =====> " + ts);
-		
-		Don don = new Don(commentaire, ts,  montant);
-		
-		
-		List<Don> dons = photo.getDons(); //récup dons de la photo
-		
-		dons.add(don); //on add le nouveau don
-	
-		
-		
+
+		Don don = new Don(commentaire, ts, montant);
+
+		List<Don> dons = photo.getDons();
+
+		dons.add(don);
+
 		don.setPhoto(photo);
-		
-		
-		
+
 		this.donRepo.save(don);
-				
+
 		this.photoRepo.save(photo);
-		
+
 		return photo;
 	}
-	
 
-	
 }

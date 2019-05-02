@@ -1,6 +1,5 @@
 package co.simplon.titrepro.isophoto.model;
 
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,49 +16,43 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 /**
  * The persistent class for the photographe database table.
  * 
  */
 @Entity
-@Table(name="photographe", schema = "db_isophoto")
-@NamedQuery(name="Photographe.findAll", query="SELECT p FROM Photographe p")
+@Table(name = "photographe", schema = "db_isophoto")
+@NamedQuery(name = "Photographe.findAll", query = "SELECT p FROM Photographe p")
 public class Photographe implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String nom;
 
 	private String prenom;
-	
+
 	private String pseudo;
-	
+
 	private String email;
-	
+
 	private String password;
 
-	//bi-directional many-to-one association to Photo
-	@OneToMany(mappedBy="photographe", cascade=CascadeType.REMOVE)
+	// bi-directional many-to-one association to Photo
+	@OneToMany(mappedBy = "photographe", cascade = CascadeType.REMOVE)
 	private List<Photo> photos;
 
-	//bi-directional many-to-one association to Authority
+	// bi-directional many-to-one association to Authority
 	@ManyToOne
-	@JoinColumn(name="id_authorities")
+	@JoinColumn(name = "id_authorities")
 	private Authority authority;
 
 	public Photographe() {
 	}
 
-	public Photographe(String nom,
-					   String prenom, 
-					   String pseudo,
-					   String email, 
-					   String password
-					   ) {
+	public Photographe(String nom, String prenom, String pseudo, String email, String password) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.pseudo = pseudo;
@@ -114,7 +107,7 @@ public class Photographe implements Serializable {
 	public void setPseudo(String pseudo) {
 		this.pseudo = pseudo;
 	}
-	
+
 	@JsonIgnore
 	public List<Photo> getPhotos() {
 		return this.photos;
@@ -137,7 +130,7 @@ public class Photographe implements Serializable {
 
 		return photo;
 	}
-	
+
 	public Authority getAuthority() {
 		return this.authority;
 	}
@@ -146,5 +139,4 @@ public class Photographe implements Serializable {
 		this.authority = authority;
 	}
 
-	
 }

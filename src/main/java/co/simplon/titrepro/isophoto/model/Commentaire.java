@@ -13,19 +13,18 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-
 /**
  * The persistent class for the commentaires database table.
  * 
  */
 @Entity
-@Table(name="commentaires", schema = "db_isophoto")
-@NamedQuery(name="Commentaire.findAll", query="SELECT c FROM Commentaire c")
+@Table(name = "commentaires", schema = "db_isophoto")
+@NamedQuery(name = "Commentaire.findAll", query = "SELECT c FROM Commentaire c")
 public class Commentaire implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String commentaires;

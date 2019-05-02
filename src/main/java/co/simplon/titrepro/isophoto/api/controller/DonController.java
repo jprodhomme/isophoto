@@ -22,9 +22,9 @@ public class DonController {
 
 	@Autowired
 	DonRepository donRepo;
-	
+
 	private DonService donService;
-	
+
 	public DonController(DonService donService) {
 		this.donService = donService;
 	}
@@ -38,25 +38,21 @@ public class DonController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(listeDons);
-	
+
 	}
-	
+
 	@PutMapping("/adddon")
 	public ResponseEntity<?> addDon(@Valid Long idPhoto,
 									@Valid String commentaire,
 									@Valid Integer montant) {
-		
-		
 
-		
 		try {
-			return ResponseEntity.status(HttpStatus.OK)
-					.body(this.donService.addDon(idPhoto, commentaire, montant));
+			return ResponseEntity.status(HttpStatus.OK).body(this.donService.addDon(idPhoto, commentaire, montant));
 
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 
-	} 
-	
+	}
+
 }

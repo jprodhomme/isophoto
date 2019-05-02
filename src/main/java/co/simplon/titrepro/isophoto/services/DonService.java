@@ -7,6 +7,4 @@ public interface DonService {
 	Photo addDon(Long idPhoto, 
 				 String commentaire, 
 				 Integer montant);
-
-
 }
