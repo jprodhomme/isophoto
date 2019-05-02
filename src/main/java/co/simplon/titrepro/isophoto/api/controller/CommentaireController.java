@@ -47,7 +47,7 @@ public class CommentaireController {
 	
 	
 	@PutMapping("/addcommentaire")
-	public ResponseEntity<?> addCommentaire(@Valid long idPhoto, @Valid String commentaireString) {
+	public ResponseEntity<?> addCommentaire(@Valid Long idPhoto, @Valid String commentaireString) {
 
 		try {
 			return ResponseEntity.status(HttpStatus.OK)
