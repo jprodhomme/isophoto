@@ -1,6 +1,5 @@
 package co.simplon.titrepro.isophoto.model;
 
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,33 +13,29 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 /**
  * The persistent class for the tags database table.
  * 
  */
 @Entity
-@Table(name="tags", schema = "db_isophoto")
-@NamedQuery(name="Tag.findAll", query="SELECT t FROM Tag t")
+@Table(name = "tags", schema = "db_isophoto")
+@NamedQuery(name = "Tag.findAll", query = "SELECT t FROM Tag t")
 public class Tag implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String tag;
 
-	
-	@ManyToMany(mappedBy="tags")
+	@ManyToMany(mappedBy = "tags")
 	@JsonIgnore
 	private List<Photo> photos;
 
 	public Tag() {
 	}
-	
-	
-	
+
 	public Tag(String tag) {
 		this.tag = tag;
 	}
@@ -48,8 +43,6 @@ public class Tag implements Serializable {
 	public Tag(List<Photo> photos) {
 		this.photos = photos;
 	}
-
-
 
 	public Long getId() {
 		return this.id;
@@ -66,8 +59,7 @@ public class Tag implements Serializable {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-	
-	
+
 	public List<Photo> getPhotos() {
 		return this.photos;
 	}

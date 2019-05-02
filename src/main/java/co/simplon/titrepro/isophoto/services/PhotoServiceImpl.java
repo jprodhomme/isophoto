@@ -16,13 +16,12 @@ public class PhotoServiceImpl implements PhotoService {
 	private PhotoRepository photoRepo;
 	private PhotographeRepository photographeRepo;
 	private TagRepository tagRepo;
-	
 
 	public PhotoServiceImpl(PhotoRepository photoRepo, PhotographeRepository photographeRepo, TagRepository tagRepo) {
 		this.photoRepo = photoRepo;
 		this.photographeRepo = photographeRepo;
 		this.tagRepo = tagRepo;
-		
+
 	}
 
 	@Override
@@ -41,13 +40,12 @@ public class PhotoServiceImpl implements PhotoService {
 
 		}
 
-		Photo photo = new Photo(description, titre, image,tags, this.photographeRepo.findByPseudo(pseudo));
+		Photo photo = new Photo(description, titre, image, tags, this.photographeRepo.findByPseudo(pseudo));
 
 		this.photoRepo.save(photo);
 
 		return photo;
-		
+
 	}
-	
-	
+
 }

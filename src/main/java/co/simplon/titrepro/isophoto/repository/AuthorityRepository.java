@@ -6,5 +6,4 @@ import co.simplon.titrepro.isophoto.model.Authority;
 
 public interface AuthorityRepository extends JpaRepository<Authority, Integer> {
 
-	
 }

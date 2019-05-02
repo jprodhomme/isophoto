@@ -1,4 +1,4 @@
-	package co.simplon.titrepro.isophoto.api.controller;
+package co.simplon.titrepro.isophoto.api.controller;
 
 import java.util.List;
 
@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,13 +26,10 @@ import co.simplon.titrepro.isophoto.services.TagService;
 public class PhotoController {
 	@Autowired
 	PhotoRepository photoRepo;
-	
-
 
 	private PhotographeService photographeService;
 	private PhotoService photoService;
 	private TagService tagService;
-
 
 	public PhotoController(PhotographeService photographeService, 
 						   PhotoService photoService, 
@@ -43,7 +39,6 @@ public class PhotoController {
 		this.photoService = photoService;
 		this.tagService = tagService;
 	}
-		
 
 	/**
 	 * Méthode GET pour retourner toutes les PHOTOS dispo en BD
@@ -95,8 +90,8 @@ public class PhotoController {
 	 * @param nom
 	 * @return
 	 */
-	@GetMapping("/photosbyphotographe/{pseudo}")
-	public ResponseEntity<?> getPhotosbyPhotographe(@PathVariable String pseudo) {
+	@GetMapping("/photosbyphotographe")
+	public ResponseEntity<?> getPhotosbyPhotographe(@Valid String pseudo) {
 
 		List<Photo> listePhoto = null;
 
@@ -134,14 +129,14 @@ public class PhotoController {
 					.body(this.photoService.savePhoto(description, titre, image, tagsString, pseudo));
 
 		} catch (Exception e) {
-			
+
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 
 	}
 
-	@DeleteMapping("/deletephoto/{delId}")
-	public ResponseEntity<?> delUser(@PathVariable long delId) {
+	@DeleteMapping("/deletephoto")
+	public ResponseEntity<?> delPhoto(@Valid long delId) {
 
 		this.photoRepo.deleteById(delId);
 
@@ -157,11 +152,3 @@ public class PhotoController {
 	}
 
 }
-		
-		
-		
-	
-	
-
-
-

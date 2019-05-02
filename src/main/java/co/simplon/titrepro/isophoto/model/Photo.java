@@ -1,6 +1,5 @@
 package co.simplon.titrepro.isophoto.model;
 
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,19 +18,18 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-
 /**
  * The persistent class for the photo database table.
  * 
  */
 @Entity
-@Table(name="photo", schema = "db_isophoto")
-@NamedQuery(name="Photo.findAll", query="SELECT p FROM Photo p")
+@Table(name = "photo", schema = "db_isophoto")
+@NamedQuery(name = "Photo.findAll", query = "SELECT p FROM Photo p")
 public class Photo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String description;
@@ -40,60 +38,44 @@ public class Photo implements Serializable {
 
 	private String titre;
 
-	//bi-directional many-to-one association to Don
-	@OneToMany(mappedBy="photo")
+	// bi-directional many-to-one association to Don
+	@OneToMany(mappedBy = "photo")
 	private List<Don> dons;
 
-	//bi-directional many-to-one association to Commentaire
-	@OneToMany(mappedBy="photo")
+	// bi-directional many-to-one association to Commentaire
+	@OneToMany(mappedBy = "photo")
 	@JsonManagedReference
 	private List<Commentaire> commentaires;
 
-		
-	//bi-directional many-to-many association to Tag
+	// bi-directional many-to-many association to Tag
 	@ManyToMany
-	@JoinTable(
-		name="many_tags_has_many_photo", schema="db_isophoto"
-		, joinColumns={
-			@JoinColumn(name="id_tags")
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="id_photo")
-			}
-		)
+	@JoinTable(name = "many_tags_has_many_photo", schema = "db_isophoto", joinColumns = {
+			@JoinColumn(name = "id_tags") }, inverseJoinColumns = { @JoinColumn(name = "id_photo") })
 	private List<Tag> tags;
 
-	//bi-directional many-to-one association to Photographe
+	// bi-directional many-to-one association to Photographe
 	@ManyToOne
-	@JoinColumn(name="id_photographe")
+	@JoinColumn(name = "id_photographe")
 	private Photographe photographe;
 
 	public Photo() {
-		
+
 	}
-	
-	public Photo(String description, 
-				 String titre, 
-				 String image, 
-				 ArrayList<Tag> tagsString, 
-				 Photographe photographe) {
+
+	public Photo(String description, String titre, String image, ArrayList<Tag> tagsString, Photographe photographe) {
 		this.description = description;
 		this.titre = titre;
 		this.image = image;
 		this.tags = tagsString;
 		this.photographe = photographe;
-			
+
 	}
-	
-	
-	public Photo(String description, 
-			 String image, 
-			 String titre, 
-			 Photographe photographe) {
-	this.description = description;
-	this.titre = titre;
-	this.image = image;
-	this.photographe = photographe;
+
+	public Photo(String description, String image, String titre, Photographe photographe) {
+		this.description = description;
+		this.titre = titre;
+		this.image = image;
+		this.photographe = photographe;
 
 	}
 
@@ -174,7 +156,5 @@ public class Photo implements Serializable {
 	public void setPhotographe(Photographe photographe) {
 		this.photographe = photographe;
 	}
-
-
 
 }

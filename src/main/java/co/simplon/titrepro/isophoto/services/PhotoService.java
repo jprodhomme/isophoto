@@ -9,7 +9,4 @@ public interface PhotoService {
 						    String image, 
 						    String tagsString, 
 						    String pseudo);
-
-
-	
 }

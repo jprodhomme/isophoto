@@ -1,29 +1,27 @@
 package co.simplon.titrepro.isophoto.model;
 
-
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
-
 
 /**
  * The persistent class for the authorities database table.
  * 
  */
-@Entity	
-@Table(name="authorities", schema = "db_isophoto")
-@NamedQuery(name="Authority.findAll", query="SELECT a FROM Authority a")
+@Entity
+@Table(name = "authorities", schema = "db_isophoto")
+@NamedQuery(name = "Authority.findAll", query = "SELECT a FROM Authority a")
 public class Authority implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String role;
 
-	//bi-directional many-to-one association to Photographe
-	@OneToMany(mappedBy="authority")
+	// bi-directional many-to-one association to Photographe
+	@OneToMany(mappedBy = "authority")
 	private List<Photographe> photographes;
 
 	public Authority() {

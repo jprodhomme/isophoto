@@ -1,6 +1,5 @@
 package co.simplon.titrepro.isophoto.model;
 
-
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -16,45 +15,42 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
 /**
  * The persistent class for the don database table.
  * 
  */
 @Entity
-@Table(name="don", schema = "db_isophoto")
-@NamedQuery(name="Don.findAll", query="SELECT d FROM Don d")
+@Table(name = "don", schema = "db_isophoto")
+@NamedQuery(name = "Don.findAll", query = "SELECT d FROM Don d")
 public class Don implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String commentaire;
 
-	@Column(name="\"dateDon\"")
+	@Column(name = "\"dateDon\"")
 	private Timestamp dateDon;
 
 	private Integer montant;
 
-	//bi-directional many-to-one association to Photo
+	// bi-directional many-to-one association to Photo
 	@ManyToOne
 	@JsonIgnore
-	@JoinColumn(name="id_photo")
+	@JoinColumn(name = "id_photo")
 	private Photo photo;
 
 	public Don() {
 	}
-	
-	public Don(String commentaire,
-			   Timestamp dateDon,
-			   Integer montant)	{
+
+	public Don(String commentaire, Timestamp dateDon, Integer montant) {
 		this.commentaire = commentaire;
 		this.dateDon = dateDon;
 		this.montant = montant;
 	}
-	
+
 	public Don(String commentaire, Integer montant) {
 		this.commentaire = commentaire;
 		this.montant = montant;
