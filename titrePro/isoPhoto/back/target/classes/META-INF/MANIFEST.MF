@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: julien
+Build-Jdk: 11.0.2
+Implementation-Title: isophoto
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: co.simplon.titre-pro
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
+ -starter-parent/isophoto
+Created-By: Maven Integration for Eclipse
+
