@@ -5,5 +5,4 @@ import co.simplon.titrepro.isophoto.model.Photo;
 public interface CommentaireService {
 
 	Photo addCommentaire(long idPhoto, String commentaireString);
-
 }

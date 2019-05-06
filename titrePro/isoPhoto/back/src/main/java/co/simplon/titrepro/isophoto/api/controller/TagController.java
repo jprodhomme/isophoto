@@ -26,6 +26,7 @@ public class TagController {
 	private TagService tagService;
 
 	public TagController(TagService tagService) {
+
 		this.tagService = tagService;
 	}
 
@@ -41,7 +42,7 @@ public class TagController {
 	}
 
 	/**
-	 * Méthode POST pour ajouter une CATEGORIE
+	 * Méthode POST pour ajouter un TAG
 	 * 
 	 * @param id
 	 * @param nom
@@ -49,9 +50,7 @@ public class TagController {
 	 */
 	@PostMapping("/addtag")
 	public ResponseEntity<?> addTag(@Valid String tagString) {
-
 		try {
-
 			return ResponseEntity.status(HttpStatus.OK).body(this.tagService.saveTag(tagString));
 
 		} catch (Exception e) {

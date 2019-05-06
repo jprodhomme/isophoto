@@ -31,11 +31,6 @@ public class PhotographeController {
 		this.photographeService = photographeService;
 	}
 
-	/**
-	 * Méthode GET pour retourner tous les photographes présents en BD
-	 * 
-	 * @return
-	 */
 	@GetMapping("/photographes")
 	public ResponseEntity<?> getAllPhotographes() {
 		List<Photographe> listePhotographes = photographeRepo.findAll();
