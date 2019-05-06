@@ -17,6 +17,7 @@ export class Don {
                     
                     this.id = id;
                     this.commentaire = commentaire;
+                    this.montant = montant,
                     this.dateDon = dateDon;
                     this.photo = photo;
                 }
