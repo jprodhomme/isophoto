@@ -1,7 +1,6 @@
 package co.simplon.titrepro.isophoto.api.controller;
 
 import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +39,7 @@ public class PhotoController {
 		this.tagService = tagService;
 	}
 
-	/**
-	 * Méthode GET pour retourner toutes les PHOTOS dispo en BD
-	 * 
-	 * @return
-	 */
+	
 	@GetMapping("/photos")
 	public ResponseEntity<?> getAllPhoto() {
 		List<Photo> listePhoto = photoRepo.findAll();
@@ -60,12 +55,23 @@ public class PhotoController {
 		return ResponseEntity.status(HttpStatus.OK).body(listePhoto);
 	}
 
-	/**
-	 * Méthode GET qui retourne toutes les PHOTOS en renseignant un TAG
-	 * 
-	 * @param tag
-	 * @return
-	 */
+	
+	@GetMapping("/photosbyid")
+	public ResponseEntity<?> getPhotoById(@Valid Long idPhoto) {
+
+		try {
+			
+			
+			return ResponseEntity.status(HttpStatus.OK).body(photoRepo.findById(idPhoto));
+
+		} catch (Exception e) {
+
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+
+	}
+	
+	
 	@GetMapping("/photosbytag")
 	public ResponseEntity<?> getPhotosbyTag(@Valid String tag) {
 
@@ -84,12 +90,7 @@ public class PhotoController {
 
 	}
 
-	/**
-	 * Méthode GET pour récupérer toutes les PHOTOS d'un PHOTOGRAPHE
-	 * 
-	 * @param nom
-	 * @return
-	 */
+
 	@GetMapping("/photosbyphotographe")
 	public ResponseEntity<?> getPhotosbyPhotographe(@Valid String pseudo) {
 

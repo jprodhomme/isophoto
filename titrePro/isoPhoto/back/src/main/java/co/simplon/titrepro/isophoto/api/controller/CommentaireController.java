@@ -48,7 +48,6 @@ public class CommentaireController {
 		try {
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(this.commentaireService.addCommentaire(idPhoto, commentaireString));
-
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
@@ -63,7 +62,6 @@ public class CommentaireController {
 		List<Commentaire> comList = null;
 		try {
 			comList = (List<Commentaire>) commentaireRepo.findAll();
-
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}

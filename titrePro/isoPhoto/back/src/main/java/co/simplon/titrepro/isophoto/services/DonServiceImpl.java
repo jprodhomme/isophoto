@@ -31,12 +31,11 @@ public class DonServiceImpl implements DonService {
 		Photo photo = photoRepo.findById(idPhoto).get();
 		
 		Date date = new Date();
+		
 		Long time = date.getTime()+7200000; // pour éviter le décalage de 2h
 		  
 		Timestamp ts = new Timestamp(time);
-
-		System.out.println("Timestamp =====> " + ts);
-
+		
 		Don don = new Don(commentaire, ts, montant);
 
 		List<Don> dons = photo.getDons();

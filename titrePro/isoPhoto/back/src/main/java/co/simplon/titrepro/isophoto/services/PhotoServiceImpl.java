@@ -17,7 +17,9 @@ public class PhotoServiceImpl implements PhotoService {
 	private PhotographeRepository photographeRepo;
 	private TagRepository tagRepo;
 
-	public PhotoServiceImpl(PhotoRepository photoRepo, PhotographeRepository photographeRepo, TagRepository tagRepo) {
+	public PhotoServiceImpl(PhotoRepository photoRepo, 
+							PhotographeRepository photographeRepo, 
+							TagRepository tagRepo) {
 		this.photoRepo = photoRepo;
 		this.photographeRepo = photographeRepo;
 		this.tagRepo = tagRepo;
@@ -25,15 +27,19 @@ public class PhotoServiceImpl implements PhotoService {
 	}
 
 	@Override
-	public Photo savePhoto(String description, String titre, String image, String tagsString, String pseudo) {
+	public Photo savePhoto(String description, 
+						   String titre, 
+						   String image, 
+						   String tagsString, 
+						   String pseudo) {
 
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 
 		for (String tagString : tagsString.split(",")) {
 
 			Tag tag = this.tagRepo.findByTag(tagString);
+			
 			if (tag == null) {
-
 				tag = this.tagRepo.save(new Tag(tagString));
 			}
 			tags.add(tag);
