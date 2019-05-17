@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "isophotofront": {
+    "isophotoFront": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/isophotofront",
+            "outputPath": "dist/isophotoFront",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -23,6 +23,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.css"
             ],
             "scripts": [],
@@ -58,18 +59,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "isophotofront:build"
+            "browserTarget": "isophotoFront:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "isophotofront:build:production"
+              "browserTarget": "isophotoFront:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "isophotofront:build"
+            "browserTarget": "isophotoFront:build"
           }
         },
         "test": {
@@ -80,6 +81,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.css"
             ],
             "scripts": [],
@@ -103,7 +105,7 @@
         }
       }
     },
-    "isophotofront-e2e": {
+    "isophotoFront-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -112,11 +114,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "isophotofront:serve"
+            "devServerTarget": "isophotoFront:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "isophotofront:serve:production"
+              "devServerTarget": "isophotoFront:serve:production"
             }
           }
         },
@@ -132,5 +134,5 @@
       }
     }
   },
-  "defaultProject": "isophotofront"
+  "defaultProject": "isophotoFront"
 }

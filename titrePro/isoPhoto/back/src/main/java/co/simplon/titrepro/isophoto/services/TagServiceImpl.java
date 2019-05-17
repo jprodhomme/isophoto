@@ -1,6 +1,7 @@
 package co.simplon.titrepro.isophoto.services;
 
 import org.springframework.stereotype.Service;
+
 import co.simplon.titrepro.isophoto.model.Tag;
 import co.simplon.titrepro.isophoto.repository.TagRepository;
 
