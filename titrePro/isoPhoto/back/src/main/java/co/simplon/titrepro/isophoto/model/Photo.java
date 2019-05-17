@@ -1,9 +1,9 @@
 package co.simplon.titrepro.isophoto.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -48,10 +49,11 @@ public class Photo implements Serializable {
 	private List<Commentaire> commentaires;
 
 	// bi-directional many-to-many association to Tag
-	@ManyToMany
+	@ManyToMany( cascade = CascadeType.PERSIST)
 	@JoinTable(name = "many_tags_has_many_photo", schema = "db_isophoto", joinColumns = {
 			@JoinColumn(name = "id_tags") }, inverseJoinColumns = { @JoinColumn(name = "id_photo") })
 	private List<Tag> tags;
+	
 
 	// bi-directional many-to-one association to Photographe
 	@ManyToOne
@@ -62,7 +64,7 @@ public class Photo implements Serializable {
 
 	}
 
-	public Photo(String description, String titre, String image, ArrayList<Tag> tagsString, Photographe photographe) {
+	public Photo(String description, String titre, String image, List<Tag> tagsString, Photographe photographe) {
 		this.description = description;
 		this.titre = titre;
 		this.image = image;
@@ -70,6 +72,8 @@ public class Photo implements Serializable {
 		this.photographe = photographe;
 
 	}
+	
+
 
 	public Photo(String description, String image, String titre, Photographe photographe) {
 		this.description = description;
@@ -78,7 +82,8 @@ public class Photo implements Serializable {
 		this.photographe = photographe;
 
 	}
-
+	
+	
 	public Long getId() {
 		return this.id;
 	}

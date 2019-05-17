@@ -53,5 +53,21 @@ public class PhotoServiceImpl implements PhotoService {
 		return photo;
 
 	}
+	
+	@Override
+    public Photo addPhoto(Photo photo, String pseudo) {
+ 
+        
+            Photo photoToSave = new Photo(photo.getDescription(),
+            						  	  photo.getTitre(),
+            						  	  photo.getImage(),
+            							  (ArrayList<Tag>) photo.getTags(),
+            							  this.photographeRepo.findByPseudo(pseudo));
 
+            photoRepo.save(photoToSave);
+
+            return photoToSave;
+       
+    }
+	
 }
