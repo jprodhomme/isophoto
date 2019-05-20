@@ -1,0 +1,28 @@
+<div class="container-fluid">
+  <form>
+    <div class="form-group">
+      <label for="titre">Titre<br></label>
+      <input type="text" class="form-control" id="titre" [(ngModel)]="newPhoto.titre" name="titre" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Description<br></label>
+      <input type="text" class="form-control" id="description" [(ngModel)]="newPhoto.description" name="description"
+        required>
+    </div>
+    <div class="form-group">
+      <label for="tags">Tags<br></label>
+      <input type="text" class="form-control" id="tag" [(ngModel)]="arrayTag" name="tag" required>
+    </div>
+    <div class="form-group">
+      <label for="photographe"> Pseudo : </label>
+      <input type="text" class="form-control" id="photographe" [(ngModel)]="newPhoto.photographe.pseudo" name="pseudo"
+        required>
+    </div>
+    <div class="container-fluid" style="text-align:left">
+      <label for="image"> Image
+        <input type="file" id="image" [(ngModel)]="newPhoto.image" name="image" required (change)="selectFile($event)">
+      </label>
+    </div>
+    <button class="submit" type="button" (click)="addPhoto()"> VALIDER </button>
+  </form>
+</div>
