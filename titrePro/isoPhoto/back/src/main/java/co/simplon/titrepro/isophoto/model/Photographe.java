@@ -60,6 +60,15 @@ public class Photographe implements Serializable {
 		this.password = password;
 	}
 
+	public Photographe(String nom, String prenom, String pseudo,String email, String password, Authority authority) {
+		this.nom = nom;
+		this.prenom = prenom;
+		this.pseudo = pseudo;
+		this.email = email;
+		this.password = password;
+		this.authority = authority;
+	}
+
 	public Long getId() {
 		return this.id;
 	}
@@ -138,5 +147,7 @@ public class Photographe implements Serializable {
 	public void setAuthority(Authority authority) {
 		this.authority = authority;
 	}
+
+
 
 }

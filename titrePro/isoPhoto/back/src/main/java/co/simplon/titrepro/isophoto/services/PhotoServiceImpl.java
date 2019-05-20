@@ -20,6 +20,7 @@ public class PhotoServiceImpl implements PhotoService {
 	public PhotoServiceImpl(PhotoRepository photoRepo, 
 							PhotographeRepository photographeRepo, 
 							TagRepository tagRepo) {
+		
 		this.photoRepo = photoRepo;
 		this.photographeRepo = photographeRepo;
 		this.tagRepo = tagRepo;

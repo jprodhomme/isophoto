@@ -16,7 +16,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -70,20 +69,15 @@ public class Photo implements Serializable {
 		this.image = image;
 		this.tags = tagsString;
 		this.photographe = photographe;
-
 	}
 	
-
-
 	public Photo(String description, String image, String titre, Photographe photographe) {
 		this.description = description;
 		this.titre = titre;
 		this.image = image;
 		this.photographe = photographe;
-
 	}
-	
-	
+		
 	public Long getId() {
 		return this.id;
 	}
