@@ -18,7 +18,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;	
 
 
 /**
@@ -55,13 +55,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Entry points
         http.authorizeRequests()//
+        		.antMatchers("/**").permitAll()
                 .antMatchers("/api/sign-in").permitAll()//
                 .antMatchers("/api/sign-up").permitAll()//
-//                .antMatchers("/h2-console/**/**").permitAll()
                 // Disallow everything else...
                 .anyRequest().authenticated();
 
-        // Apply JWT
+        // Apply JWT - vérifie la requete avant envoie vers le controller
         http.addFilterBefore(new JwtTokenFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
     }
 
@@ -72,8 +72,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/h2-console/**/**");
-        web.ignoring().antMatchers("/resources/**").anyRequest();
+//        web.ignoring().antMatchers("/h2-console/**/**");
+//        web.ignoring().antMatchers("/resources/**").anyRequest();
     }
 
     /**

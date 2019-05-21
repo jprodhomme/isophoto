@@ -10,6 +10,9 @@ import co.simplon.titrepro.isophoto.model.Photographe;
 public interface PhotographeRepository extends JpaRepository<Photographe, Long> {
 
 	Photographe findByPseudo(String pseudo);
+	
+	@Query("SELECT p FROM Photographe p WHERE p.pseudo LIKE ?1")
+	Optional <Photographe> findByPseudo2(String pseudo);
 
 	boolean existsByPseudo(String pseudo);
 

@@ -16,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
@@ -57,6 +58,7 @@ public class Photo implements Serializable {
 	// bi-directional many-to-one association to Photographe
 	@ManyToOne
 	@JoinColumn(name = "id_photographe")
+	@JsonBackReference
 	private Photographe photographe;
 
 	public Photo() {

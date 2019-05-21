@@ -1,4 +1,5 @@
 package co.simplon.titrepro.isophoto.api.controller;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -97,8 +99,8 @@ public class PhotoController {
 		return ResponseEntity.status(HttpStatus.OK).body(listePhoto);
 	}
 
-	@GetMapping("/photosbyphotographe")
-	public ResponseEntity<?> getPhotosbyPhotographe(@Valid String pseudo) {
+	@GetMapping("/photosbyphotographe/{pseudo}")
+	public ResponseEntity<?> getPhotosbyPhotographe(@PathVariable String pseudo) {
 
 		List<Photo> listePhoto = null;
 
@@ -123,14 +125,15 @@ public class PhotoController {
 	 * @param pseudo
 	 * @return
 	 */
+	 
 	@PostMapping("/addphoto")
+	@PreAuthorize("hasAuthority('photographe')")
 	public ResponseEntity<?> addPhoto(@RequestBody Photo photo, String pseudo) {		
 		
 		
 	
 		try {
 			return ResponseEntity.status(HttpStatus.OK)
-//					.body(this.photoService.savePhoto(description, titre, image, tagsString, pseudo));
 					.body(this.photoService.addPhoto(photo, pseudo));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

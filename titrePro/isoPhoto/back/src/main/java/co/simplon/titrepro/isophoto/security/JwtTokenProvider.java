@@ -2,10 +2,7 @@ package co.simplon.titrepro.isophoto.security;
 
 
 import java.util.Base64;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
@@ -57,11 +52,11 @@ public class JwtTokenProvider {
      * @param roles the user roles.
      * @return the created JWT as String.
      */
-    @SuppressWarnings("unchecked")
-	public String createToken(String pseudo, Authority authority) {
 
-        Claims claims = Jwts.claims().setSubject(pseudo);
-        claims.put("auth", ((Collection<? extends GrantedAuthority>) authority).stream().map(s -> new SimpleGrantedAuthority(s.getAuthority())).filter(Objects::nonNull).collect(Collectors.toList()));
+	public String createToken(String pseudo, Authority authority) {
+		System.out.println("token");
+		 Claims claims = Jwts.claims().setSubject(pseudo);
+	     claims.put("auth", authority);
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
@@ -100,7 +95,10 @@ public class JwtTokenProvider {
      * @return the JWT from the HTTP Header.
      */
     public String resolveToken(HttpServletRequest req) {
-        String bearerToken = req.getHeader("Authorization");
+    	 String bearerToken = req.getHeader("Authorization");
+         System.out.println("http : " + req);
+         System.out.println("bearerToken : " + bearerToken);
+         System.out.println("bearerToken : " + req.getHeader("headers"));
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }

@@ -14,6 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import co.simplon.titrepro.isophoto.exception.InvalidJWTException;
 
+
 /**
  * Specific filter that is in charge of checking that each HTTP request coming to our server contains a valid JWT.
  */
@@ -26,9 +27,17 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, 
+    								HttpServletResponse httpServletResponse,
+    								FilterChain filterChain) throws ServletException, IOException {
+    	
         String token = jwtTokenProvider.resolveToken(httpServletRequest);
+        System.out.println("requete : " + httpServletRequest);
+        System.out.println("token : " + token);
+        
+        
         try {
+        	
             if (token != null && jwtTokenProvider.validateToken(token)) {
                 Authentication auth = jwtTokenProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);

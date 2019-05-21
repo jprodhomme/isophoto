@@ -1,17 +1,17 @@
 package co.simplon.titrepro.isophoto.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,20 +23,23 @@ import co.simplon.titrepro.isophoto.exception.ExistingUsernameException;
 import co.simplon.titrepro.isophoto.exception.InvalidCredentialsException;
 import co.simplon.titrepro.isophoto.model.Photographe;
 import co.simplon.titrepro.isophoto.repository.PhotographeRepository;
-import co.simplon.titrepro.isophoto.services.PhotoService;
 import co.simplon.titrepro.isophoto.services.PhotographeService;
 
 @RestController
 @RequestMapping("/api")
 public class PhotographeController {
 	
-
+	@Autowired
 	PhotographeRepository photographeRepo;
 	
+	@Autowired
 	private PhotographeService photographeService;
 	
-	public PhotographeController(PhotographeService photographeService, PhotoService photoService) {
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	public PhotographeController(PhotographeService photographeService, BCryptPasswordEncoder passwordEncoder) {
 		this.photographeService = photographeService;
+		this.passwordEncoder = passwordEncoder;
 	}
 	
 	
@@ -49,6 +52,7 @@ public class PhotographeController {
     @PostMapping("/sign-up")
     public ResponseEntity<JsonWebToken> signUp(@RequestBody Photographe photographe) {
         try {
+        	System.out.println(photographe.getPassword());
             return ResponseEntity.ok(new JsonWebToken(photographeService.signup(photographe)));
         } catch (ExistingUsernameException ex) {
             return ResponseEntity.badRequest().build();
@@ -74,8 +78,8 @@ public class PhotographeController {
      * Méthode réservée aux Admins
      * @return la liste de tous les photographes présents en base.
      */
-    @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/photographe")
+    @PreAuthorize("hasAuthority('admin')")
     public List<PhotographeDto> getAllUsers() {
         return photographeService.findAllPhotographe().stream().map(photographe -> new PhotographeDto(photographe.getPseudo(), photographe.getAuthority())).collect(Collectors.toList());
     }

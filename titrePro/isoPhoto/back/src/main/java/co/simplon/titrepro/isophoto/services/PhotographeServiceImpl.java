@@ -1,24 +1,32 @@
 package co.simplon.titrepro.isophoto.services;
 
-import co.simplon.titrepro.isophoto.exception.ExistingUsernameException;
-import co.simplon.titrepro.isophoto.exception.InvalidCredentialsException;
-import co.simplon.titrepro.isophoto.model.Photographe;
-import co.simplon.titrepro.isophoto.repository.PhotographeRepository;
-import co.simplon.titrepro.isophoto.security.JwtTokenProvider;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import co.simplon.titrepro.isophoto.exception.ExistingUsernameException;
+import co.simplon.titrepro.isophoto.exception.InvalidCredentialsException;
+import co.simplon.titrepro.isophoto.model.Photographe;
+import co.simplon.titrepro.isophoto.repository.AuthorityRepository;
+import co.simplon.titrepro.isophoto.repository.PhotographeRepository;
+import co.simplon.titrepro.isophoto.security.JwtTokenProvider;
 
 
 @Service
 public class PhotographeServiceImpl implements PhotographeService {
 
+	@Autowired
 	private PhotographeRepository photographeRepo;
+	
+	@Autowired
+	private AuthorityRepository authorityRepo;
+	
+	//chiffrement du password
 	private BCryptPasswordEncoder passwordEncoder;
 	private JwtTokenProvider jwtTokenProvider;
 	private AuthenticationManager authenticationManager;
@@ -27,17 +35,15 @@ public class PhotographeServiceImpl implements PhotographeService {
 	public PhotographeServiceImpl(PhotographeRepository photographeRepo, 
 								  BCryptPasswordEncoder passwordEncoder,
 								  JwtTokenProvider jwtTokenProvider,
-								  AuthenticationManager authenticationManager) {
+								  AuthenticationManager authenticationManager,
+								  AuthorityRepository authorityRepo) {
 
 		this.photographeRepo = photographeRepo;
 		this.passwordEncoder = passwordEncoder;
 		this.jwtTokenProvider = jwtTokenProvider;
 		this.authenticationManager = authenticationManager;
+		this.authorityRepo = authorityRepo;
 	}
-	
-	
-	
-	
 	
     @Override
     public String signin(String pseudo, String password) throws InvalidCredentialsException {
@@ -56,21 +62,20 @@ public class PhotographeServiceImpl implements PhotographeService {
             												photographe.getPrenom(),
             												photographe.getPseudo(),
             												photographe.getEmail(),
-            												passwordEncoder.encode(photographe.getPassword()), 
-            												photographe.getAuthority());
-            photographeRepo.save(photographeToSave);
-            return jwtTokenProvider.createToken(photographe.getPseudo(),
-            									photographe.getAuthority());
+            												passwordEncoder.encode(photographe.getPassword()));
+           Photographe newPhotographe =  photographeRepo.save(photographeToSave);
+           
+           newPhotographe.setAuthority(authorityRepo.findByRole("photographe"));
+           
+           photographeRepo.save(newPhotographe);
+           
+            
+            return jwtTokenProvider.createToken(newPhotographe.getPseudo(),
+            									newPhotographe.getAuthority());
         } else {
             throw new ExistingUsernameException();
         }
     }
-
-	@Override
-	public Photographe findByPseudo(String pseudo) {
-		return this.photographeRepo.findByPseudo(pseudo);
-
-	}
 
 	@Override
 	public Photographe savePhotographe(String nom, 
@@ -91,5 +96,11 @@ public class PhotographeServiceImpl implements PhotographeService {
     public List<Photographe> findAllPhotographe(){
     	return this.photographeRepo.findAll();
     }
+	
+	@Override
+	public Photographe findByPseudo(String pseudo) {
+		return this.photographeRepo.findByPseudo(pseudo);
+
+	}
 
 }

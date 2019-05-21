@@ -8,8 +8,6 @@ import co.simplon.titrepro.isophoto.model.Authority;
  */
 public class PhotographeDto {
 
-	private Long id;
-
 	private String pseudoDto;
 
 	private Authority authority;
@@ -27,11 +25,6 @@ public class PhotographeDto {
 		this.authority = authority;
 	}
 	
-	public PhotographeDto(Long id, String pseudoDto, Authority authority) {
-		this.id = id;
-		this.pseudoDto = pseudoDto;
-		this.authority = authority;
-	}
 
 	public Authority getAuthority() {
 		return authority;
@@ -47,14 +40,6 @@ public class PhotographeDto {
 
 	public void setPseudoDto(String pseudoDto) {
 		this.pseudoDto = pseudoDto;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 }

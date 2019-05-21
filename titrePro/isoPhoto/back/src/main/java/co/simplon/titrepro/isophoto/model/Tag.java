@@ -11,6 +11,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * The persistent class for the tags database table.
  * 
@@ -28,6 +30,7 @@ public class Tag implements Serializable {
 	private String tag;
 
 	@ManyToMany(mappedBy = "tags")
+	@JsonIgnore
 	private List<Photo> photos;
 
 	public Tag() {

@@ -41,6 +41,7 @@ public class Photographe implements Serializable {
 	private String password;
 
 	// bi-directional many-to-one association to Photo
+	@JsonIgnore
 	@OneToMany(mappedBy = "photographe", cascade = CascadeType.REMOVE)
 	private List<Photo> photos;
 
@@ -66,9 +67,8 @@ public class Photographe implements Serializable {
 		this.pseudo = pseudo;
 		this.email = email;
 		this.password = password;
-		this.authority = authority;
 	}
-
+	
 	public Long getId() {
 		return this.id;
 	}
@@ -117,7 +117,7 @@ public class Photographe implements Serializable {
 		this.pseudo = pseudo;
 	}
 
-	@JsonIgnore
+	
 	public List<Photo> getPhotos() {
 		return this.photos;
 	}
@@ -147,7 +147,5 @@ public class Photographe implements Serializable {
 	public void setAuthority(Authority authority) {
 		this.authority = authority;
 	}
-
-
 
 }
