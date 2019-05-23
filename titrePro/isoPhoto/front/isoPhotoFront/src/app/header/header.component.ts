@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../service/login.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  
+
+  constructor(private loginService : LoginService) { }
 
   ngOnInit() {
   }
+  
 
+  logout(){
+  this.loginService.signOut()
+  console.log(environment.accessToken)}
 }

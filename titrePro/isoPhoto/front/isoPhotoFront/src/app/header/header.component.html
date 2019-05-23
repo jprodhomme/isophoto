@@ -1,9 +1,32 @@
-<div class="button">
-  <div class="bar">
+
+ 
+    <mat-toolbar class="toolbar">
+
+  <mat-toolbar-row>
+ 
+    
+    <span class="logo">
+        <span class="word1">iso</span>
+        <span class="word2">Photo</span>
+      </span>
       
-    <button mat-button routerLink="/">Accueil</button>
-    <button mat-button routerLink="/profil">Mon Profil</button>
-    <button mat-button routerLink="/photos">Mes Photos</button>
-    <button mat-button routerLink="/upload"> Ajouter Photo</button>
-  </div>
-</div>
+  </mat-toolbar-row>
+  
+
+  <mat-toolbar-row>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row class="bouton">
+      <mat-nav-list>
+          
+          <!-- <a *ngIf="isAdmin" mat-list-item routerLink="user-list">Liste des utilisateurs</a> -->
+        </mat-nav-list>
+    <button mat-button routerLink="/">ACCUEIL</button>
+    <button mat-button routerLink="/profil">FAIRE UN DON</button>
+    <button mat-button routerLink="/">MES PHOTOS</button>
+    <button mat-button routerLink="/upload">POSTER UNE PHOTO</button>
+    <button mat-button routerLink="/signup"> S'INSCRIRE</button>
+    <button mat-button routerLink="/signin"> SE CONNECTER</button>
+    <button mat-button (click)="logout()" routerLink="/signin"> SE DECONNECTER</button>
+  </mat-toolbar-row>
+ 

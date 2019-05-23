@@ -4,13 +4,23 @@
     height: 3rem;
     border : solid ;
     border-radius: 5px;
-    
     position: absolute;
+    width:100%;
     bottom :0;
     left: 0;
     right: 0;
+    top: 880px;
+    background-color:rgb(36, 35, 35);
+   
+    
   }
   
 p{
     text-align: center;
+}
+.text {
+  font: 15px 'Arial Narrow', sans-serif;
+  color: #fefefe;
+  text-transform: uppercase;
+
 }

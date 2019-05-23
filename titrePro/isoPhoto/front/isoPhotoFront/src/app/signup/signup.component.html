@@ -1,0 +1,48 @@
+  <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>S'inscrire</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="container">
+          <mat-form-field>
+            <input matInput placeholder="Nom" formControlName="nom">
+            <mat-error *ngIf="loginForm.controls['nom'].hasError('required')">
+              Le nom est <strong>obligatoire</strong>
+            </mat-error>
+          </mat-form-field>
+       
+          <mat-form-field>
+            <input matInput placeholder="Prenom" formControlName="prenom">
+            <mat-error *ngIf="loginForm.controls['prenom'].hasError('required')">
+              Le prenom est <strong>obligatoire</strong>
+            </mat-error>
+          </mat-form-field>
+      
+          <mat-form-field>
+            <input matInput placeholder="Pseudo" formControlName="pseudo">
+            <mat-error *ngIf="loginForm.controls['pseudo'].hasError('required')">
+              Le pseudo est <strong>obligatoire</strong>
+            </mat-error>
+          </mat-form-field>
+     
+          <mat-form-field>
+            <input matInput placeholder="email" formControlName="email">
+            <mat-error *ngIf="loginForm.controls['email'].hasError('required')">
+              L'adresse mail est <strong>obligatoire</strong>
+            </mat-error>
+          </mat-form-field>
+     
+          <mat-form-field>
+            <input matInput type="password" placeholder="Mot de passe" formControlName="password">
+            <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+              Le mot de passe est <strong>obligatoire</strong>
+            </mat-error>
+          </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button style="width:100%" mat-raised-button color="primary" type="submit" (click)="addPhotographe()">Valider</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

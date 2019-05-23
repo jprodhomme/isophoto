@@ -11,11 +11,11 @@
     </div>
     <div class="form-group">
       <label for="tags">Tags<br></label>
-      <input type="text" class="form-control" id="tag" [(ngModel)]="arrayTag" name="tag" required>
+      <input type="text" class="form-control" id="tag" [(ngModel)]="newPhoto.arrayTag" name="tag" required>
     </div>
     <div class="form-group">
       <label for="photographe"> Pseudo : </label>
-      <input type="text" class="form-control" id="photographe" [(ngModel)]="newPhoto.photographe.pseudo" name="pseudo"
+      <input type="text" class="form-control" id="photographe" [(ngModel)]="newPhotographe.pseudo" name="pseudo"
         required>
     </div>
     <div class="container-fluid" style="text-align:left">
@@ -26,3 +26,47 @@
     <button class="submit" type="button" (click)="addPhoto()"> VALIDER </button>
   </form>
 </div>
+
+<!-- <form [formGroup]="uploadForm" novalidate>
+    <mat-card class="addPhoto-card">
+      <mat-card-header>
+        <mat-card-title>Ajouter une Photo</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="container">
+            <mat-form-field>
+              <input matInput placeholder="Titre" formControlName="titre">
+              <mat-error *ngIf="uploadForm.controls['titre'].hasError('required')">
+                Le titre est <strong>obligatoire</strong>
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput placeholder="Description" formControlName="description">
+                <mat-error *ngIf="uploadForm.controls['description'].hasError('required')">
+                  La description est <strong>obligatoire</strong>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                  <input matInput placeholder="Tags" formControlName="tag">
+                  <mat-error *ngIf="uploadForm.controls['tag'].hasError('required')">
+                   Au moins un tag est <strong>obligatoire</strong>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput placeholder="Photographe" formControlName="photographe">
+                    <mat-error *ngIf="uploadForm.controls['photographe'].hasError('required')">
+                      Le photographe est <strong>obligatoire</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field>
+                      
+                      <input type="file" formControlName="image"  required (change)="selectFile($event)">
+                    </mat-form-field>
+                 
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button style="width:100%" mat-raised-button color="primary" type="submit" (click)="addPhoto()">Valider</button>
+        </mat-card-actions>
+      </mat-card>
+    </form> -->

@@ -3,7 +3,6 @@ import { Photo } from '../model/photo.model';
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,20 +19,20 @@ export class PhotoService {
   constructor(private httpClient: HttpClient) { }
 
   /**
-   * @param newFriend le nouveau friend à créer
+   * @param newPhoto nouvelle photo à créer
    */
   public addPhoto(newphoto: Photo, arrayTag : string) {
-    this.httpClient.post<Photo>('http://localhost:8080/api/create/' + arrayTag, newphoto).subscribe(
+    this.httpClient.post<Photo>('http://localhost:8080/api/create/' + newphoto, arrayTag).subscribe(
       newPhoto => {
-        // this.availablePhotos.push(newphoto);
+
         console.log(newPhoto);
       }
     );
 
-    console.log(newphoto.getTagListe().length)
+    console.log(newphoto.tagListe.length)
   }
   /**
-   * La fonction getAllFriend() est privée car elle n'a besoin d'être appellée que dans le service.
+   * La fonction getAllPhotos() est privée car elle n'a besoin d'être appellée que dans le service.
    */
   public getAllPhotos(): Observable<Photo[]> {
     console.log('getAllPhotos' + this.availablePhotos)
@@ -46,9 +45,9 @@ export class PhotoService {
   public findPhotoById(idPhoto: number): Observable<Photo> {
     if (idPhoto) {
       if (!this.availablePhotos) {
-        return this.getAllPhotos().pipe(map(photos => photos.find(photo => photo.idPhoto === idPhoto)));
+        return this.getAllPhotos().pipe(map(photos => photos.find(photo => photo.id === idPhoto)));
       }
-      return of(this.availablePhotos.find(photo => photo.idPhoto === idPhoto));
+      return of(this.availablePhotos.find(photo => photo.id === idPhoto));
     } else {
       return ; // TO DO 
     }
