@@ -13,11 +13,12 @@ import * as jwt_decode from 'jwt-decode';
 })
 export class LoginService {
 
+  logged = false;
   //garde l'authority pour l'utiliser dans les guards
-  userRoles: BehaviorSubject<string> = new BehaviorSubject('');
+  userRole: BehaviorSubject<string> = new BehaviorSubject('');
 
   constructor(private httpClient: HttpClient, private router: Router) {
-    this.getUserRoles();
+    this.getUserRole();
   }
 
   public get loggedIn(): boolean {
@@ -29,8 +30,10 @@ export class LoginService {
     this.httpClient.post<JsonWebToken>(environment.apiUrl + 'sign-in', photographe).subscribe(
       token => {
         sessionStorage.setItem(environment.accessToken, token.token);
+      
+
         console.log('Token =>' , token.token)
-        this.getUserRoles();
+        this.getUserRole();
         this.router.navigate(['/']);
         
         
@@ -46,18 +49,20 @@ export class LoginService {
       error => console.log('Error while signUp'));
   }
 
+
   public signOut() {
    
     sessionStorage.removeItem(environment.accessToken);
     this.router.navigate(['']);
   }
 
-  private getUserRoles() {
+  private getUserRole() {
     if (sessionStorage.getItem(environment.accessToken)) {
       const decodedToken = jwt_decode(sessionStorage.getItem(environment.accessToken));
    
-      const authorities: string = decodedToken.auth;
-      this.userRoles.next(authorities);
+      const authorities: string = decodedToken.authRole;
+      const pseudo: string = decodedToken.Pseudo;
+      this.userRole.next(authorities);
     }
   }
 }

@@ -67,6 +67,5 @@ export class PhotoService {
     );
     return this.httpClient.request(req);
   }
-   
-  
+
 }

@@ -46,7 +46,7 @@ export class SigninComponent {
   
         
       });
-
+      return photographe.pseudo;
     
   }
 }

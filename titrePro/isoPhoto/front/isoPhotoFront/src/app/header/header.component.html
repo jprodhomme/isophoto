@@ -1,32 +1,28 @@
-
- 
-    <mat-toolbar class="toolbar">
+<mat-toolbar class="toolbar">
 
   <mat-toolbar-row>
- 
-    
+
     <span class="logo">
-        <span class="word1">iso</span>
-        <span class="word2">Photo</span>
-      </span>
-      
-  </mat-toolbar-row>
-  
+      <span class="word1">iso</span>
+      <span class="word2">Photo</span>
+    </span>
 
-  <mat-toolbar-row>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row >
+
   </mat-toolbar-row>
 
   <mat-toolbar-row class="bouton">
-      <mat-nav-list>
-          
-          <!-- <a *ngIf="isAdmin" mat-list-item routerLink="user-list">Liste des utilisateurs</a> -->
-        </mat-nav-list>
+    <mat-nav-list>
+
+    </mat-nav-list>
     <button mat-button routerLink="/">ACCUEIL</button>
-    <button mat-button routerLink="/profil">FAIRE UN DON</button>
-    <button mat-button routerLink="/">MES PHOTOS</button>
-    <button mat-button routerLink="/upload">POSTER UNE PHOTO</button>
-    <button mat-button routerLink="/signup"> S'INSCRIRE</button>
-    <button mat-button routerLink="/signin"> SE CONNECTER</button>
-    <button mat-button (click)="logout()" routerLink="/signin"> SE DECONNECTER</button>
+    <button mat-button *ngIf="isPhotographe || isAdmin" routerLink="/profil">FAIRE UN DON</button>
+    <button mat-button *ngIf="isPhotographe || isAdmin" routerLink="/photos">MES PHOTOS</button>
+    <button mat-button *ngIf="isPhotographe || isAdmin" routerLink="/upload">POSTER UNE PHOTO</button>
+    <button mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signup"> M'INSCRIRE</button>
+    <button mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signin"> ME CONNECTER</button>
+    <button mat-button *ngIf="(isPhotographe || isAdmin) && (!isPhotographe || !isAdmin)" (click)="logout()" routerLink="/signin"> ME DECONNECTER</button>
+
   </mat-toolbar-row>
- 

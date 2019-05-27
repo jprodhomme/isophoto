@@ -12,7 +12,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { UploadComponent } from './upload/upload.component';
-import { AddPhotoComponent } from './add-photo/add-photo.component';
+import { PhotoListComponent} from './photo-list/photo-list.component';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
@@ -20,7 +20,6 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {PhotographeGuard} from './guards/photographe.guard';
 import {AdminGuard} from './guards/admin.guard';
 import {JwtInterceptor} from './http-interceptor/jwt.interceptor';
-
 
 
 @NgModule({
@@ -31,16 +30,15 @@ import {JwtInterceptor} from './http-interceptor/jwt.interceptor';
     CommentaireComponent,
     HeaderComponent,
     PhotoComponent,
+    PhotoListComponent,
     FooterComponent,
     UploadComponent,
-    AddPhotoComponent,
+    PhotoComponent,
     SignupComponent,
     SigninComponent,
     
   ],
   imports: [
- 
-
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,

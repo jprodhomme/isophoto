@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../service/login.service';
-import { environment } from 'src/environments/environment';
+import { SigninComponent } from '../signin/signin.component';
+
 
 @Component({
   selector: 'app-header',
@@ -9,15 +10,40 @@ import { environment } from 'src/environments/environment';
 })
 export class HeaderComponent implements OnInit {
 
-  
+isLogged = false;
+isAdmin : boolean;
+isPhotographe : boolean;
+photographePseudo : string;
 
-  constructor(private loginService : LoginService) { }
+constructor(private loginService : LoginService) { }
 
-  ngOnInit() {
+ngOnInit() {
+
+  sessionStorage.clear;
+  this.getConnection();
+
   }
-  
 
-  logout(){
-  this.loginService.signOut()
-  console.log(environment.accessToken)}
+getConnection(){
+
+  this.loginService.userRole.subscribe(userRole => {
+
+    this.isAdmin = userRole.includes("admin");
+    this.isPhotographe = userRole.includes('photographe');
+    this.isLogged = userRole.length > 0;
+    this.photographePseudo = userRole.sub();
+
+  });
+}
+
+logout(){
+
+  this.loginService.signOut();
+  this.isLogged =false;
+  this.isPhotographe = false;
+  this.isAdmin = false;
+}
+
+
+     
 }

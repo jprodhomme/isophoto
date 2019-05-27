@@ -1,4 +1,4 @@
-  <form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()">
+  <form [formGroup]="loginForm" novalidate>
   <mat-card class="login-card">
     <mat-card-header>
       <mat-card-title>S'inscrire</mat-card-title>
@@ -42,7 +42,7 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button style="width:100%" mat-raised-button color="primary" type="submit" (click)="addPhotographe()">Valider</button>
+      <button style="width:100%" mat-raised-button color="primary" type="submit" (click)="onSubmit()">Valider</button>
     </mat-card-actions>
   </mat-card>
 </form>

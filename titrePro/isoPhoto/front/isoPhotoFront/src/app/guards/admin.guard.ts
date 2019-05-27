@@ -10,10 +10,10 @@ export class AdminGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (!this.loginService.loggedIn) {
+    if (!this.loginService.logged) {
       this.router.navigate(['login']);
       return false;
-    } else if (this.loginService.userRoles.getValue().includes('admin')) {
+    } else if (this.loginService.userRole.getValue().includes('admin')) {
       return true;
     }
 

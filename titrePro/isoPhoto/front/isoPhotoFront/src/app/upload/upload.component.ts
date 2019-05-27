@@ -18,16 +18,20 @@ import { Photographe } from '../model/photographe.model';
 })
 
 export class UploadComponent {
-
+  photographe = new Photographe();
+  photo=new Photo();
   newPhoto: Photo;
   photoList: Photo[] = []
   tagList: Tag[] = []
   tagString: string;
   formulaire: string;
 
+  
   selectedFiles: FileList;
   currentFileUpload: File;
   uploadService: UploadFileService;
+
+  image :string;
 
 
   uploadForm = this.fb.group({
@@ -45,6 +49,10 @@ export class UploadComponent {
   ngOnInit() {
 
     this.newPhoto = new Photo(0, '', '', '', [], [], [], this.getPhotographePseudo());
+
+    
+    this.image = localStorage.getItem('image');
+    console.log("THIS IMAGE ====>" + this.image);
   }
   selectFile(event) {
 
@@ -59,19 +67,34 @@ export class UploadComponent {
     }
   }
 
+
+
   onSubmit(){
+
     let photographe = new Photographe();
     let photo =new Photo();
+
+    
+
+    
+    
 
     photographe.pseudo = this.getPhotographePseudo();
 
     photo.titre = this.uploadForm.value.titre;
     photo.description = this.uploadForm.value.description;
     photo.image = this.split(this.uploadForm.value.image);
+    localStorage.setItem('image', photo.image);
+    
   
-
+    this.split(this.uploadForm.value.image)
     this.photoService.addPhoto(photo, this.uploadForm.value.tagListe, photographe.pseudo);
     this.currentFileUpload = this.selectedFiles.item(0);
+
+
+   
+
+
     this.photoService.pushFileToStorage(this.currentFileUpload).subscribe(event => {
       if (event instanceof HttpResponse) {
         console.log('File is completely uploaded!');

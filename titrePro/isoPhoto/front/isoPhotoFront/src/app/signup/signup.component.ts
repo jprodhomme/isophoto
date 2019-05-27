@@ -46,3 +46,4 @@ export class SignupComponent implements OnInit {
     console.log(photographe.pseudo);
   }
 }
+
