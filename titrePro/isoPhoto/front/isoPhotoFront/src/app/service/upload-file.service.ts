@@ -14,7 +14,7 @@ export class UploadFileService {
 
     formdata.append('file', file);
 
-    const req = new HttpRequest('POST', environment.apiUrl + 'uploadphoto', formdata, {
+    const req = new HttpRequest('POST', environment.apiUrl + 'photo/uploadphoto', formdata, {
       reportProgress: true,
       responseType: 'text'  
       

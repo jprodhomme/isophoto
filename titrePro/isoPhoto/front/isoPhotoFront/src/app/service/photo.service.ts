@@ -21,15 +21,14 @@ export class PhotoService {
   /**
    * @param newPhoto nouvelle photo à créer
    */
-  public addPhoto(newphoto: Photo, arrayTag : string) {
-    this.httpClient.post<Photo>('http://localhost:8080/api/create/' + newphoto, arrayTag).subscribe(
+  public addPhoto(newphoto: Photo, arrayTag : string, pseudo : string) {
+    console.log(pseudo);
+    this.httpClient.post<Photo>('http://localhost:8080/api/create/' + arrayTag + '/' + pseudo, newphoto).subscribe(
       newPhoto => {
 
-        console.log(newPhoto);
       }
     );
 
-    console.log(newphoto.tagListe.length)
   }
   /**
    * La fonction getAllPhotos() est privée car elle n'a besoin d'être appellée que dans le service.

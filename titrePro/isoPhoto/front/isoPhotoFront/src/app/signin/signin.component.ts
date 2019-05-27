@@ -2,6 +2,7 @@ import { Component, } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {LoginService} from '../service/login.service';
 import { Photographe } from '../model/photographe.model';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from '@angular/material';
 
 
 @Component({
@@ -18,7 +19,12 @@ export class SigninComponent {
     ]
   });
 
-  constructor(private fb: FormBuilder, 
+
+  horizontalPostion : MatSnackBarHorizontalPosition = 'left';
+  verticalPosition : MatSnackBarVerticalPosition = 'bottom';
+
+  constructor(private fb: FormBuilder,
+              private snackBar : MatSnackBar,
               private loginService: LoginService) {}
 
   onSubmit() {
@@ -27,9 +33,21 @@ export class SigninComponent {
     photographe.pseudo = this.loginForm.value.pseudo;
     photographe.password = this.loginForm.value.password;
 
+
+    
+
     this.loginService.signIn(photographe);
+   
+   
+      this.snackBar.open('Bonjour ' + photographe.pseudo , undefined, {
+        horizontalPosition : 'left',
+        verticalPosition : 'bottom',
+        panelClass : ['snackBar', 'snackBar2'] 
+  
+        
+      });
 
     
   }
-
 }
+

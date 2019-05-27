@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,38 +26,38 @@ import co.simplon.titrepro.isophoto.repository.PhotographeRepository;
 import co.simplon.titrepro.isophoto.services.PhotographeService;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/api")
 public class PhotographeController {
 	
 	@Autowired
 	PhotographeRepository photographeRepo;
 	
-	@Autowired
+
 	private PhotographeService photographeService;
+
 	
-	private BCryptPasswordEncoder passwordEncoder;
-	
-	public PhotographeController(PhotographeService photographeService, BCryptPasswordEncoder passwordEncoder) {
+	public PhotographeController(PhotographeService photographeService) {
 		this.photographeService = photographeService;
-		this.passwordEncoder = passwordEncoder;
+		
 	}
 	
 	
 	
     /**
-     * Method pour enregistrer un nouveau photographe en base
-     * @param photographe le nouveau photographe à enregistrer
-     * @return un JWT si le sign up est OK ou un code réponse KO
-     */
-    @PostMapping("/sign-up")
-    public ResponseEntity<JsonWebToken> signUp(@RequestBody Photographe photographe) {
-        try {
-        	System.out.println(photographe.getPassword());
-            return ResponseEntity.ok(new JsonWebToken(photographeService.signup(photographe)));
-        } catch (ExistingUsernameException ex) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
+	 * Method pour enregistrer un nouveau photographe en base
+	 * 
+	 * @param photographe le nouveau photographe à enregistrer
+	 * @return un JWT si le sign up est OK ou un code réponse KO
+	 */
+	@PostMapping("/sign-up")
+	public ResponseEntity<JsonWebToken> signUp(@RequestBody Photographe photographe) {
+		try {
+			return ResponseEntity.ok(new JsonWebToken(photographeService.signup(photographe)));
+		} catch (ExistingUsernameException ex) {
+			return ResponseEntity.badRequest().build();
+		}
+	}
 
     /**
      * Methode pour connecter un photographe (déjà existant)
@@ -79,11 +79,11 @@ public class PhotographeController {
      * @return la liste de tous les photographes présents en base.
      */
     @GetMapping("/photographe")
-    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('photographe')")
     public List<PhotographeDto> getAllUsers() {
         return photographeService.findAllPhotographe().stream().map(photographe -> new PhotographeDto(photographe.getPseudo(), photographe.getAuthority())).collect(Collectors.toList());
     }
-
+    
 
 
 	@GetMapping("/photographes")

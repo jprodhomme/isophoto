@@ -69,6 +69,11 @@ public class Photographe implements Serializable {
 		this.password = password;
 	}
 	
+	public Photographe(String pseudo, String password) {
+		this.pseudo = pseudo;
+		this.password = password;
+	}
+	
 	public Long getId() {
 		return this.id;
 	}

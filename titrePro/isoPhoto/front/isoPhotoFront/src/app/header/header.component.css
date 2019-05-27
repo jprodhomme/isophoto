@@ -6,8 +6,8 @@
   color:white;
   position: relative;
   top: -25px;
-  width:auto;
-  width: 100vw;
+  width:100%;
+  max-width: 1780px;
   background-image: url("../../assets/oldtimer-4190813_1920.jpg")
   
 }

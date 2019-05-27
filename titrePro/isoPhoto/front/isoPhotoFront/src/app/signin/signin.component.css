@@ -27,3 +27,8 @@ form {
   .col:last-child {
     margin-right: 0;
   }
+
+  .snackBar {
+    background-color: white;
+    color: black;
+  }

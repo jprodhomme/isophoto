@@ -1,0 +1,9 @@
+.container{
+    display: flex;
+    flex-direction: column;
+  }
+
+  img{
+  align-content : center;
+  width: 1200px;
+  }

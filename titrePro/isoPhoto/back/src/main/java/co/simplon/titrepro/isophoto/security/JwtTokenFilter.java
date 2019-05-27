@@ -32,23 +32,23 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     								FilterChain filterChain) throws ServletException, IOException {
     	
         String token = jwtTokenProvider.resolveToken(httpServletRequest);
-        System.out.println("requete : " + httpServletRequest);
-        System.out.println("token : " + token);
+   
+       
         
-        
-        try {
-        	
-            if (token != null && jwtTokenProvider.validateToken(token)) {
-                Authentication auth = jwtTokenProvider.getAuthentication(token);
-                SecurityContextHolder.getContext().setAuthentication(auth);
-            }
-        } catch (InvalidJWTException ex) {
-            // this is very important, since it guarantees the user is not authenticated at all
-            SecurityContextHolder.clearContext();
-            httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "Invalid JWT provided");
-            return;
-        }
+		try {
 
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
-    }
+			if (token != null && jwtTokenProvider.validateToken(token)) {
+				Authentication auth = jwtTokenProvider.getAuthentication(token);
+				SecurityContextHolder.getContext().setAuthentication(auth);
+
+			}
+		} catch (InvalidJWTException ex) {
+			// this is very important, since it guarantees the user is not authenticated at all
+			SecurityContextHolder.clearContext();
+			httpServletResponse.sendError(HttpStatus.BAD_REQUEST.value(), "Invalid JWT provided");
+			return;
+		}
+
+		filterChain.doFilter(httpServletRequest, httpServletResponse);
+	}
 }

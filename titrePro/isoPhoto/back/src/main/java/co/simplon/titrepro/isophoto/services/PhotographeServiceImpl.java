@@ -76,6 +76,28 @@ public class PhotographeServiceImpl implements PhotographeService {
             throw new ExistingUsernameException();
         }
     }
+    
+    @Override
+    public String signupAdmin(Photographe photographe) throws ExistingUsernameException {
+        if (!photographeRepo.existsByPseudo(photographe.getPseudo())) {
+            Photographe photographeToSave = new Photographe(photographe.getNom(),
+            												photographe.getPrenom(),
+            												photographe.getPseudo(),
+            												photographe.getEmail(),
+            												passwordEncoder.encode(photographe.getPassword()));
+           Photographe newPhotographe =  photographeRepo.save(photographeToSave);
+           
+           newPhotographe.setAuthority(authorityRepo.findByRole("admin"));
+           
+           photographeRepo.save(newPhotographe);
+           
+            
+            return jwtTokenProvider.createToken(newPhotographe.getPseudo(),
+            									newPhotographe.getAuthority());
+        } else {
+            throw new ExistingUsernameException();
+        }
+    }
 
 	@Override
 	public Photographe savePhotographe(String nom, 
@@ -102,5 +124,6 @@ public class PhotographeServiceImpl implements PhotographeService {
 		return this.photographeRepo.findByPseudo(pseudo);
 
 	}
+	
 
 }

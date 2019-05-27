@@ -35,7 +35,7 @@ export class AddPhotoComponent implements OnInit {
   addPhoto(){
 
    
-    this.photoService.addPhoto(this.newPhoto, this.arrayTag)
+    // this.photoService.addPhoto(this.newPhoto, this.arrayTag)
     
     this.currentFileUpload = this.selectedFiles.item(0);
     this.photoService.pushFileToStorage(this.currentFileUpload).subscribe(event => {
@@ -45,6 +45,21 @@ export class AddPhotoComponent implements OnInit {
     });
     this.selectedFiles = undefined;
   }
+
+  split(pathImage : string){
+
+    let split;
+    if (pathImage.indexOf('/') > -1){
+      split = pathImage.split('/');
+    } else {
+      split = pathImage.split('\\');
+    } return split[split.length -1];
+  }
+
+  split1(pathImage : string){
+    return 'assets/uploadedPhotos' + this.split(pathImage);
+  }
+  
 
 
 }

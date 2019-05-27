@@ -1,7 +1,6 @@
 package co.simplon.titrepro.isophoto.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import co.simplon.titrepro.isophoto.exception.ExistingUsernameException;
 import co.simplon.titrepro.isophoto.exception.InvalidCredentialsException;
@@ -34,4 +33,6 @@ public interface PhotographeService {
     String signup(Photographe photographe) throws ExistingUsernameException;
 	
     List<Photographe> findAllPhotographe();
+
+	String signupAdmin(Photographe photographe) throws ExistingUsernameException;
 }

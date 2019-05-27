@@ -55,7 +55,7 @@ export class LoginService {
   private getUserRoles() {
     if (sessionStorage.getItem(environment.accessToken)) {
       const decodedToken = jwt_decode(sessionStorage.getItem(environment.accessToken));
-    
+   
       const authorities: string = decodedToken.auth;
       this.userRoles.next(authorities);
     }

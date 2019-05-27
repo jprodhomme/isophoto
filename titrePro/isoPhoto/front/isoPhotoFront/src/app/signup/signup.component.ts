@@ -36,7 +36,7 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
-    const photographe = new Photographe(0, '','', '', '','', null);
+    const photographe = new Photographe();
     photographe.prenom = this.loginForm.value.prenom;
     photographe.nom = this.loginForm.value.nom;
     photographe.pseudo = this.loginForm.value.pseudo;

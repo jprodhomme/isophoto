@@ -1,11 +1,11 @@
-@import '~@angular/material/theming';
+// @import '~@angular/material/theming';
 
-@include mat-core();
+// @include mat-core();
 
-$theme-charte-primary: mat-palette($mat-green);
-$theme-charte-accent:  mat-palette($mat-green);
-$theme-charte-warn:    mat-palette($mat-red);
+// $theme-charte-primary: mat-palette($mat-green);
+// $theme-charte-accent:  mat-palette($mat-green);
+// $theme-charte-warn:    mat-palette($mat-red);
 
-$theme-charte: mat-dark-theme($theme-charte-primary, $theme-charte-accent, $theme-charte-warn);
+// $theme-charte: mat-dark-theme($theme-charte-primary, $theme-charte-accent, $theme-charte-warn);
 
-@include angular-material-theme($theme-charte);
+// @include angular-material-theme($theme-charte);

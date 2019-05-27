@@ -1,6 +1,4 @@
 package co.simplon.titrepro.isophoto.api.controller;
-import org.springframework.security.access.prepost.PreAuthorize;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,7 +125,6 @@ public class PhotoController {
 	 */
 	 
 	@PostMapping("/addphoto")
-	@PreAuthorize("hasAuthority('photographe')")
 	public ResponseEntity<?> addPhoto(@RequestBody Photo photo, String pseudo) {		
 		
 		
@@ -139,11 +136,11 @@ public class PhotoController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
 	}
-	
-	
-	@PostMapping("/create/{tag}")
+	@PreAuthorize("hasAuthority('photographe')")
+		@PostMapping("/create/{tag}/{pseudo}")
 	public ResponseEntity<?> addNewPhoto(@RequestBody Photo photo,
-										 @PathVariable String tag) {
+										 @PathVariable String tag,
+										 @PathVariable String pseudo) {
 		
 		List<Tag> tagList = new ArrayList<Tag>();
 		for (String tagString : tag.split(",")) {
@@ -151,52 +148,24 @@ public class PhotoController {
 			Tag foundTag = this.tagRepo.findByTag(tagString);
 			
 			if (foundTag == null) {
-				foundTag = this.tagRepo.save(new Tag(tag));
+				
+				foundTag = this.tagRepo.save(new Tag(tagString.trim()));
 			}
 			tagList.add(foundTag);
+			
 
 		}
-//		
+	
 		Photo newPhoto = null;
-//		
+		
 		String titre = photo.getTitre();
 		String description = photo.getDescription();
 		String  image = photo.getImage();
-		String pseudo = photo.getPhotographe().getPseudo();
-		
-//		System.out.println("LENGTH =====> "+ tags.size());
-//		tags.add(new Tag("testTag"));
-		
-//		ArrayList<Tag> tagsString = (ArrayList<Tag>) photo.getTags();
-//		String pseudo = "lolo";
-//		
-//		if ((titre == null) || (titre.isEmpty())) {
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Il manque le titre de la photo");
-//		}
-//		if ((description == null) || (description.isEmpty())) {
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Il manque la description de la photo");
-//		}
-//		if (image == null || (image.isEmpty())) {
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Il manque l'image");
-//		}
-//		if ((tagsString == null) || (tagsString.isEmpty())) {
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Il manque les tags");
-//		}
-//		if ((pseudo == null) || (pseudo.isEmpty())) {
-//			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Il manque le photographe");
-//		}
-//		newPhoto = new Photo(titre, description, image, tagsString, this.photographeRepo.findByPseudo(pseudo));
-		
-		System.out.println("=================>" + photo.getTitre());
-		System.out.println("=================>" + photo.getDescription());
-		System.out.println("=================>" + photo.getTags());
-		System.out.println("=================>" + photo.getImage());
-		System.out.println("=================>" + photo.getPhotographe().getPseudo());
-//		
+		System.out.println(photo.getImage(	));
+
 		newPhoto = new Photo(titre, description, image, tagList, this.photographeRepo.findByPseudo(pseudo));
 		this.photoRepo.save(newPhoto);
-//		
-//		System.out.println("LENGTH =====> "+ tags.size());
+
 		return ResponseEntity.status(HttpStatus.OK).body(newPhoto);
 	}
 
@@ -220,8 +189,6 @@ public class PhotoController {
 		
 		
 	}
-
-	
 
 	@DeleteMapping("/deletephoto")
 	public ResponseEntity<?> delPhoto(@Valid long delId) {

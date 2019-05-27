@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FileServiceImpl implements FileService {
-	private final Path rootLocation = Paths.get("/home/julien/Documents/programmation/angular/isoPhotoFront/src/assets/uploadedPhotos");
+	private final Path rootLocation = Paths.get("/home/julien/Documents/programmation/isophoto/titrePro/isoPhoto/front/isoPhotoFront/src/assets/uploadedPhotos");
 
 	public void store(MultipartFile file) {
 		try {

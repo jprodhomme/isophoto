@@ -5,8 +5,6 @@ import { Commentaire } from './commentaire.model';
 
 export class Photo{
 
-  
-
     constructor(
                 public id? : number,
                 public description? : string,
@@ -15,10 +13,6 @@ export class Photo{
                 public donListe? : Don[],
                 public commentaireListe? : Commentaire[],
                 public tagListe? : Tag[],
-                public photographe? : Photographe)
-                {
-           
-                }
+                public photographe? : Photographe) { }
 
-    
-            }
+}
