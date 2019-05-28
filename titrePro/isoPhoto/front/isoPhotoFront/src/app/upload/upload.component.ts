@@ -74,6 +74,8 @@ export class UploadComponent {
     let photographe = new Photographe();
     let photo =new Photo();
 
+    photo.image = this.split(this.uploadForm.value.image);
+    localStorage.setItem('image', photo.image);
     
 
     
@@ -84,8 +86,6 @@ export class UploadComponent {
     photo.titre = this.uploadForm.value.titre;
     photo.description = this.uploadForm.value.description;
     photo.image = this.split(this.uploadForm.value.image);
-    localStorage.setItem('image', photo.image);
-    
   
     this.split(this.uploadForm.value.image)
     this.photoService.addPhoto(photo, this.uploadForm.value.tagListe, photographe.pseudo);

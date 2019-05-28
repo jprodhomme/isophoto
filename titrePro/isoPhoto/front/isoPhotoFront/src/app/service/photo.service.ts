@@ -3,6 +3,7 @@ import { Photo } from '../model/photo.model';
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,16 @@ export class PhotoService {
   
   newPhoto : Photo;
 
-  availablePhotos: Photo[];
+ public availablePhotos: Photo[];
 
   // la liste observable que l'on rend visible partout dans l'appli
   availablePhotos$: BehaviorSubject<Photo[]> = new BehaviorSubject(this.availablePhotos);
 
   constructor(private httpClient: HttpClient) { }
 
+  getPhotos(): Observable<Photo[]>{
+    return this.httpClient.get<Photo[]>(environment.apiUrl + 'photos');
+  }
   /**
    * @param newPhoto nouvelle photo à créer
    */
@@ -38,19 +42,6 @@ export class PhotoService {
     return this.httpClient.get<Photo[]>('http://localhost:8080/api/photos');
   }
 
-  /**
-   * @param idPhoto l'id qu'il faut rechercher dans la liste.
-   */
-  public findPhotoById(idPhoto: number): Observable<Photo> {
-    if (idPhoto) {
-      if (!this.availablePhotos) {
-        return this.getAllPhotos().pipe(map(photos => photos.find(photo => photo.id === idPhoto)));
-      }
-      return of(this.availablePhotos.find(photo => photo.id === idPhoto));
-    } else {
-      return ; // TO DO 
-    }
-  }
  
   pushFileToStorage(file: File): Observable<HttpEvent<{}>> {
 
@@ -68,4 +59,12 @@ export class PhotoService {
     return this.httpClient.request(req);
   }
 
-}
+
+  public findPhotoByPhotographe(pseudo: string) : Observable<Photo[]>{
+    
+    
+    return this.httpClient.get<Photo[]>(environment.apiUrl + 'photosbyphotographe/' + pseudo);
+   }
+    
+  }
+

@@ -10,7 +10,9 @@ import { PhotoListComponent } from './photo-list/photo-list.component';
 
 const routes: Routes = [
 
-  {path : 'profil', component : DonComponent},
+
+
+  {path : 'dons', component : DonComponent},
   {path : 'photos', component : PhotoListComponent},
   {path : 'upload', component : UploadComponent},
   {path : 'signup', component : SignupComponent},

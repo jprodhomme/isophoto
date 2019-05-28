@@ -1,3 +1,7 @@
-<p>
-  photo-list works!
-</p>
+<table>
+  <tr *ngFor="let image of photoListe | async">
+    <td>
+      <img src="../../assets/uploadedPhotos/{{image.image}}">
+    </td>
+  </tr>
+</table>

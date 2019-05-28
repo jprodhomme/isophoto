@@ -6,24 +6,16 @@
   color:white;
   position: relative;
   top: -25px;
-  width:100%;
-  max-width: 1780px;
+  width : 100%;
   background-image: url("../../assets/oldtimer-4190813_1920.jpg")
   
 }
 
-body {
-  background: #282828;/* match border color */
-  text-align: center;
-}
 
-small {
-  color: #333;
-}
 .logo {
   font: 50px 'Arial Narrow', sans-serif;/* I picked this font because it's the closest looking 'web safe' font http://cssfontstack.com/ */
   color: #fefefe;
-  text-transform: uppercase;
+ 
   letter-spacing: -4px;
 }
 
@@ -31,16 +23,7 @@ small {
 .logo span {
   position: relative;
 }
-.logo span:before,
-.logo span:after {
-  content: '';
-  position: absolute;
-  border-width: 12px;/* makes a nice, big 64px square */
-  border-style: solid;
-  border-color: transparent;
-  height: 0;
-  z-index: 10;
-}
+
 
 /* stuff for 1st word */
 .logo .word1 {

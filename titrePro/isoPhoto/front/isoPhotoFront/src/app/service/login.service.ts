@@ -56,7 +56,7 @@ export class LoginService {
     this.router.navigate(['']);
   }
 
-  private getUserRole() {
+  public getUserRole() {
     if (sessionStorage.getItem(environment.accessToken)) {
       const decodedToken = jwt_decode(sessionStorage.getItem(environment.accessToken));
    

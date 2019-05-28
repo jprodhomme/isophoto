@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../service/login.service';
-import { SigninComponent } from '../signin/signin.component';
 
 
 @Component({
@@ -14,6 +13,7 @@ isLogged = false;
 isAdmin : boolean;
 isPhotographe : boolean;
 photographePseudo : string;
+pseudo: string;
 
 constructor(private loginService : LoginService) { }
 
@@ -21,6 +21,11 @@ ngOnInit() {
 
   sessionStorage.clear;
   this.getConnection();
+  
+  this.pseudo = localStorage.getItem('pseudo');
+
+
+
 
   }
 
@@ -32,6 +37,8 @@ getConnection(){
     this.isPhotographe = userRole.includes('photographe');
     this.isLogged = userRole.length > 0;
     this.photographePseudo = userRole.sub();
+
+    sessionStorage.setItem('pseudo', this.photographePseudo);
 
   });
 }

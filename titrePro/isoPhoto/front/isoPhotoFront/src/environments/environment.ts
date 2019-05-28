@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:8080/api/',
-  accessToken: 'access_token'
+  accessToken: 'access_token',
 };
 /*
  * For easier debugging in development mode, you can import the following file
