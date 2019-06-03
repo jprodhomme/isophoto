@@ -3,9 +3,9 @@ package co.simplon.titrepro.isophoto.services;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface FileService {
-	void store(MultipartFile file);
+	void store(MultipartFile file, String pseudo);
 	
-	String photoString(MultipartFile file);
+	
 	
 
 }

@@ -43,7 +43,7 @@ export class LoginService {
   signUp(photographe: Photographe) {
     this.httpClient.post<Photographe>(environment.apiUrl + 'sign-up', photographe).subscribe(
       newPhotographe => {
-        
+        this.router.navigate(['/signin']);
         
       },
       error => console.log('Error while signUp'));

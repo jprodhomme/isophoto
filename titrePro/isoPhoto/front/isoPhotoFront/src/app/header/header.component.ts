@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../service/login.service';
+import { environment } from 'src/environments/environment.prod';
 
 
 @Component({
@@ -24,9 +25,6 @@ ngOnInit() {
   
   this.pseudo = localStorage.getItem('pseudo');
 
-
-
-
   }
 
 getConnection(){
@@ -50,6 +48,11 @@ logout(){
   this.isPhotographe = false;
   this.isAdmin = false;
 }
+
+public clearStorage(){
+  window.localStorage.clear();
+
+  }
 
 
      

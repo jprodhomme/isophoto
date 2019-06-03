@@ -1,5 +1,7 @@
 package co.simplon.titrepro.isophoto.services;
 
+import java.util.List;
+
 import co.simplon.titrepro.isophoto.model.Photo;
 
 public interface PhotoService {
@@ -13,4 +15,8 @@ public interface PhotoService {
 //	Photo addPhoto(Photo photo);
 
 	Photo addPhoto(Photo photo, String pseudo);
+	
+	public List<String> photoCommentaire( Long idPhoto);
+
+	public String photographebyphotoid(Long idPhoto);
 }

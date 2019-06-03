@@ -39,13 +39,13 @@ export class SigninComponent {
     this.loginService.signIn(photographe);
    
    
-      this.snackBar.open('Bonjour ' + photographe.pseudo , undefined, {
-        horizontalPosition : 'left',
-        verticalPosition : 'bottom',
-        panelClass : ['snackBar', 'snackBar2'] 
+      // this.snackBar.open('Bonjour ' + photographe.pseudo , undefined, {
+      //   horizontalPosition : 'left',
+      //   verticalPosition : 'bottom',
+      //   panelClass : ['snackBar', 'snackBar2'] 
   
         
-      });
+      // });
       return photographe.pseudo;
     
   }

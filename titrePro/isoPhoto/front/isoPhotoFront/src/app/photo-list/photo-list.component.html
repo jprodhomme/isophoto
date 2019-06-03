@@ -1,7 +1,11 @@
-<table>
-  <tr *ngFor="let image of photoListe | async">
-    <td>
-      <img src="../../assets/uploadedPhotos/{{image.image}}">
-    </td>
-  </tr>
-</table>
+
+
+<div class="top">
+
+<div *ngFor="let image of photoListe | async">
+  <a (click)="onSelectImage(image.id)">
+    <img src="../../assets/uploadedPhotos/{{image.image}}" style="height: 200px;">
+    </a>
+  </div>
+
+</div>

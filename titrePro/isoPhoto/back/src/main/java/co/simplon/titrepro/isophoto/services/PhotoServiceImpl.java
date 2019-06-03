@@ -1,9 +1,11 @@
 package co.simplon.titrepro.isophoto.services;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import co.simplon.titrepro.isophoto.model.Commentaire;
 import co.simplon.titrepro.isophoto.model.Photo;
 import co.simplon.titrepro.isophoto.model.Tag;
 import co.simplon.titrepro.isophoto.repository.PhotoRepository;
@@ -70,5 +72,23 @@ public class PhotoServiceImpl implements PhotoService {
             return photoToSave;
        
     }
+
+	@Override
+	public List<String> photoCommentaire(Long idPhoto) {
+		
+		List<String> commentairePhoto = new ArrayList<String>();
+				
+		
+		for (Commentaire commentaire :   this.photoRepo.findById(idPhoto).get().getCommentaires()) {
+			commentairePhoto.add(commentaire.getCommentaires());
+		}
+		return commentairePhoto;
+	}
+
+	@Override
+	public String photographebyphotoid(Long idPhoto) {
+		
+		return this.photoRepo.findById(idPhoto).get().getPhotographe().getPseudo();
+	}
 	
 }

@@ -3,12 +3,33 @@
     flex-direction: column;
   }
 
-  img{
-  align-content : center;
-  width: 1200px;
+img{
+  height: auto;
+  width : 640px;
+ 
   }
-  .previz{
-    
-    display: table;
-   margin: 0 auto;
-      }
+
+
+.previz1{
+
+  display: block;
+  margin-left: auto;
+  margin-right:auto;
+
+
+  position : absolute;
+  
+  width: 120px;
+       
+  display: table;
+  margin: 0 auto;
+}
+
+.previz{
+  display: block;
+  margin-left: auto;
+  margin-right:auto;
+  width : 100%;
+
+
+}

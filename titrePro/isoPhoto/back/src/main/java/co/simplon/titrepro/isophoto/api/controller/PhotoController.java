@@ -1,6 +1,7 @@
 package co.simplon.titrepro.isophoto.api.controller;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -73,14 +75,29 @@ public class PhotoController {
 	}
 
 	@GetMapping("/photosbyid/{idPhoto}")
-	public ResponseEntity<?> getPhotoById(@PathVariable Long idPhoto) {
+	public ResponseEntity<Optional<Photo>> getPhotoById(@PathVariable Long idPhoto) {
 
 		try {
+			Optional<Photo> optPhoto = null;
+			optPhoto = photoRepo.findById(idPhoto);
+			System.out.println("PSEUDO +++++ " + optPhoto.get().getPhotographe().getPseudo());
+			
 			return ResponseEntity.status(HttpStatus.OK).body(photoRepo.findById(idPhoto));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 	}
+	
+	@GetMapping("photocommentairesbyid/{idPhoto}")
+	public List<String> getCommentairesById(@PathVariable Long idPhoto){
+		return this.photoService.photoCommentaire(idPhoto);
+	}
+	
+	@GetMapping("photographebyphotoid/{idPhoto}")
+	public String getphotographebyphotoid(@PathVariable Long idPhoto){
+		return this.photoService.photographebyphotoid(idPhoto);
+	}
+	
 
 	@GetMapping("/photosbytag")
 	public ResponseEntity<?> getPhotosbyTag(@Valid String tag) {
@@ -106,6 +123,7 @@ public class PhotoController {
 			Photographe photographeNom = photographeService.findByPseudo(pseudo);
 
 			listePhoto = (List<Photo>) photographeNom.getPhotos();
+			System.out.println(listePhoto);
 
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -157,30 +175,37 @@ public class PhotoController {
 		}
 	
 		Photo newPhoto = null;
+		Photographe photographe = this.photographeRepo.findByPseudo(pseudo);
 		
 		String titre = photo.getTitre();
 		String description = photo.getDescription();
-		String  image = photo.getImage();
-		System.out.println(photo.getImage(	));
+		String  image = photographe.getPseudo()+"-" +photo.getImage();
+		System.out.println("IMAGE " + image);
 
-		newPhoto = new Photo(titre, description, image, tagList, this.photographeRepo.findByPseudo(pseudo));
+		newPhoto = new Photo(titre, description, image, tagList, photographe);
 		this.photoRepo.save(newPhoto);
 
 		return ResponseEntity.status(HttpStatus.OK).body(newPhoto);
 	}
-
 
 	/**
 	 * 
 	 * @param file
 	 * @return
 	 */
-	@PostMapping("/photo/uploadphoto")
-	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
+	@PostMapping("/photo/uploadphoto/{pseudo}")
+	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,
+												   @PathVariable String pseudo) {
 		String message = "";
 		try {
-			fileService.store(file);
+			String thisPseudo = pseudo +"-";
+			
+			fileService.store(file,  thisPseudo);
+			
+			
 			message = "You successfully uploaded " + file.getOriginalFilename() + "!";
+			
+			
 			return ResponseEntity.status(HttpStatus.OK).body(message);
 		} catch (Exception e) {
 			message = "Fail to upload Profile Picture" + file.getOriginalFilename() + "!";
@@ -189,6 +214,7 @@ public class PhotoController {
 		
 		
 	}
+
 
 	@DeleteMapping("/deletephoto")
 	public ResponseEntity<?> delPhoto(@Valid long delId) {

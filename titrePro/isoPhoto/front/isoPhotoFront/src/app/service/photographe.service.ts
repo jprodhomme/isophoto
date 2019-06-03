@@ -23,7 +23,6 @@ export class PhotographeService {
     this.httpClient.post<Photographe>('POST','http://localhost:8080/api/sign-up' + newPhotographe, ).subscribe(
       newPhotographe => {
        this.availablePhotographes.push(newPhotographe);
-        console.log(newPhotographe);
       }
     );
 }

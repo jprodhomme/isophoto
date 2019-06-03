@@ -34,6 +34,20 @@ export class PhotoService {
     );
 
   }
+
+   /** La fonction publishPhotos() est chargée une fois au démarrage de l'application.
+  * Elle récupère la liste des photos depuis la base de données et met à jour la liste et la liste observable.
+  */
+ public publishPhotos() {
+  this.getPhotos().subscribe(
+    photoList => {
+      this.availablePhotos = photoList;
+      this.availablePhotos$.next(this.availablePhotos);
+    });
+}
+
+
+
   /**
    * La fonction getAllPhotos() est privée car elle n'a besoin d'être appellée que dans le service.
    */
@@ -43,18 +57,18 @@ export class PhotoService {
   }
 
  
-  pushFileToStorage(file: File): Observable<HttpEvent<{}>> {
+  pushFileToStorage(file: File, pseudo :string): Observable<HttpEvent<{}>> {
 
     const formdata: FormData = new FormData();
 
     formdata.append('file', file);
 
-    const req = new HttpRequest('POST', 'http://localhost:8080/api/photo/uploadphoto', formdata, {
+    const req = new HttpRequest('POST', 'http://localhost:8080/api/photo/uploadphoto/'+pseudo,  formdata, {
 
       reportProgress: true,
       responseType: 'text'  
       
-    }
+    }  
     );
     return this.httpClient.request(req);
   }
@@ -64,6 +78,13 @@ export class PhotoService {
     
     
     return this.httpClient.get<Photo[]>(environment.apiUrl + 'photosbyphotographe/' + pseudo);
+   }
+
+
+  public findPhotoById(id: number) : Observable<Photo>{
+    
+    
+    return this.httpClient.get<Photo>(environment.apiUrl + '/photosbyid/' + id);
    }
     
   }

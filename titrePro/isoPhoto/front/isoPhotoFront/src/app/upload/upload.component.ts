@@ -74,28 +74,20 @@ export class UploadComponent {
     let photographe = new Photographe();
     let photo =new Photo();
 
-    photo.image = this.split(this.uploadForm.value.image);
-    localStorage.setItem('image', photo.image);
-    
-
-    
-    
-
     photographe.pseudo = this.getPhotographePseudo();
-
+    photo.image = this.split(this.uploadForm.value.image);
+    localStorage.setItem('image', photographe.pseudo+"-"+photo.image); //pour l'afficher sous le formulaire d'upload
+        
     photo.titre = this.uploadForm.value.titre;
     photo.description = this.uploadForm.value.description;
     photo.image = this.split(this.uploadForm.value.image);
   
-    this.split(this.uploadForm.value.image)
     this.photoService.addPhoto(photo, this.uploadForm.value.tagListe, photographe.pseudo);
     this.currentFileUpload = this.selectedFiles.item(0);
 
-
+    
    
-
-
-    this.photoService.pushFileToStorage(this.currentFileUpload).subscribe(event => {
+    this.photoService.pushFileToStorage(this.currentFileUpload, photographe.pseudo).subscribe(event => {
       if (event instanceof HttpResponse) {
         console.log('File is completely uploaded!');
       }

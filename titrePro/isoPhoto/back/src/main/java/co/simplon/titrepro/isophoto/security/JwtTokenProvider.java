@@ -56,7 +56,9 @@ public class JwtTokenProvider {
 	public String createToken(String pseudo, Authority authority) {
 		
 		 Claims claims = Jwts.claims().setSubject(pseudo);
+		 claims.put("pseudo", pseudo);
 	     claims.put("auth", authority);
+	     claims.put("authRole", authority.getRole());
 
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);

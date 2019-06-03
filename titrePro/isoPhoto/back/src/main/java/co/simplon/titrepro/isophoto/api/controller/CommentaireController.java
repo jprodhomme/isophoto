@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,12 +43,14 @@ public class CommentaireController {
 		return ResponseEntity.status(HttpStatus.OK).body(listeCommentaire);
 	}
 
-	@PutMapping("/addcommentaire")
-	public ResponseEntity<?> addCommentaire(@Valid Long idPhoto, @Valid String commentaireString) {
+	@PutMapping("/addcommentaire/{idPhoto}/{commentaireBox}")
+	public ResponseEntity<?> addCommentaire(@PathVariable Long idPhoto,
+											@PathVariable String commentaireBox) {
 
 		try {
+			
 			return ResponseEntity.status(HttpStatus.OK)
-					.body(this.commentaireService.addCommentaire(idPhoto, commentaireString));
+					.body(this.commentaireService.addCommentaire(idPhoto, commentaireBox));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}

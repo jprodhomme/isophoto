@@ -20,6 +20,10 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {PhotographeGuard} from './guards/photographe.guard';
 import {AdminGuard} from './guards/admin.guard';
 import {JwtInterceptor} from './http-interceptor/jwt.interceptor';
+import { PhotoDetailsComponent } from './photo-details/photo-details.component';
+// import { GalleryModule } from '@gnx-gallery/core';
+// import { LightboxModule } from '@ngx-gallery/lightbox';
+// import { GallerizeModule } from 'ngx-gallery/gallerize';
 
 
 @NgModule({
@@ -36,6 +40,7 @@ import {JwtInterceptor} from './http-interceptor/jwt.interceptor';
     PhotoComponent,
     SignupComponent,
     SigninComponent,
+    PhotoDetailsComponent,
     
   ],
   imports: [
@@ -44,8 +49,11 @@ import {JwtInterceptor} from './http-interceptor/jwt.interceptor';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-     FormsModule,
-     ReactiveFormsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    // GalleryModule,
+    // LightboxModule,
+    // GallerizeModule,
     
   
     ],
