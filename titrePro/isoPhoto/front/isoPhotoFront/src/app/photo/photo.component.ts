@@ -34,4 +34,10 @@ export class PhotoComponent implements OnInit {
     
   }
 
+  onSelectImage(photoId : number){
+
+    this.photoService.findPhotoById(photoId);
+    this.router.navigate(['/photodetails/' +photoId]);
+  }
+
 }

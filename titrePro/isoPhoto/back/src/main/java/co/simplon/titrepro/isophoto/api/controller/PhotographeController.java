@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import co.simplon.titrepro.isophoto.dto.PhotographeDto;
 import co.simplon.titrepro.isophoto.exception.ExistingUsernameException;
 import co.simplon.titrepro.isophoto.exception.InvalidCredentialsException;
 import co.simplon.titrepro.isophoto.model.Photographe;
+import co.simplon.titrepro.isophoto.repository.PhotoRepository;
 import co.simplon.titrepro.isophoto.repository.PhotographeRepository;
 import co.simplon.titrepro.isophoto.services.PhotographeService;
 
@@ -33,6 +35,8 @@ public class PhotographeController {
 	@Autowired
 	PhotographeRepository photographeRepo;
 	
+	@Autowired
+	PhotoRepository photoRepo;
 
 	private PhotographeService photographeService;
 
@@ -84,6 +88,11 @@ public class PhotographeController {
         return photographeService.findAllPhotographe().stream().map(photographe -> new PhotographeDto(photographe.getPseudo(), photographe.getAuthority())).collect(Collectors.toList());
     }
     
+    @GetMapping("/photographebyphotoid/{photoId}")
+    public String getPhotographeByPhotoId(@PathVariable Long photoId) {
+    	return this.photoRepo.findById(photoId).get().getPhotographe().getPseudo();
+    	
+    }
 
 
 	@GetMapping("/photographes")

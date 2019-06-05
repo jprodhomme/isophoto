@@ -41,11 +41,12 @@ public class Photo implements Serializable {
 
 	// bi-directional many-to-one association to Don
 	@OneToMany(mappedBy = "photo")
+	@JsonManagedReference (value="don")
 	private List<Don> dons;
 
 	// bi-directional many-to-one association to Commentaire
 	@OneToMany(mappedBy = "photo")
-	@JsonManagedReference
+	@JsonManagedReference(value="photo-commentaire")
 	private List<Commentaire> commentaires;
 
 	// bi-directional many-to-many association to Tag
@@ -58,7 +59,7 @@ public class Photo implements Serializable {
 	// bi-directional many-to-one association to Photographe
 	@ManyToOne
 	@JoinColumn(name = "id_photographe")
-	@JsonBackReference
+	@JsonBackReference(value="photo-photographe")
 	private Photographe photographe;
 
 	public Photo() {

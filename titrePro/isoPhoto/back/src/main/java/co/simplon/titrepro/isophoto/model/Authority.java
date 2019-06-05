@@ -11,7 +11,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
  * The persistent class for the authorities database table.
@@ -31,7 +31,7 @@ public class Authority implements Serializable {
 
 	// bi-directional many-to-one association to Photographe
 	@OneToMany(mappedBy = "authority")
-	@JsonIgnore
+	@JsonManagedReference
 	private List<Photographe> photographes;
 
 	public Authority() {

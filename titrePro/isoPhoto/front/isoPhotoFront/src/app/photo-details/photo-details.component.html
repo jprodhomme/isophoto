@@ -1,5 +1,5 @@
 <div class="low">
-
+  Mes Photos
   <div>
     <span colspan="2" style="font: 20px 'Arial Narrow', sans-serif; text-transform: uppercase">{{photoTitre}} </span>
   </div>
@@ -27,14 +27,19 @@
     <th colspan="2" style="font: 25px 'Arial Narrow', sans-serif;"> COMMENTAIRES : </th>
 
   </tr>
+  <tr * ngFor="let pseudo of pseudoByPhotoId | async">
+      <span style="font: 12px 'Arial Narrow', sans-serif;"> {{pseudo.pseudo}} : </span>
+  </tr>
 
   <tr *ngFor="let commentaire of stringCommentaire |async ">
 
-    <span style="font: 12px 'Arial Narrow', sans-serif;"> {{photoPseudo}} : </span>
+   
     <span hidden style="font: 12px 'Arial Narrow', sans-serif;"> {{commentaire.id}} : </span>
     <span style="  font: 20px 'Arial Narrow', sans-serif;"> {{commentaire.commentaires}} </span>
     <button (click)="deleteCommentaire(commentaire.id)">Supprimer</button>
 
   </tr>
+
+  
 
 </div>

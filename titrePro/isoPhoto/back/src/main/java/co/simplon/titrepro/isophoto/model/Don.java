@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  * The persistent class for the don database table.
@@ -38,8 +38,8 @@ public class Don implements Serializable {
 
 	// bi-directional many-to-one association to Photo
 	@ManyToOne
-	@JsonIgnore
 	@JoinColumn(name = "id_photo")
+	@JsonBackReference(value="don")
 	private Photo photo;
 
 	public Don() {
