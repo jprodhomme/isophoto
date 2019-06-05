@@ -5,6 +5,7 @@ import * as jwt_decode from 'jwt-decode';
 import { Photo } from '../model/photo.model';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { CommentaireService } from '../service/commentaire.service';
 
 @Component({
   selector: 'app-photo-list',
@@ -13,7 +14,9 @@ import { Router } from '@angular/router';
 })
 export class PhotoListComponent implements OnInit {
 
-  constructor(private photoService : PhotoService, private router : Router) { }
+  constructor(private photoService : PhotoService, 
+              private commentaireService : CommentaireService,
+              private router : Router) { }
 
   pseudo : string;
   photoListe : Observable<Photo[]>;
@@ -31,6 +34,8 @@ export class PhotoListComponent implements OnInit {
   onSelectImage(photoId : number){
 
     this.photoService.findPhotoById(photoId);
+
+
     this.router.navigate(['/photodetails/' +photoId]);
   }
 

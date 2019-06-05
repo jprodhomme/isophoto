@@ -23,6 +23,7 @@ import co.simplon.titrepro.isophoto.dto.PhotographeDto;
 import co.simplon.titrepro.isophoto.exception.ExistingUsernameException;
 import co.simplon.titrepro.isophoto.exception.InvalidCredentialsException;
 import co.simplon.titrepro.isophoto.model.Photographe;
+import co.simplon.titrepro.isophoto.repository.CommentaireRepository;
 import co.simplon.titrepro.isophoto.repository.PhotoRepository;
 import co.simplon.titrepro.isophoto.repository.PhotographeRepository;
 import co.simplon.titrepro.isophoto.services.PhotographeService;
@@ -37,6 +38,9 @@ public class PhotographeController {
 	
 	@Autowired
 	PhotoRepository photoRepo;
+	
+	@Autowired
+	CommentaireRepository commentaireRepo;
 
 	private PhotographeService photographeService;
 
@@ -75,6 +79,7 @@ public class PhotographeController {
         } catch (InvalidCredentialsException ex) {
             return ResponseEntity.badRequest().build();
         }
+        
     }
 
     /**
@@ -88,11 +93,40 @@ public class PhotographeController {
         return photographeService.findAllPhotographe().stream().map(photographe -> new PhotographeDto(photographe.getPseudo(), photographe.getAuthority())).collect(Collectors.toList());
     }
     
-    @GetMapping("/photographebyphotoid/{photoId}")
-    public String getPhotographeByPhotoId(@PathVariable Long photoId) {
-    	return this.photoRepo.findById(photoId).get().getPhotographe().getPseudo();
+    @GetMapping("/photographefromphotoid/{photoId}")
+    public ResponseEntity<?> getPhotographeByPhotoIdLOL(@PathVariable Long photoId) {
     	
-    }
+    	System.out.println("TTTTT" + this.photoRepo.findById(photoId).get().getPhotographe().getPseudo());
+    	Photographe photographe = this.photoRepo.findById(photoId).get().getPhotographe();
+    	
+    	try {
+    		
+
+		} catch (Exception e) {
+
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+
+		return ResponseEntity.status(HttpStatus.OK).body(photographe);
+	}
+    
+
+    @GetMapping("photographefromcomid/{comId}")
+    public ResponseEntity<?> getPhotographeByCommentaireId(@PathVariable Long comId) {
+    	
+    
+    	Photographe photographe = this.commentaireRepo.findById(comId).get().getPhotographe();
+    	
+    	try {
+    		
+
+		} catch (Exception e) {
+
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+
+		return ResponseEntity.status(HttpStatus.OK).body(photographe);
+	}
 
 
 	@GetMapping("/photographes")

@@ -23,7 +23,6 @@ export class PhotoComponent implements OnInit {
   constructor(
     private photoService: PhotoService,
     private router: Router,
-    private httpClient: HttpClient,
     ) {
      }
 
@@ -39,5 +38,7 @@ export class PhotoComponent implements OnInit {
     this.photoService.findPhotoById(photoId);
     this.router.navigate(['/photodetails/' +photoId]);
   }
+
+  
 
 }

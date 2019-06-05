@@ -38,7 +38,6 @@ public class Commentaire implements Serializable {
 	
 	//bi-directional many-to-one association to Photographe
 	@ManyToOne
-	@JsonBackReference
 	@JoinColumn(name="id_photographe")
 	private Photographe photographe;
 	

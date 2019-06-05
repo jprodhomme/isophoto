@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Commentaire } from '../model/commentaire.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Photographe } from '../model/photographe.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class CommentaireService {
 
   public availableCommentaires: Commentaire[] = [];
 
-  
+
   public getCommentaire(photoId: number) {
 
     this.stringCommentaire = this.httpClient.get<Commentaire[]>(environment.apiUrl + 'photocommentairesbyid/' + photoId);
@@ -32,9 +33,16 @@ export class CommentaireService {
 
   public deleteCommentaire(idPhoto : number, pseudo : string, comId: number){
 
-    this.httpClient.delete<string>(environment.apiUrl + 'deletecommentaire/' + comId + '/'+ pseudo).subscribe();
+    this.httpClient.delete<string>(environment.apiUrl + 'deletecommentaire/' + comId + '/'+ pseudo + '/' + idPhoto).subscribe();
 
     this.stringCommentaire = this.httpClient.get<Commentaire[]>(environment.apiUrl + 'photocommentairesbyid/' + idPhoto);
+
+  }
+
+ public photographeFromComId(comId){
+   
+    this.httpClient.get<Photographe>(environment.apiUrl + 'photographefromcomid/' + comId).subscribe();
+
 
   }
 

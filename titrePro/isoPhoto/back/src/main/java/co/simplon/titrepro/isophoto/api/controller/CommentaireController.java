@@ -78,15 +78,22 @@ public class CommentaireController {
 
 	}
 
-	@DeleteMapping("/deletecommentaire/{delId}/{pseudo}")
-	public ResponseEntity<?> delCommentaire(@PathVariable Long delId,
-											@PathVariable String pseudo) {
+	@DeleteMapping("/deletecommentaire/{comId}/{pseudo}/{photoId}")
+	public ResponseEntity<?> delCommentaire(@PathVariable Long comId,
+											@PathVariable String pseudo,
+											@PathVariable Long photoId) {
 		
 	try{
+			if(pseudo.equals("Admin")) {
+
+				this.commentaireRepo.deleteById(comId);
+			}
+				
 	    			
-		if (this.commentaireRepo.findById(delId).get().getPhotographe().getPseudo().equals( pseudo) || (this.photographeRepo.findByPseudo(pseudo).getPseudo().equals( pseudo)))
+		if (this.commentaireRepo.findById(comId).get().getPhotographe().getPseudo().equals( pseudo) ||
+				(this.photoRepo.findById(photoId).get().getPhotographe().getPseudo().equals( pseudo)) 					)
 		
-			this.commentaireRepo.deleteById(delId);
+			this.commentaireRepo.deleteById(comId);
 		
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

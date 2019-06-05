@@ -3,24 +3,37 @@
   <mat-toolbar-row>
 
     <span class="logo">
+
       <span class="word1">iSO</span>
+
       <span class="word2">PHOTO</span>
+
     </span>
 
   </mat-toolbar-row>
 
-  <mat-toolbar-row >
+  <mat-toolbar-row style="left: 65%; "> Bienvenue {{this.thisIsPseudo}}
+
+  </mat-toolbar-row>
+
+  <mat-toolbar-row>
+
   </mat-toolbar-row>
 
   <mat-toolbar-row class="bouton">
-    
-    
+
     <button mat-button (click)="clearStorage()" routerLink="/">ACCUEIL</button>
+
     <button mat-button *ngIf="isPhotographe || isAdmin" routerLink="/profil" (click)="clearStorage()">FAIRE UN DON</button>
-    <button mat-button *ngIf="isPhotographe || isAdmin" routerLink="/photos" (click)="clearStorage()"  >MES PHOTOS</button>
+
+    <button mat-button *ngIf="isPhotographe || isAdmin" routerLink="/photos" (click)="clearStorage()">MES PHOTOS</button>
+
     <button mat-button *ngIf="isPhotographe || isAdmin" routerLink="/upload" (click)="clearStorage()">POSTER UNE PHOTO</button>
+
     <button mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signup"> M'INSCRIRE</button>
+
     <button mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signin"> ME CONNECTER</button>
+
     <button mat-button *ngIf="(isPhotographe || isAdmin) && (!isPhotographe || !isAdmin)" (click)="logout()" routerLink="/signin"> ME DECONNECTER</button>
 
-  </mat-toolbar-row>
+</mat-toolbar-row>

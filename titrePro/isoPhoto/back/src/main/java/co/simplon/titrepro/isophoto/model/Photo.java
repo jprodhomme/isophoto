@@ -59,7 +59,6 @@ public class Photo implements Serializable {
 	// bi-directional many-to-one association to Photographe
 	@ManyToOne
 	@JoinColumn(name = "id_photographe")
-	@JsonBackReference(value="photo-photographe")
 	private Photographe photographe;
 
 	public Photo() {

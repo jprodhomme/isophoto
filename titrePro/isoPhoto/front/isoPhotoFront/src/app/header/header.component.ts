@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../service/login.service';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
+import * as jwt_decode from 'jwt-decode';
 
 
 @Component({
@@ -15,6 +16,7 @@ export class HeaderComponent implements OnInit {
   isPhotographe : boolean;
   photographePseudo : string;
   pseudo: string;
+  thisIsPseudo: string;
 
   constructor(private loginService : LoginService) { }
 
@@ -23,6 +25,9 @@ export class HeaderComponent implements OnInit {
     sessionStorage.clear;
     this.getConnection();
     this.pseudo = localStorage.getItem('pseudo');
+    
+    const decodedToken = jwt_decode(sessionStorage.getItem(environment.accessToken));
+    this.thisIsPseudo = decodedToken.pseudo;
 
   }
 
@@ -45,6 +50,7 @@ logout(){
   this.isLogged =false;
   this.isPhotographe = false;
   this.isAdmin = false;
+  this.thisIsPseudo = "";
 }
 
 public clearStorage(){

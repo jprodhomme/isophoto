@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -44,13 +45,13 @@ public class Photographe implements Serializable {
 
 	//bi-directional many-to-one association to Commentaire
 	@OneToMany(mappedBy="photographe")
-	@JsonManagedReference
+	@JsonIgnore
 	private List<Commentaire> commentaires;
 
 	// bi-directional many-to-one association to Photo
 	
 	@OneToMany(mappedBy = "photographe", cascade = CascadeType.REMOVE)
-	@JsonManagedReference(value="photo-photographe")
+	@JsonIgnore
 	private List<Photo> photos;
 
 

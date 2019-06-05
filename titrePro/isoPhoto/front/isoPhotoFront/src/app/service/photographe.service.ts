@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Photographe } from '../model/photographe.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PhotographeService {
-
+  pseudoCommentaire: Observable<string>;
   newPhoto : Photographe;
+
 
   availablePhotographes: Photographe[];
 
@@ -20,10 +23,12 @@ export class PhotographeService {
    * @param newPhotographe le nouveau friend à créere
    */
   public addPhotographe(newPhotographe: Photographe) {
-    this.httpClient.post<Photographe>('POST','http://localhost:8080/api/sign-up' + newPhotographe, ).subscribe(
+    this.httpClient.post<Photographe>('POST',environment.apiUrl +'sign-up' + newPhotographe, ).subscribe(
       newPhotographe => {
        this.availablePhotographes.push(newPhotographe);
       }
     );
 }
+
+  
 }
