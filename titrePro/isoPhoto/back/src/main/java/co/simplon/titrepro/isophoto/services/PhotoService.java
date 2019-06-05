@@ -2,6 +2,7 @@ package co.simplon.titrepro.isophoto.services;
 
 import java.util.List;
 
+import co.simplon.titrepro.isophoto.model.Commentaire;
 import co.simplon.titrepro.isophoto.model.Photo;
 
 public interface PhotoService {
@@ -12,11 +13,13 @@ public interface PhotoService {
 						    String tagsString, 
 						    String pseudo);
 
-//	Photo addPhoto(Photo photo);
+
 
 	Photo addPhoto(Photo photo, String pseudo);
 	
-	public List<String> photoCommentaire( Long idPhoto);
+	public List<Commentaire> photoCommentaire( Long idPhoto);
+	
+//	public List<Integer> photoIdCOmmentaire(Long idPhoto);
 
 	public String photographebyphotoid(Long idPhoto);
 }

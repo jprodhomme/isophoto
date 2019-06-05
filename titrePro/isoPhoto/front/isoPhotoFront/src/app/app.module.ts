@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { PhotoComponent } from './photo/photo.component';
 import { PhotographeComponent } from './photographe/photographe.component';
 import { DonComponent } from './don/don.component';
-import { CommentaireComponent } from './commentaire/commentaire.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -31,7 +30,6 @@ import { PhotoDetailsComponent } from './photo-details/photo-details.component';
     AppComponent,
     PhotographeComponent,
     DonComponent,
-    CommentaireComponent,
     HeaderComponent,
     PhotoComponent,
     PhotoListComponent,
@@ -54,8 +52,6 @@ import { PhotoDetailsComponent } from './photo-details/photo-details.component';
     // GalleryModule,
     // LightboxModule,
     // GallerizeModule,
-    
-  
     ],
     providers: [ PhotographeGuard, AdminGuard,
       {

@@ -74,13 +74,12 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
 	@Override
-	public List<String> photoCommentaire(Long idPhoto) {
+	public List<Commentaire> photoCommentaire(Long idPhoto) {
 		
-		List<String> commentairePhoto = new ArrayList<String>();
-				
+		List<Commentaire> commentairePhoto = new ArrayList<Commentaire>();
 		
-		for (Commentaire commentaire :   this.photoRepo.findById(idPhoto).get().getCommentaires()) {
-			commentairePhoto.add(commentaire.getCommentaires());
+		for (Commentaire commentaire : this.photoRepo.findById(idPhoto).get().getCommentaires()) {
+			commentairePhoto.add(commentaire);
 		}
 		return commentairePhoto;
 	}
@@ -90,5 +89,11 @@ public class PhotoServiceImpl implements PhotoService {
 		
 		return this.photoRepo.findById(idPhoto).get().getPhotographe().getPseudo();
 	}
+
+//	@Override
+//	public List<Integer> photoIdCOmmentaire(Long idPhoto) {
+//		
+//		return this.commentaireRepo.;
+//	}
 	
 }

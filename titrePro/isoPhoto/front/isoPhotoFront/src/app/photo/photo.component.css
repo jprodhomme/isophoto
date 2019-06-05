@@ -1,0 +1,7 @@
+img{
+     
+    display : flex;
+    flex-direction: row;
+    margin :2%;
+    float : left;
+  }

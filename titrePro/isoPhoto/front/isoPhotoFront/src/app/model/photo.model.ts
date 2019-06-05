@@ -11,7 +11,7 @@ export class Photo{
                 public image? : string,
                 public titre? : string,
                 public donListe? : Don[],
-                public commentaireListe? : Commentaire[],
+                public commentaires? : Commentaire[],
                 public tagListe? : Tag[],
                 public photographe? : Photographe) { }
 

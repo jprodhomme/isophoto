@@ -72,6 +72,7 @@ export class UploadComponent {
   onSubmit(){
 
     let photographe = new Photographe();
+    
     let photo =new Photo();
 
     photographe.pseudo = this.getPhotographePseudo();

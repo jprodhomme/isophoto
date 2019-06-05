@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+
 /**
  * The persistent class for the commentaires database table.
  * 
@@ -34,9 +35,16 @@ public class Commentaire implements Serializable {
 	@JsonBackReference
 	@JoinColumn(name = "id_photo")
 	private Photo photo;
-
+	
+	//bi-directional many-to-one association to Photographe
+	@ManyToOne
+	@JsonBackReference
+	@JoinColumn(name="id_photographe")
+	private Photographe photographe;
+	
 	public Commentaire() {
 	}
+
 
 	public Commentaire(String commentaires) {
 		this.commentaires = commentaires;
@@ -64,6 +72,13 @@ public class Commentaire implements Serializable {
 
 	public void setPhoto(Photo photo) {
 		this.photo = photo;
+	}
+	public Photographe getPhotographe() {
+		return photographe;
+	}
+
+	public void setPhotographe(Photographe photographe) {
+		this.photographe = photographe;
 	}
 
 }

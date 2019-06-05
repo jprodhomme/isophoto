@@ -6,6 +6,8 @@ import { PhotoService } from '../service/photo.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { PhotoListComponent } from '../photo-list/photo-list.component';
 
 @Component({
   selector: 'app-photo',
@@ -14,22 +16,22 @@ import { FormBuilder } from '@angular/forms';
 })
 export class PhotoComponent implements OnInit {
 
-  newPhoto : Photo;
-  photographe: Photographe;
-  description : string;
-  image : string;
-  titre : string;
-  tagListe : Tag[];
-   
-      
 
-  constructor(private formBuilder: FormBuilder,
+  photoListe : Observable<Photo[]>;
+   
+
+  constructor(
     private photoService: PhotoService,
     private router: Router,
-    private httpClient: HttpClient,) {
+    private httpClient: HttpClient,
+    ) {
      }
 
   ngOnInit() {
+
+    this.photoListe = this.photoService.getPhotos();
+    
+    
   }
 
 }

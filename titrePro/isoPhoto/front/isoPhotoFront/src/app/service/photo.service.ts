@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Photo } from '../model/photo.model';
 import { HttpClient, HttpRequest, HttpEvent } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -11,6 +10,8 @@ import { environment } from 'src/environments/environment';
 export class PhotoService {
   
   newPhoto : Photo;
+
+ 
 
  public availablePhotos: Photo[];
 
@@ -22,15 +23,13 @@ export class PhotoService {
   getPhotos(): Observable<Photo[]>{
     return this.httpClient.get<Photo[]>(environment.apiUrl + 'photos');
   }
+
   /**
    * @param newPhoto nouvelle photo à créer
    */
   public addPhoto(newphoto: Photo, arrayTag : string, pseudo : string) {
-    console.log(pseudo);
     this.httpClient.post<Photo>('http://localhost:8080/api/create/' + arrayTag + '/' + pseudo, newphoto).subscribe(
-      newPhoto => {
-
-      }
+      
     );
 
   }

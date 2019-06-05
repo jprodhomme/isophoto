@@ -55,9 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Entry points
         http.authorizeRequests()//
-        		.antMatchers("/api/photos").hasAnyAuthority("photographe")
         		.antMatchers("/**").permitAll()
-        		.antMatchers("/api/sign-in").permitAll()
 
                 // Disallow everything else...
                 .anyRequest().authenticated();

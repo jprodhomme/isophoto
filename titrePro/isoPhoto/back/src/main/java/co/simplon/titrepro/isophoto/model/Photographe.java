@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 /**
  * The persistent class for the photographe database table.
@@ -40,15 +42,22 @@ public class Photographe implements Serializable {
 
 	private String password;
 
+	//bi-directional many-to-one association to Commentaire
+	@OneToMany(mappedBy="photographe")
+	@JsonIgnore
+	private List<Commentaire> commentaires;
+
 	// bi-directional many-to-one association to Photo
 	@JsonIgnore
 	@OneToMany(mappedBy = "photographe", cascade = CascadeType.REMOVE)
 	private List<Photo> photos;
 
+
 	// bi-directional many-to-one association to Authority
 	@ManyToOne
 	@JoinColumn(name = "id_authorities")
 	private Authority authority;
+
 
 	public Photographe() {
 	}
@@ -143,6 +152,13 @@ public class Photographe implements Serializable {
 		photo.setPhotographe(null);
 
 		return photo;
+	}
+	public List<Commentaire> getCommentaires() {
+		return commentaires;
+	}
+	
+	public void setCommentaires(List<Commentaire> commentaires) {
+		this.commentaires = commentaires;
 	}
 
 	public Authority getAuthority() {

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import co.simplon.titrepro.isophoto.model.Commentaire;
 import co.simplon.titrepro.isophoto.model.Photo;
 import co.simplon.titrepro.isophoto.model.Photographe;
 import co.simplon.titrepro.isophoto.model.Tag;
@@ -61,7 +61,7 @@ public class PhotoController {
 		this.tagService = tagService;	
 		this.fileService = fileService;
 	}
-
+	
 	@GetMapping("/photos")
 	public ResponseEntity<?> getAllPhoto() {
 		List<Photo> listePhoto = photoRepo.findAll();
@@ -80,7 +80,7 @@ public class PhotoController {
 		try {
 			Optional<Photo> optPhoto = null;
 			optPhoto = photoRepo.findById(idPhoto);
-			System.out.println("PSEUDO +++++ " + optPhoto.get().getPhotographe().getPseudo());
+			
 			
 			return ResponseEntity.status(HttpStatus.OK).body(photoRepo.findById(idPhoto));
 		} catch (Exception e) {
@@ -89,7 +89,27 @@ public class PhotoController {
 	}
 	
 	@GetMapping("photocommentairesbyid/{idPhoto}")
-	public List<String> getCommentairesById(@PathVariable Long idPhoto){
+	public List<Commentaire> getCommentairesById(@PathVariable Long idPhoto){
+		this.photoRepo.findById(idPhoto).get().getCommentaires();
+		return this.photoService.photoCommentaire(idPhoto);
+	}
+	
+	@GetMapping("idcomphoto/{idPhoto}")
+	public List<Commentaire> getCommentairesIdBphotoyId(@PathVariable Long idPhoto){
+		int id = 0;
+		List<Integer> listeId= new ArrayList<Integer>();
+		
+		List<Commentaire> listcom = new ArrayList<Commentaire>();
+		listcom =  this.photoRepo.findById(idPhoto).get().getCommentaires();
+		
+		for(Commentaire comz : listcom) {
+			for(int i = 0; i<=listcom.size(); i++) {
+				comz.getId();
+				System.out.println("id "+ comz.getId());
+				
+			}
+		}
+	
 		return this.photoService.photoCommentaire(idPhoto);
 	}
 	
@@ -141,7 +161,7 @@ public class PhotoController {
 	 * @param pseudo
 	 * @return
 	 */
-	 
+	@PreAuthorize("hasAuthority('photographe')")
 	@PostMapping("/addphoto")
 	public ResponseEntity<?> addPhoto(@RequestBody Photo photo, String pseudo) {		
 		
@@ -193,6 +213,7 @@ public class PhotoController {
 	 * @param file
 	 * @return
 	 */
+	@PreAuthorize("hasAuthority('photographe')")
 	@PostMapping("/photo/uploadphoto/{pseudo}")
 	public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,
 												   @PathVariable String pseudo) {

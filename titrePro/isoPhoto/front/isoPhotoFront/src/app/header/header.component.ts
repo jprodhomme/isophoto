@@ -10,27 +10,25 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class HeaderComponent implements OnInit {
 
-isLogged = false;
-isAdmin : boolean;
-isPhotographe : boolean;
-photographePseudo : string;
-pseudo: string;
+  isLogged = false;
+  isAdmin : boolean;
+  isPhotographe : boolean;
+  photographePseudo : string;
+  pseudo: string;
 
-constructor(private loginService : LoginService) { }
+  constructor(private loginService : LoginService) { }
 
-ngOnInit() {
+  ngOnInit() {
 
-  sessionStorage.clear;
-  this.getConnection();
-  
-  this.pseudo = localStorage.getItem('pseudo');
+    sessionStorage.clear;
+    this.getConnection();
+    this.pseudo = localStorage.getItem('pseudo');
 
   }
 
-getConnection(){
+  getConnection(){
 
-  this.loginService.userRole.subscribe(userRole => {
-
+    this.loginService.userRole.subscribe(userRole => {
     this.isAdmin = userRole.includes("admin");
     this.isPhotographe = userRole.includes('photographe');
     this.isLogged = userRole.length > 0;
@@ -53,7 +51,5 @@ public clearStorage(){
   window.localStorage.clear();
 
   }
-
-
      
 }

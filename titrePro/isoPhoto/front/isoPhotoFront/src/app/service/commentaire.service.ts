@@ -9,10 +9,9 @@ import { environment } from 'src/environments/environment';
 })
 export class CommentaireService {
 
-  stringCommentaire : Observable<string[]>;
+  public stringCommentaire: Observable<Commentaire[]>;
 
   constructor(private httpClient: HttpClient) { }
-
 
   public availableCommentaires: Commentaire[] = [];
 
@@ -20,19 +19,28 @@ export class CommentaireService {
   public availableCommentaires$ = new BehaviorSubject(this.availableCommentaires);
 
 
-public getCommentaire(photoId : number){
+  public getCommentaire(photoId: number) {
 
+    this.stringCommentaire = this.httpClient.get<Commentaire[]>(environment.apiUrl + 'photocommentairesbyid/' + photoId);
 
-  this.stringCommentaire = this.httpClient.get<string[]>(environment.apiUrl + 'photocommentairesbyid/' + photoId);   
-          
-}    
-
-
-  public addCommentaire(idPhoto : number, commentaireBox :string){
-   
-    this.httpClient.put<string>(environment.apiUrl + 'addcommentaire/' + idPhoto + '/' + commentaireBox, null).subscribe();
-    console.log("1")
-    this.stringCommentaire = this.httpClient.get<string[]>(environment.apiUrl + 'photocommentairesbyid/' + idPhoto);   
-          
   }
+
+
+  public addCommentaire(idPhoto: number, commentaireBox: string, pseudo :string) {
+
+    this.httpClient.put<string>(environment.apiUrl + 'addcommentaire/' + idPhoto + '/'+ commentaireBox  +'/' + pseudo, null).subscribe();
+    
+    this.stringCommentaire = this.httpClient.get<Commentaire[]>(environment.apiUrl + 'photocommentairesbyid/' + idPhoto);
+
+  }
+
+  public deleteCommentaire(idPhoto : number, pseudo : string){
+
+    this.httpClient.delete<string>(environment.apiUrl + 'deletecommentaire/' + idPhoto + '/'+ pseudo).subscribe();
+
+   
+
+  }
+
+  
 }
