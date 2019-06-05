@@ -30,48 +30,30 @@ export class PhotoDetailsComponent implements OnInit {
               private commentaireService: CommentaireService,
               private httpClient: HttpClient,) { }
 
-
-
   ngOnInit() {
-
     
     this.photoId = +this.route.snapshot.params.photoId;
-
-    
-    
+   
     this.httpClient.get<Photo>(environment.apiUrl + 'photosbyid/' + this.photoId).subscribe(
       (result) => {
         this.photoImage = result.image;
-       
         this.photoTitre = result.titre;
-        
         this.photoDesc = result.description;
-        
         this.comList = result.commentaires;
-      
       }
     ); 
 
-
-
     const decodedToken = jwt_decode(sessionStorage.getItem(environment.accessToken));
 
-    this.photoPseudo = decodedToken.pseudo;
-       
-    this.commentaireService.getCommentaire(this.photoId);
-    
+    this.photoPseudo = decodedToken.pseudo; 
+    this.commentaireService.getCommentaire(this.photoId);    
     this.stringCommentaire = this.commentaireService.stringCommentaire;
-
     this.stringCommentaire.subscribe();
-
-    
-
   }
 
   postCommentaire() {
 
     this.commentaireService.addCommentaire(this.photoId, this.photoPseudo, this.commentaireBox);
-
     this.commentaireBox = "";
 
     setTimeout(() => this.stringCommentaire = this.commentaireService.stringCommentaire, 100);
@@ -80,7 +62,7 @@ export class PhotoDetailsComponent implements OnInit {
 
   deleteCommentaire(comId){
    
-    this.commentaireService.deleteCommentaire(comId, this.photoPseudo);
+    this.commentaireService.deleteCommentaire(this.photoId, this.photoPseudo, comId );
     
     setTimeout(() => this.stringCommentaire = this.commentaireService.stringCommentaire, 100);
     this.stringCommentaire.subscribe();

@@ -15,16 +15,12 @@ export class CommentaireService {
 
   public availableCommentaires: Commentaire[] = [];
 
-  // la liste observable que l'on rend visible partout dans l'appli
-  public availableCommentaires$ = new BehaviorSubject(this.availableCommentaires);
-
-
+  
   public getCommentaire(photoId: number) {
 
     this.stringCommentaire = this.httpClient.get<Commentaire[]>(environment.apiUrl + 'photocommentairesbyid/' + photoId);
 
   }
-
 
   public addCommentaire(idPhoto: number, commentaireBox: string, pseudo :string) {
 
@@ -34,11 +30,11 @@ export class CommentaireService {
 
   }
 
-  public deleteCommentaire(idPhoto : number, pseudo : string){
+  public deleteCommentaire(idPhoto : number, pseudo : string, comId: number){
 
-    this.httpClient.delete<string>(environment.apiUrl + 'deletecommentaire/' + idPhoto + '/'+ pseudo).subscribe();
+    this.httpClient.delete<string>(environment.apiUrl + 'deletecommentaire/' + comId + '/'+ pseudo).subscribe();
 
-   
+    this.stringCommentaire = this.httpClient.get<Commentaire[]>(environment.apiUrl + 'photocommentairesbyid/' + idPhoto);
 
   }
 
