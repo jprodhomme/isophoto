@@ -1,39 +1,49 @@
-<mat-toolbar class="toolbar">
+<div class="container1">
+  <div class="item1">
+   
 
-  <mat-toolbar-row>
+        <span class="logo">
 
-    <span class="logo">
+          <span class="word1">iSO</span>
 
-      <span class="word1">iSO</span>
+          <span class="word2">PHOTO</span>
 
-      <span class="word2">PHOTO</span>
+        </span>
+
+  </div>
+  <div class="item2">
+
+
+    <span style="left: 65%; " *ngIf="isPhotographe || isAdmin"> Bienvenue {{this.thisIsPseudo}}
 
     </span>
 
-  </mat-toolbar-row>
+  </div>
+  <div class="item3">
+    <mat-toolbar-row>
 
-  <mat-toolbar-row style="left: 65%; "> Bienvenue {{this.thisIsPseudo}}
+    </mat-toolbar-row>
 
-  </mat-toolbar-row>
+    <mat-toolbar-row class="bouton">
 
-  <mat-toolbar-row>
+      <button mat-button (click)="clearStorage()" routerLink="/">ACCUEIL</button>
 
-  </mat-toolbar-row>
+      <!-- <button mat-button *ngIf="isPhotographe || isAdmin" routerLink="/profil" (click)="clearStorage()">FAIRE UN
+        DON</button> -->
 
-  <mat-toolbar-row class="bouton">
+      <button mat-button *ngIf="isPhotographe || isAdmin" routerLink="/photos" (click)="clearStorage()">MES
+        PHOTOS</button>
 
-    <button mat-button (click)="clearStorage()" routerLink="/">ACCUEIL</button>
+      <button mat-button *ngIf="isPhotographe || isAdmin" routerLink="/upload" (click)="clearStorage()">POSTER UNE
+        PHOTO</button>
 
-    <button mat-button *ngIf="isPhotographe || isAdmin" routerLink="/profil" (click)="clearStorage()">FAIRE UN DON</button>
+      <button mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signup"> M'INSCRIRE</button>
 
-    <button mat-button *ngIf="isPhotographe || isAdmin" routerLink="/photos" (click)="clearStorage()">MES PHOTOS</button>
+      <button mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signin"> ME CONNECTER</button>
 
-    <button mat-button *ngIf="isPhotographe || isAdmin" routerLink="/upload" (click)="clearStorage()">POSTER UNE PHOTO</button>
+      <button mat-button *ngIf="(isPhotographe || isAdmin) && (!isPhotographe || !isAdmin)" (click)="logout()"
+        routerLink="/signin"> ME DECONNECTER</button>
 
-    <button mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signup"> M'INSCRIRE</button>
-
-    <button mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signin"> ME CONNECTER</button>
-
-    <button mat-button *ngIf="(isPhotographe || isAdmin) && (!isPhotographe || !isAdmin)" (click)="logout()" routerLink="/signin"> ME DECONNECTER</button>
-
-</mat-toolbar-row>
+    </mat-toolbar-row>
+  </div>
+</div>

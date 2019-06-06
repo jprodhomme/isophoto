@@ -1,46 +1,57 @@
-<div class="low">
-  Mes Photos
-  <div>
-    <span colspan="2" style="font: 20px 'Arial Narrow', sans-serif; text-transform: uppercase">{{photoTitre}} </span>
-  </div>
-  <div>
-    <span colspan="2" style="font: 12px 'Arial Narrow', sans-serif;"> par {{pseudoPhoto}}</span>
-  </div>
+<div class="wrapper">
 
-  <tr>
-    <td colspan="2">
-      <img src="../../assets/uploadedPhotos/{{photoImage}}" style="height: 640px; width : auto;" class="center">
-    </td>
-  </tr>
-
-  <tr>
-    <th style="text-align:left">
-      <textarea rows="5" cols="153" [(ngModel)]="commentaireBox" id="commentaireBox">Ajouter un commentaire
+  <header class="header">
+    <div class="title">
+    Mes Photos
+    </div>
+    <div class = "titre">
+    <div >
+      <span colspan="2" style="font: 20px 'Arial Narrow', sans-serif; text-transform: uppercase">{{photoTitre}} </span>
+    </div>
+    <div>
+      <span colspan="2" style="font: 12px 'Arial Narrow', sans-serif;"> par {{pseudoPhoto}}</span>
+    </div>
+  </div>
+  </header>
+  <div class="main">
+    <tr>
+     
+        <img src="../../assets/uploadedPhotos/{{photoImage}}">
+      
+    </tr>
+  </div>
+  <aside class="aside aside-1">
+    
+      
+        <textarea rows="5" cols="100" [(ngModel)]="commentaireBox" id="commentaireBox">Ajouter un commentaire
       </textarea>
-    </th>
-    <th style=" vertical-align : middle">
-      <input (click)="postCommentaire()" type="submit">
-    </th>
-  </tr>
+      
+     
+        <input (click)="postCommentaire()" type="submit">
+      
+   
 
-  <tr>
-    <th colspan="2" style="font: 25px 'Arial Narrow', sans-serif;"> COMMENTAIRES : </th>
+    <tr>
+      <th style="font: 25px 'Arial Narrow', sans-serif; "> COMMENTAIRES : </th>
 
-  </tr>
+    </tr>
 
-  <tr *ngFor="let commentaire of stringCommentaire |async ">
+    <tr *ngFor="let commentaire of stringCommentaire | async ">
 
-    <span style="font: 12px 'Arial Narrow', sans-serif;"> {{commentaire.photographe.pseudo}} :   </span>
-
-
+      <span style="font: 12px 'Arial Narrow', sans-serif;"> {{commentaire.photographe.pseudo}} : </span>
 
 
 
-    <span style="font: 20px 'Arial Narrow', sans-serif;"> {{commentaire.commentaires}} </span>
-    <button (click)="deleteCommentaire(commentaire.id)">Supprimer</button>
 
-  </tr>
 
-  
+      <span style="font: 20px 'Arial Narrow', sans-serif;"> {{commentaire.commentaires}} </span>
+      <button (click)="deleteCommentaire(commentaire.id)">Supprimer</button>
+
+    </tr>
+  </aside>
+
+
+
+
 
 </div>

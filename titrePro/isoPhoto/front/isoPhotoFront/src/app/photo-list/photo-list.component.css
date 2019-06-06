@@ -1,17 +1,25 @@
 
    .top{
-     
-       margin-top: 50px;
-   }
+     display: flex;
+     flex-direction: row;
+     flex-wrap: wrap;
+     justify-content: space-evenly;
+     background-color: rgb(55, 61, 59);
+  }
 
    img{
-     
-     display : flex;
-     flex-direction: row;
-     margin :2%;
-     float : left;
+      height: 340px;
+      border-radius: 5px;
    }
 
    a:hover{
      cursor: pointer;
    }
+
+.items{
+  flex-flow: row;
+ 
+  
+  margin :2px;
+  
+}

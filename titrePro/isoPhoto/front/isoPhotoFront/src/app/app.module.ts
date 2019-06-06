@@ -5,7 +5,6 @@ import { MaterialModule } from './material-module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PhotoComponent } from './photo/photo.component';
-import { PhotographeComponent } from './photographe/photographe.component';
 import { DonComponent } from './don/don.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -28,7 +27,6 @@ import { PhotoDetailsComponent } from './photo-details/photo-details.component';
 @NgModule({
   declarations: [
     AppComponent,
-    PhotographeComponent,
     DonComponent,
     HeaderComponent,
     PhotoComponent,

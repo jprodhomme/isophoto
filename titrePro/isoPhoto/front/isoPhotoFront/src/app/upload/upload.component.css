@@ -11,24 +11,12 @@ img{
 
 .previz1{
 
-  display: block;
-  margin-left: auto;
-  margin-right:auto;
-
-
-  position : absolute;
   
-  width: 120px;
+  display: flex;
+    
+  flex-direction: column;
+align-items: stretch;
+
+  
        
-  display: table;
-  margin: 0 auto;
-}
-
-.previz{
-  display: block;
-  margin-left: auto;
-  margin-right:auto;
-  width : 100%;
-
-
 }

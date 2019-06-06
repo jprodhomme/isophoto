@@ -1,12 +1,28 @@
-img{
-     
-    display : flex;
+
+   .top{
+    display: flex;
     flex-direction: row;
-    
-    margin :0.15%;
-    float : left;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+ }
+
+  img{
+     height: 250px;
   }
-.top{
+
+  a:hover{
+    cursor: pointer;
+  }
+
+.items{
+ flex-flow: row;
+ 
+ margin :2px;
+ 
+}
+
+.titre{
   
-  width : 100%;
+    display :flex ;
+   align-self: center;
 }

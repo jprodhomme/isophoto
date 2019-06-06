@@ -2,23 +2,11 @@
   color:white
 }
 
-.toolbar{
-  color:white;
-  /* position : fixed; */
-  padding: 5px 5px;
-  margin-bottom: 5px;
-    top: -25px;
-    left:0px; 
-  width : 100%;
-  background-image: url("../../assets/oldtimer-4190813_1920.jpg")
-  
-}
 
 
 .logo {
   font: 50px 'Arial Narrow', sans-serif;/* I picked this font because it's the closest looking 'web safe' font http://cssfontstack.com/ */
   color: #fefefe;
- 
   letter-spacing: -4px;
 }
 
@@ -27,23 +15,39 @@
   position: relative;
 }
 
-
 /* stuff for 1st word */
 .logo .word1 {
   color: #116b25;
   top:10px;
   font-size: 45px;
-  
   margin-right: -12px;
   display: inline-block;/* required for transform */
   z-index: 10;/* stack 1st word on top */
 }
-
-
 
 /* stuff for 2nd word */
 .logo .word2 {
   font-size:45px;
   z-index: 20;/* stack 2nd word below */
   top:25px;
+}
+
+.container1{
+  display: flex;
+  margin-bottom: 5px;
+  height : 150px;
+  background-image: url("../../assets/oldtimer-4190813_1920.jpg") 
+}
+
+.item1{
+}
+
+.item2{
+
+  align-self: flex-end;  
+}
+
+.item3{
+  align-self: flex-end;
+  
 }

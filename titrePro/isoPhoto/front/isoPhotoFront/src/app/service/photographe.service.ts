@@ -20,7 +20,7 @@ export class PhotographeService {
   constructor(private httpClient: HttpClient) { }
 
     /**
-   * @param newPhotographe le nouveau friend à créere
+   * @param newPhotographe le nouveau photographe à créer
    */
   public addPhotographe(newPhotographe: Photographe) {
     this.httpClient.post<Photographe>('POST',environment.apiUrl +'sign-up' + newPhotographe, ).subscribe(
