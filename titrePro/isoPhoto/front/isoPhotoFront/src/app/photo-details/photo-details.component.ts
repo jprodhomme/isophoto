@@ -8,6 +8,7 @@ import * as jwt_decode from 'jwt-decode';
 import { CommentaireService } from '../service/commentaire.service';
 import { Commentaire } from '../model/commentaire.model';
 import { Photographe } from '../model/photographe.model';
+import { PhotoService } from '../service/photo.service';
 @Component({
   selector: 'app-photo-details',
   templateUrl: './photo-details.component.html',
@@ -39,6 +40,7 @@ export class PhotoDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private commentaireService: CommentaireService,
+    private photoService: PhotoService,
     private httpClient: HttpClient) { }
 
   ngOnInit() {
@@ -88,7 +90,11 @@ export class PhotoDetailsComponent implements OnInit {
     this.stringCommentaire.subscribe();
 
   }
+  deletePhoto(){
 
+    this.photoService.deletePhoto(this.photoId, this.loggedPhotographe);
+    console.log(this.photoId + " " + this.loggedPhotographe);
+  }
 
 }
 

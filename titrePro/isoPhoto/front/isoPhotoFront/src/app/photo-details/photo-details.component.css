@@ -26,10 +26,21 @@
 .titre{
     align-self: flex-start;
 }
+.comment-text-area{
+    display: table-cell;
+    vertical-align: top;
+  }
+  .textinput {  
+    width: 100%;
+    min-height: 35px;
+    outline: none;
+    resize: none;
+    border: 1px solid #f0f0f0;
+  }
 
 img{
    
-    height: 640px; 
-    width : auto;  
+    height: 100%; 
+    max-width: 100%;  
     border-radius: 5px;
 }

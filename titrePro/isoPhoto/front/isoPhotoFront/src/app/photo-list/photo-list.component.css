@@ -1,25 +1,22 @@
+.container{
+  display:flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  padding : 3px;
 
-   .top{
-     display: flex;
-     flex-direction: row;
-     flex-wrap: wrap;
-     justify-content: space-evenly;
-     background-color: rgb(55, 61, 59);
-  }
+}
 
-   img{
-      height: 340px;
-      border-radius: 5px;
-   }
 
-   a:hover{
-     cursor: pointer;
-   }
+ a:hover{
+   cursor: pointer;
+ }
 
-.items{
-  flex-flow: row;
- 
-  
-  margin :2px;
-  
+
+
+
+img{
+
+  height : 250px;
+  max-width: 100%;
 }

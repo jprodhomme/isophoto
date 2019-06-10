@@ -1,5 +1,4 @@
-export class JsonWebToken{
-    constructor(public token : string){
-
+export class JsonWebToken {
+    constructor(public token: string) {
     }
 }

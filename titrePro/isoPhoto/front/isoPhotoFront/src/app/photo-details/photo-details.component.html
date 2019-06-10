@@ -1,41 +1,37 @@
-<div class="wrapper">
+<mat-card class=wrapper>
+  <mat-card-header class="header">
 
-  <header class="header">
-    <div class="title">
-    Mes Photos
+    <mat-card-title style="font: 20px 'Arial Narrow', sans-serif; text-transform: uppercase">{{photoTitre}}
+    </mat-card-title>
+    <mat-card-subtitle style="font: 12px 'Arial Narrow', sans-serif;"> par {{pseudoPhoto}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <!-- <input (click)="deletePhoto()" value="supprimer" type="submit"> -->
+  <!-- <img mat-card-image src="../../assets/uploadedPhotos/{{photoImage}}"> -->
+
+
+      <div class="container">
+          <img mat-card-image src="../../assets/uploadedPhotos/{{photoImage}}">
+         
+          <div class="overlay"></div>
+          <div class="button"><a (click)="deletePhoto()"> Supprimer </a></div>
+        </div>
+
+        <mat-card-content>
+
+
+
+
+
+    <div class="comment-text-area">
+      <textarea rows="5" cols="50" [(ngModel)]="commentaireBox" id="commentaireBox" class="textinput"
+        placeholder="Ajouter un commentaire"></textarea>
     </div>
-    <div class = "titre">
-    <div >
-      <span colspan="2" style="font: 20px 'Arial Narrow', sans-serif; text-transform: uppercase">{{photoTitre}} </span>
-    </div>
-    <div>
-      <span colspan="2" style="font: 12px 'Arial Narrow', sans-serif;"> par {{pseudoPhoto}}</span>
-    </div>
-  </div>
-  </header>
-  <div class="main">
-    <tr>
-     
-        <img src="../../assets/uploadedPhotos/{{photoImage}}">
-      
-    </tr>
-  </div>
-  <aside class="aside aside-1">
-    
-      
-        <textarea rows="5" cols="100" [(ngModel)]="commentaireBox" id="commentaireBox">Ajouter un commentaire
-      </textarea>
-      
-     
-        <input (click)="postCommentaire()" type="submit">
-      
-   
 
-    <tr>
-      <th style="font: 25px 'Arial Narrow', sans-serif; "> COMMENTAIRES : </th>
 
-    </tr>
+    <input (click)="postCommentaire()" value="Commenter" type="submit">
 
+    <p style="font: 25px 'Arial Narrow', sans-serif; "> COMMENTAIRES : </p>
     <tr *ngFor="let commentaire of stringCommentaire | async ">
 
       <span style="font: 12px 'Arial Narrow', sans-serif;"> {{commentaire.photographe.pseudo}} : </span>
@@ -48,10 +44,5 @@
       <button (click)="deleteCommentaire(commentaire.id)">Supprimer</button>
 
     </tr>
-  </aside>
-
-
-
-
-
-</div>
+  </mat-card-content>
+</mat-card>

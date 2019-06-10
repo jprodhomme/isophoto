@@ -2,6 +2,7 @@ package co.simplon.titrepro.isophoto.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,7 +32,7 @@ public class Commentaire implements Serializable {
 	private String commentaires;
 
 	// bi-directional many-to-one association to Photo
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.REMOVE)
 	@JsonBackReference(value="photo-commentaire")
 	@JoinColumn(name = "id_photo")
 	private Photo photo;

@@ -56,7 +56,7 @@ public class Photo implements Serializable {
 	
 
 	// bi-directional many-to-one association to Photographe
-	@ManyToOne
+	@ManyToOne( cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "id_photographe")
 	private Photographe photographe;
 

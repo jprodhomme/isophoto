@@ -1,17 +1,9 @@
-
-
-
-
-<div class="top">
-    <div class ="titre">
-        Bienvenue sur IsoPhoto
-        </div>
-
-    <div class ="items" *ngFor="let image of photoListe | async">
-      <a (click)="onSelectImage(image.id)">
-        <img src="../../assets/uploadedPhotos/{{image.image}}" >
-        </a>
-      </div>
-    
-    </div>
-    
+<main class="container">
+    <div class="item" *ngFor="let image of photoListe | async">
+    <a  (click)="onSelectImage(image.id)">
+   
+    <img src="../../assets/uploadedPhotos/{{image.image}}">
+  
+  </a>
+</div>
+</main>

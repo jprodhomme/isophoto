@@ -96,7 +96,7 @@ public class PhotographeController {
     @GetMapping("/photographefromphotoid/{photoId}")
     public ResponseEntity<?> getPhotographeByPhotoIdLOL(@PathVariable Long photoId) {
     	
-    	System.out.println("TTTTT" + this.photoRepo.findById(photoId).get().getPhotographe().getPseudo());
+    	
     	Photographe photographe = this.photoRepo.findById(photoId).get().getPhotographe();
     	
     	try {

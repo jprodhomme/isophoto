@@ -19,6 +19,9 @@ import {PhotographeGuard} from './guards/photographe.guard';
 import {AdminGuard} from './guards/admin.guard';
 import {JwtInterceptor} from './http-interceptor/jwt.interceptor';
 import { PhotoDetailsComponent } from './photo-details/photo-details.component';
+import { MatToolbarModule, MatSidenavModule, MatListModule, MatButtonModule, MatIconModule } from "@angular/material";
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { NgxPayPalModule } from 'ngx-paypal';
 // import { GalleryModule } from '@gnx-gallery/core';
 // import { LightboxModule } from '@ngx-gallery/lightbox';
 // import { GallerizeModule } from 'ngx-gallery/gallerize';
@@ -47,6 +50,13 @@ import { PhotoDetailsComponent } from './photo-details/photo-details.component';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule,
+    MatButtonModule,
+    NgxPayPalModule,
+    FlexLayoutModule
     // GalleryModule,
     // LightboxModule,
     // GallerizeModule,

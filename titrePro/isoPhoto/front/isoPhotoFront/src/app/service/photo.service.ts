@@ -83,8 +83,16 @@ export class PhotoService {
   public findPhotoById(id: number) : Observable<Photo>{
     
     
-    return this.httpClient.get<Photo>(environment.apiUrl + '/photosbyid/' + id);
+    return this.httpClient.get<Photo>(environment.apiUrl + 'photosbyid/' + id);
+   }
+
+   public deletePhoto(photoId : number, loggedphotographe : string){
+    return this.httpClient.delete(environment.apiUrl + 'deletephoto/' + photoId + "/" + loggedphotographe).subscribe(
+      () =>{
+          },
+      (error) => console.log("suppression watchCategory pb : ", error) 
+  );
+}
    }
     
-  }
 

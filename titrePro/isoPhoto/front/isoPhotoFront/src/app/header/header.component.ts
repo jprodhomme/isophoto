@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { LoginService } from '../service/login.service';
 import { environment } from 'src/environments/environment';
 import * as jwt_decode from 'jwt-decode';
@@ -24,10 +24,12 @@ export class HeaderComponent implements OnInit {
 
     sessionStorage.clear;
     this.getConnection();
-    this.pseudo = localStorage.getItem('pseudo');
+    
     
     const decodedToken = jwt_decode(sessionStorage.getItem(environment.accessToken));
     this.thisIsPseudo = decodedToken.pseudo;
+    this.pseudo= decodedToken.pseudo;
+    console.log(this.pseudo)
 
   }
 
@@ -57,5 +59,14 @@ public clearStorage(){
   window.localStorage.clear();
 
   }
-     
+
+  
+  classToggle() {
+    const navs = document.querySelectorAll('.Navbar__Items')
+    
+    navs.forEach(nav => nav.classList.toggle('Navbar__ToggleShow'));
+  }
+  
+ 
+
 }

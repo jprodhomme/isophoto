@@ -1,53 +1,40 @@
-.bouton{
-  color:white
+.companyName{
+  font-size: 150%;
 }
 
-
-
-.logo {
-  font: 50px 'Arial Narrow', sans-serif;/* I picked this font because it's the closest looking 'web safe' font http://cssfontstack.com/ */
-  color: #fefefe;
-  letter-spacing: -4px;
+.mat-toolbar{
+height: 7vh;
 }
 
-/* stuff for both words */
-.logo span {
-  position: relative;
+div {
+  overflow: inherit;
 }
 
-/* stuff for 1st word */
-.logo .word1 {
-  color: #116b25;
-  top:10px;
-  font-size: 45px;
-  margin-right: -12px;
-  display: inline-block;/* required for transform */
-  z-index: 10;/* stack 1st word on top */
+.mat-sidenav-container{
+background-color: rgb(50, 63, 71);
+min-height: 5vh !important;
 }
 
-/* stuff for 2nd word */
-.logo .word2 {
-  font-size:45px;
-  z-index: 20;/* stack 2nd word below */
-  top:25px;
+a{
+  text-decoration: none;
+  font-size: 110%;
+  white-space: normal;
 }
 
-.container1{
-  display: flex;
-  margin-bottom: 5px;
-  height : 150px;
-  background-image: url("../../assets/oldtimer-4190813_1920.jpg") 
+button{
+  font-size: 110%;
+  min-width: min-content;
 }
 
-.item1{
+.example-icon {
+  padding: 0 14px;
 }
 
-.item2{
-
-  align-self: flex-end;  
+.example-spacer {
+  flex: 1 1 auto;
 }
 
-.item3{
-  align-self: flex-end;
-  
+.mat-sidenav-content{
+    font-size: 200%;
+    text-align: center;
 }

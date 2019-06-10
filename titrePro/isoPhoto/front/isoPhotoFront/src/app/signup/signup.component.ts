@@ -19,6 +19,7 @@ export class SignupComponent implements OnInit {
     password: [null, Validators.compose([
       Validators.required, Validators.minLength(5), Validators.maxLength(255)])
     ]
+    
   });
   
   newPhotographe : Photographe;

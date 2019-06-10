@@ -1,49 +1,44 @@
-<div class="container1">
-  <div class="item1">
-   
 
-        <span class="logo">
+<div>
+  <mat-toolbar color="primary">
+    <div fxShow="true" fxHide.gt-sm="true">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
 
-          <span class="word1">iSO</span>
+    <a mat-button class="companyName" routerLink="/">
+      <span>
+        <span>iSO</span>
+        <span>PHOTO</span>
+      </span>
+    </a>
+    <span class="example-spacer"></span>
+    <div fxShow="true" fxHide.lt-md="true">
+      <a mat-button *ngIf="isPhotographe || isAdmin" routerLink="/photos">Mes photos</a>
+      <a mat-button *ngIf="isPhotographe || isAdmin" routerLink="/upload">Ajouter une photo</a>
+      <a mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signup">M'inscrire</a>
+      <a mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signin">Me connecter</a>
+      <a mat-button *ngIf="(isPhotographe || isAdmin) && (!isPhotographe || !isAdmin)" routerLink="/signin">Me déconnecter</a>
+    </div>
 
-          <span class="word2">PHOTO</span>
+  </mat-toolbar>
+  <mat-sidenav-container fxFlexFill class="example-container">
 
-        </span>
+    <mat-sidenav color="primary" #sidenav fxLayout="column" mode="over" opened="false" fxHide.gt-sm="true">
+      <div fxLayout="column">
+        <a mat-button *ngIf="isPhotographe || isAdmin" routerLink="/photos">Mes photos</a>
+        <a mat-button *ngIf="isPhotographe || isAdmin" routerLink="/upload">Ajouter une photo</a>
+        <a mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signup">M'inscrire</a>
+        <a mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signin">Me connecter</a>
+        <a mat-button *ngIf="(isPhotographe || isAdmin) && (!isPhotographe || !isAdmin)" routerLink="/signin">Me déconnecter</a>
+      </div>
+    </mat-sidenav>
 
-  </div>
-  <div class="item2">
-
-
-    <span style="left: 65%; " *ngIf="isPhotographe || isAdmin"> Bienvenue {{this.thisIsPseudo}}
-
-    </span>
-
-  </div>
-  <div class="item3">
-    <mat-toolbar-row>
-
-    </mat-toolbar-row>
-
-    <mat-toolbar-row class="bouton">
-
-      <button mat-button (click)="clearStorage()" routerLink="/">ACCUEIL</button>
-
-      <!-- <button mat-button *ngIf="isPhotographe || isAdmin" routerLink="/profil" (click)="clearStorage()">FAIRE UN
-        DON</button> -->
-
-      <button mat-button *ngIf="isPhotographe || isAdmin" routerLink="/photos" (click)="clearStorage()">MES
-        PHOTOS</button>
-
-      <button mat-button *ngIf="isPhotographe || isAdmin" routerLink="/upload" (click)="clearStorage()">POSTER UNE
-        PHOTO</button>
-
-      <button mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signup"> M'INSCRIRE</button>
-
-      <button mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signin"> ME CONNECTER</button>
-
-      <button mat-button *ngIf="(isPhotographe || isAdmin) && (!isPhotographe || !isAdmin)" (click)="logout()"
-        routerLink="/signin"> ME DECONNECTER</button>
-
-    </mat-toolbar-row>
-  </div>
+  </mat-sidenav-container>
 </div>
+
+
+<!-- <mat-sidenav-content fxFlexFill>
+                  Awesome content
+                </mat-sidenav-content> -->

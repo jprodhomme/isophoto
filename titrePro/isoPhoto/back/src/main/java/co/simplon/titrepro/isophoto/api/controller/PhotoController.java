@@ -78,8 +78,6 @@ public class PhotoController {
 	public ResponseEntity<Optional<Photo>> getPhotoById(@PathVariable Long idPhoto) {
 
 		try {
-			Optional<Photo> optPhoto = null;
-			optPhoto = photoRepo.findById(idPhoto);
 			
 			
 			return ResponseEntity.status(HttpStatus.OK).body(photoRepo.findById(idPhoto));
@@ -96,8 +94,7 @@ public class PhotoController {
 	
 	@GetMapping("idcomphoto/{idPhoto}")
 	public List<Commentaire> getCommentairesIdBphotoyId(@PathVariable Long idPhoto){
-		int id = 0;
-		List<Integer> listeId= new ArrayList<Integer>();
+		
 		
 		List<Commentaire> listcom = new ArrayList<Commentaire>();
 		listcom =  this.photoRepo.findById(idPhoto).get().getCommentaires();
@@ -151,34 +148,12 @@ public class PhotoController {
 		return ResponseEntity.status(HttpStatus.OK).body(listePhoto);
 	}
 
-	/**
-	 * 
-	 * @param file
-	 * @param description
-	 * @param titre
-	 * @param image
-	 * @param tagsString
-	 * @param pseudo
-	 * @return
-	 */
-	@PreAuthorize("hasAuthority('photographe')")
-	@PostMapping("/addphoto")
-	public ResponseEntity<?> addPhoto(@RequestBody Photo photo, String pseudo) {		
-		
-		
-	
-		try {
-			return ResponseEntity.status(HttpStatus.OK)
-					.body(this.photoService.addPhoto(photo, pseudo));
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-		}
-	}
 	@PreAuthorize("hasAuthority('photographe')")
 		@PostMapping("/create/{tag}/{pseudo}")
 	public ResponseEntity<?> addNewPhoto(@RequestBody Photo photo,
 										 @PathVariable String tag,
 										 @PathVariable String pseudo) {
+		System.out.println("photo " + photo +" tag " + tag+" pseudo " + pseudo);
 		
 		List<Tag> tagList = new ArrayList<Tag>();
 		for (String tagString : tag.split(",")) {
@@ -237,15 +212,24 @@ public class PhotoController {
 	}
 
 
-	@DeleteMapping("/deletephoto")
-	public ResponseEntity<?> delPhoto(@Valid long delId) {
-		this.photoRepo.deleteById(delId);
-		List<Photo> photoList = null;
-		try {
-			photoList = (List<Photo>) photoRepo.findAll();
+	@DeleteMapping("/deletephoto/{delId}/{loggedPhotographe}")
+	public ResponseEntity<?> delPhoto(@PathVariable Long delId,
+									  @PathVariable String loggedPhotographe) {
+	
+		try{
+			if(loggedPhotographe.equals("Admin")) {
+
+				this.photoRepo.deleteById(delId);
+			}
+				
+	    			
+		if (this.photoRepo.findById(delId).get().getPhotographe().getPseudo().equals( loggedPhotographe))
+		
+			this.photoRepo.deleteById(delId);
+		
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
-		return ResponseEntity.status(HttpStatus.OK).body(photoList);
+		return ResponseEntity.status(HttpStatus.OK).body(null);
 	}
 }

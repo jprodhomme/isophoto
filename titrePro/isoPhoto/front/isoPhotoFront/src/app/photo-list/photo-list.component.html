@@ -1,12 +1,14 @@
-
-
-<div class="top">
-
-
-<div class ="items" *ngFor="let image of photoListe | async">
-  <a (click)="onSelectImage(image.id)">
-    <img src="../../assets/uploadedPhotos/{{image.image}}" >
-    </a>
-  </div>
-
+<main class="container">
+    <div class="item" *ngFor="let image of photoListe | async">
+    <a (click)="onSelectImage(image.id)">
+   
+    
+    <img src="../../assets/uploadedPhotos/{{image.image}}">
+    <input (click)="deletePhoto()" value="supprimer" type="submit">
+    
+  
+  </a>
 </div>
+</main>
+
+

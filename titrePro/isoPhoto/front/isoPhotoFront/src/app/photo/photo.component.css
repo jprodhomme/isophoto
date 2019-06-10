@@ -1,28 +1,22 @@
+.container{
+   display:flex;
+   flex-wrap: wrap;
+   align-items: flex-start;
+   justify-content: space-evenly;
+   padding : 3px;
 
-   .top{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
  }
 
-  img{
-     height: 250px;
-  }
 
   a:hover{
     cursor: pointer;
   }
 
-.items{
- flex-flow: row;
- 
- margin :2px;
- 
-}
 
-.titre{
-  
-    display :flex ;
-   align-self: center;
+
+
+img{
+
+   height : 250px;
+   max-width: 100%;
 }
