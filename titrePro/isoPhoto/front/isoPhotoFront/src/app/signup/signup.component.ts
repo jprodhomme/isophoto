@@ -3,6 +3,8 @@ import { Photographe } from '../model/photographe.model';
 import { PhotographeService } from '../service/photographe.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../service/login.service';
+import { CustomValidator } from '../validators/custom.validator.service';
+import { errorMessages } from '../validators/errors.service';
 
 @Component({
   selector: 'app-signup',
@@ -11,8 +13,14 @@ import { LoginService } from '../service/login.service';
 })
 export class SignupComponent implements OnInit {
 
+  errors = errorMessages;
+
   loginForm = this.fb.group({
-    pseudo: [null, Validators.required],
+    pseudo: ['', [
+      Validators.required,
+      Validators.minLength(1),
+      CustomValidator.pseudoValidator(this.photographeService.availablePseudo)
+    ]],
     nom: [null, Validators.required],
     prenom: [null, Validators.required],
     email: [null, Validators.required],

@@ -1,9 +1,16 @@
-<main class="container">
+<div class="container">
+
+    <div class="titre"> 
+      <div style = "font-family: lato">Bienvenue sur iSOPHOTO, </div>
+      <div> Connectez-vous pour partagez vos photos !</div>
+    </div>
+   
     <div class="item" *ngFor="let image of photoListe | async">
     <a  (click)="onSelectImage(image.id)">
    
-    <img src="../../assets/uploadedPhotos/{{image.image}}">
+    <img class="image" src="../../assets/uploadedPhotos/{{image.image}}">
   
   </a>
+
 </div>
-</main>
+</div>

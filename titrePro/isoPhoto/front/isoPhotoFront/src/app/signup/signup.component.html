@@ -22,6 +22,9 @@
       
           <mat-form-field>
             <input matInput placeholder="Pseudo" formControlName="pseudo">
+            <mat-error *ngIf="loginForm.value.pseudo">
+              {{errors.pseudoSame}}
+          </mat-error>
             <mat-error *ngIf="loginForm.controls['pseudo'].hasError('required')">
               Le pseudo est <strong>obligatoire</strong>
             </mat-error>

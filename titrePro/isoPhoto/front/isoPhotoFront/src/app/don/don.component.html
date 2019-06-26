@@ -1,4 +1,4 @@
-
-<input type="number" [(ngModel)]="finalAmount" style="padding-bottom: 10px;">
+<span> Ses photos vous plaisent ? Faites un don de 5 euros !</span>
 <h2 *ngIf="paypalLoad">Paypal button is loading</h2>
 <div id="paypal-checkout-btn"></div>
+<ngx-paypal [config]="payPalConfig"></ngx-paypal>

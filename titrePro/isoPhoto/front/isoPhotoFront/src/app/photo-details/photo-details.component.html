@@ -10,14 +10,16 @@
   <!-- <img mat-card-image src="../../assets/uploadedPhotos/{{photoImage}}"> -->
 
 
-      <div class="container">
-          <img mat-card-image src="../../assets/uploadedPhotos/{{photoImage}}">
-         
-          <div class="overlay"></div>
-          <div class="button"><a (click)="deletePhoto()"> Supprimer </a></div>
-        </div>
+  <div class="container">
+    <img mat-card-image src="../../assets/uploadedPhotos/{{photoImage}}">
 
-        <mat-card-content>
+    <div class="overlay"></div>
+
+    <input (click)=" payPal()" value="donner" type="submit">
+    <!-- <div class="button"><a (click)="deletePhoto()"> Supprimer </a></div> -->
+  </div>
+
+  <mat-card-content>
 
 
 

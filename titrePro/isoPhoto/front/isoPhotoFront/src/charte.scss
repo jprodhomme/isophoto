@@ -6,6 +6,35 @@ $theme-charte-primary: mat-palette($mat-green);
 $theme-charte-accent:  mat-palette($mat-green);
 $theme-charte-warn:    mat-palette($mat-red);
 
-$theme-charte: mat-dark-theme($theme-charte-primary, $theme-charte-accent, $theme-charte-warn);
+$theme-charte: mat-light-theme($theme-charte-primary, $theme-charte-accent, $theme-charte-warn);
 
 @include angular-material-theme($theme-charte);
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* Color Theme Swatches in Hex */
+// .My-Color-Theme-1-hex { color: #1B5E20; }
+// .My-Color-Theme-2-hex { color: #FFFFFF; }
+// .My-Color-Theme-3-hex { color: #000000; }
+// .My-Color-Theme-4-hex { color: #212121; }
+// .My-Color-Theme-5-hex { color: #2E7D32; }
+
+// /* Color Theme Swatches in RGBA */
+// .My-Color-Theme-1-rgba { color: rgba(27, 94, 32, 1); }
+// .My-Color-Theme-2-rgba { color: rgba(255, 255, 255, 1); }
+// .My-Color-Theme-3-rgba { color: rgba(0, 0, 0, 1); }
+// .My-Color-Theme-4-rgba { color: rgba(33, 33, 33, 1); }
+// .My-Color-Theme-5-rgba { color: rgba(46, 125, 50, 1); }
+
+// /* Color Theme Swatches in HSLA */
+// .My-Color-Theme-1-hsla { color: hsla(124, 55, 23, 1); }
+// .My-Color-Theme-2-hsla { color: hsla(0, 0, 100, 1); }
+// .My-Color-Theme-3-hsla { color: hsla(0, 0, 0, 1); }
+// .My-Color-Theme-4-hsla { color: hsla(0, 0, 12, 1); }
+// .My-Color-Theme-5-hsla { color: hsla(123, 46, 33, 1); }
+
+// body{
+//     background-color :rgb(27, 26, 26);
+// }

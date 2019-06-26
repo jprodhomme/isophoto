@@ -67,8 +67,6 @@ export class UploadComponent {
     }
   }
 
-
-
   onSubmit(){
 
     let photographe = new Photographe();

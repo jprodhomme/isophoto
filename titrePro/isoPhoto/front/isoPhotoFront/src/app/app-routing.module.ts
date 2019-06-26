@@ -12,7 +12,7 @@ const routes: Routes = [
 
 
   {path : '', component : PhotoComponent},
-  {path : 'dons', component : DonComponent},
+  {path : 'dons/:photoId', component : DonComponent},
   {path : 'photos', component : PhotoListComponent},
   {path : 'upload', component : UploadComponent},
   {path : 'signup', component : SignupComponent},

@@ -1,5 +1,6 @@
-.companyName{
+/* .companyName{
   font-size: 150%;
+  color:white;
 }
 
 .mat-toolbar{
@@ -12,7 +13,7 @@ div {
 
 .mat-sidenav-container{
 background-color: rgb(50, 63, 71);
-min-height: 5vh !important;
+min-height: 10vh !important;
 }
 
 a{
@@ -37,4 +38,26 @@ button{
 .mat-sidenav-content{
     font-size: 200%;
     text-align: center;
-}
+} */
+
+  /* Add animation (fade in the popup) */
+  @-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+    }
+    
+    @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+    }
+    
+    .flex-spacer {
+      flex: 1 1 auto;
+    }
+  
+    .cart-title {
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 1O px;
+      padding-left: 15px;
+    }
+  

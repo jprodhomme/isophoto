@@ -15,7 +15,11 @@ export class PhotographeService {
 
   availablePhotographes: Photographe[];
 
+  availablePseudo : string[];
+
   availablePhotographe$: BehaviorSubject<Photographe[]> = new BehaviorSubject(this.availablePhotographes);
+
+  availablePseudo$: BehaviorSubject<string[]> = new BehaviorSubject(this.availablePseudo);
 
   constructor(private httpClient: HttpClient) { }
 
@@ -28,7 +32,23 @@ export class PhotographeService {
        this.availablePhotographes.push(newPhotographe);
       }
     );
+  }
+
+  public getPseudo(): Observable<string[]> {
+    return this.httpClient.get<string[]>(environment.apiUrl + 'pseudos');
+  }
+
+  public publishPseudos(){
+    this.getPseudo().subscribe(
+      pseudoList =>{
+        this.availablePseudo = pseudoList;
+        this.availablePseudo$.next(this.availablePseudo);
+        console.log(this.availablePseudo.length);
+      }
+
+    )
+  }
+
 }
 
   
-}

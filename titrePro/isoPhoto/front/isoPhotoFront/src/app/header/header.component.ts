@@ -11,6 +11,8 @@ import * as jwt_decode from 'jwt-decode';
 })
 export class HeaderComponent implements OnInit {
 
+  @Output() public sidenavToggle = new EventEmitter();
+
   isLogged = false;
   isAdmin : boolean;
   isPhotographe : boolean;
@@ -18,55 +20,54 @@ export class HeaderComponent implements OnInit {
   pseudo: string;
   thisIsPseudo: string;
 
-  constructor(private loginService : LoginService) { }
+  constructor(private loginService : LoginService,
+              ) { }
 
   ngOnInit() {
 
-    sessionStorage.clear;
-    this.getConnection();
-    
-    
-    const decodedToken = jwt_decode(sessionStorage.getItem(environment.accessToken));
-    this.thisIsPseudo = decodedToken.pseudo;
-    this.pseudo= decodedToken.pseudo;
-    console.log(this.pseudo)
+      sessionStorage.clear;
+      this.getConnection();
+      
+      
+      const decodedToken = jwt_decode(sessionStorage.getItem(environment.accessToken));
+      this.thisIsPseudo = decodedToken.pseudo;
+      this.pseudo= decodedToken.pseudo;
+      console.log(this.pseudo)
 
+      
+
+    }
+
+    public onToggleSidenav = () => {
+      console.log('Lolo')
+      this.sidenavToggle.emit();
+    } 
+
+    getConnection(){
+
+      this.loginService.userRole.subscribe(userRole => {
+      this.isAdmin = userRole.includes("admin");
+      this.isPhotographe = userRole.includes('photographe');
+      this.isLogged = userRole.length > 0;
+      this.photographePseudo = userRole.sub();
+
+      sessionStorage.setItem('pseudo', this.photographePseudo);
+
+    });
   }
 
-  getConnection(){
+  logout(){
 
-    this.loginService.userRole.subscribe(userRole => {
-    this.isAdmin = userRole.includes("admin");
-    this.isPhotographe = userRole.includes('photographe');
-    this.isLogged = userRole.length > 0;
-    this.photographePseudo = userRole.sub();
-
-    sessionStorage.setItem('pseudo', this.photographePseudo);
-
-  });
-}
-
-logout(){
-
-  this.loginService.signOut();
-  this.isLogged =false;
-  this.isPhotographe = false;
-  this.isAdmin = false;
-  this.thisIsPseudo = "";
-}
-
-public clearStorage(){
-  window.localStorage.clear();
-
+    this.loginService.signOut();
+    this.isLogged =false;
+    this.isPhotographe = false;
+    this.isAdmin = false;
+    this.thisIsPseudo = "";
   }
 
-  
-  classToggle() {
-    const navs = document.querySelectorAll('.Navbar__Items')
-    
-    navs.forEach(nav => nav.classList.toggle('Navbar__ToggleShow'));
+  public clearStorage(){
+    window.localStorage.clear();
+
   }
-  
- 
 
 }

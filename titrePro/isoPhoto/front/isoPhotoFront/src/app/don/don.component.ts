@@ -1,79 +1,88 @@
 import { Component, OnInit } from '@angular/core';
-import * as jwt_decode from 'jwt-decode';
-import { environment } from 'src/environments/environment';
-import {
-  IPayPalConfig,
-  ICreateOrderRequest 
-} from 'ngx-paypal';
-
-declare let paypal: any;
+import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
+import { DonService } from '../service/don.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-don',
+  selector:'app-don',
   templateUrl: './don.component.html',
-  styleUrls: ['./don.component.css']
+  styleUrls:['./don.component.css']
 })
 export class DonComponent implements OnInit {
 
+  public payPalConfig?: IPayPalConfig;
+
+  photoId : number;
+
+
   
-  constructor() { }
+  constructor(private httpClient: HttpClient, private router : Router, private route : ActivatedRoute, private donService : DonService){}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.photoId = +this.route.snapshot.params.photoId;
+    this.initConfig();
   }
 
-
-testDecodeJwt(){
-  if (sessionStorage.getItem(environment.accessToken)){
-    const decodedToken =  jwt_decode(sessionStorage.getItem(environment.accessToken));
-    console.log(decodedToken.sub);
-    return decodedToken.sub;
+  private initConfig(): void {
+    this.payPalConfig = {
+    currency: 'EUR',
+    clientId: 'sb',
+    createOrderOnClient: (data) => <ICreateOrderRequest>{
+      intent: 'CAPTURE',
+      purchase_units: [
+        {
+          amount: {
+            currency_code: 'EUR',
+            value: '5.00',
+            breakdown: {
+              item_total: {
+                currency_code: 'EUR',
+                value: '5.00'
+              }
+            }
+          },
+          items: [
+            {
+              name: 'Enterprise Subscription',
+              quantity: '1',
+              category: 'DIGITAL_GOODS',
+              unit_amount: {
+                currency_code: 'EUR',
+                value: '5.00',
+              },
+            }
+          ]
+        }
+      ]
+    },
+    advanced: {
+      commit: 'true'
+    },
+    style: {
+      label: 'paypal',
+      layout: 'vertical'
+    },
+    onApprove: (data, actions) => {
+      console.log('onApprove - transaction was approved, but not authorized', data, actions);
+      actions.order.get().then(details => {
+        console.log('onApprove - you can get full order details inside onApprove: ', details);
+      });
+    },
+    onClientAuthorization: (data) => {
+      this.donService.addDon(this.photoId);
+      console.log('onClientAuthorization - you should probably inform your server about completed transaction at this point', data);
+      // this.showSuccess = true;
+    },
+    onCancel: (data, actions) => {
+      console.log('OnCancel', data, actions);
+    },
+    onError: err => {
+      console.log('OnError', err);
+    },
+    onClick: (data, actions) => {
+      console.log('onClick', data, actions);
+    },
+  };
   }
-}
-
-addScript: boolean = false;
-paypalLoad: boolean = true;
-
-finalAmount: number = 1;
-
-paypalConfig = {
-  env: 'sandbox',
-  client: {
-    sandbox: '3PH2AE2H92PMSM2V',
-    production: 'AESwYdwIUh1Nyt6KaZSvO4H9FtUcAQCHSxrjq7umPQ8.Sip0bBIPScMS'
-  },
-  commit: true,
-  payment: (data, actions) => {
-    return actions.payment.create({
-      payment: {
-        transactions: [
-          { amount: { total: this.finalAmount, currency: 'INR' } }
-        ]
-      }
-    });
-  },
-  onAuthorize: (data, actions) => {
-    return actions.payment.execute().then((payment) => {
-      //Do something when payment is successful.
-    })
-  }
-};
-
-ngAfterViewChecked(): void {
-  if (!this.addScript) {
-    this.addPaypalScript().then(() => {
-      paypal.Button.render(this.paypalConfig, '#paypal-checkout-btn');
-      this.paypalLoad = false;
-    })
-  }
-}
-
-addPaypalScript() {
-  this.addScript = true;
-  return new Promise((resolve, reject) => {
-    let scripttagElement = document.createElement('script');    
-    scripttagElement.src = 'https://www.paypalobjects.com/api/checkout.js';
-    scripttagElement.onload = resolve;
-    document.body.appendChild(scripttagElement);
-  })
-}
 }

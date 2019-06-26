@@ -1,4 +1,4 @@
-
+<!-- 
 <div>
   <mat-toolbar color="primary">
     <div fxShow="true" fxHide.gt-sm="true">
@@ -19,7 +19,7 @@
       <a mat-button *ngIf="isPhotographe || isAdmin" routerLink="/upload">Ajouter une photo</a>
       <a mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signup">M'inscrire</a>
       <a mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signin">Me connecter</a>
-      <a mat-button *ngIf="(isPhotographe || isAdmin) && (!isPhotographe || !isAdmin)" routerLink="/signin">Me déconnecter</a>
+      <a (click)="logout()" mat-button *ngIf="(isPhotographe || isAdmin) && (!isPhotographe || !isAdmin)" routerLink="/signin">Me déconnecter</a>
     </div>
 
   </mat-toolbar>
@@ -31,14 +31,45 @@
         <a mat-button *ngIf="isPhotographe || isAdmin" routerLink="/upload">Ajouter une photo</a>
         <a mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signup">M'inscrire</a>
         <a mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signin">Me connecter</a>
-        <a mat-button *ngIf="(isPhotographe || isAdmin) && (!isPhotographe || !isAdmin)" routerLink="/signin">Me déconnecter</a>
+        <a (click)="logout()" mat-button *ngIf="(isPhotographe || isAdmin) && (!isPhotographe || !isAdmin)" routerLink="/signin">Me déconnecter</a>
       </div>
     </mat-sidenav>
 
   </mat-sidenav-container>
-</div>
+</div> -->
 
 
 <!-- <mat-sidenav-content fxFlexFill>
                   Awesome content
                 </mat-sidenav-content> -->
+
+
+<mat-toolbar color="accent" class="mat-elevation-z5" role="heading">
+  <div>
+    <a class="docs-navbar-hide-small docs-button mat-button ng-star-inserted" _ngcontent-cl="" mat-button routerLink="/" (click)="clearStorage()"
+      tabindex="0" aria-disabled="false">
+      <mat-icon>home</mat-icon>
+      <div class="mat-button-ripple mat-ripple" matripple=""></div>
+      <div class="mat-button-focus-overlay"></div>
+    </a>
+
+  </div>
+
+  <div class="flex-spacer" _ngcontent-cl=""></div>
+
+  <div fxHide.gt-xs>
+    <button mat-icon-button (click)="onToggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
+  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+  
+    
+        <a mat-button *ngIf="isPhotographe || isAdmin" routerLink="/photos" (click)="clearStorage()">Mes photos</a>
+        <a mat-button *ngIf="isPhotographe || isAdmin" routerLink="/upload" (click)="clearStorage()">Ajouter une photo</a>
+        <a mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signup" (click)="clearStorage()">M'inscrire</a>
+        <a mat-button *ngIf="!isPhotographe && !isAdmin" routerLink="/signin" (click)="clearStorage()">Me connecter</a>
+        <a (click)="logout()" mat-button *ngIf="(isPhotographe || isAdmin) && (!isPhotographe || !isAdmin)" routerLink="/signin" (click)="clearStorage()">Me déconnecter</a>
+  </div>
+</mat-toolbar>

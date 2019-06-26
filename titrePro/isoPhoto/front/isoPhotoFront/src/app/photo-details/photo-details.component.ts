@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Photo } from '../model/photo.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import * as jwt_decode from 'jwt-decode';
@@ -41,7 +41,8 @@ export class PhotoDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private commentaireService: CommentaireService,
     private photoService: PhotoService,
-    private httpClient: HttpClient) { }
+    private httpClient: HttpClient,
+    private router : Router) { }
 
   ngOnInit() {
     const decodedToken = jwt_decode(sessionStorage.getItem(environment.accessToken));
@@ -94,6 +95,12 @@ export class PhotoDetailsComponent implements OnInit {
 
     this.photoService.deletePhoto(this.photoId, this.loggedPhotographe);
     console.log(this.photoId + " " + this.loggedPhotographe);
+  }
+
+  payPal(){
+    console.log("lolo")
+    this.router.navigate(['dons/' + this.photoId]);
+
   }
 
 }
